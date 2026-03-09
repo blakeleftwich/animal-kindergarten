@@ -466,7 +466,7 @@ function M.new()
 			
 		elseif (currentCount == 1 or touched == true) then
 			if savedData.enableSounds == true then
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					playReservedChannel( putSound, 11, 0 )
 				elseif (randomVO == 1 or currentGame == 1) then
 					playReservedChannel( canYouDragSound, 11, 0 )
@@ -568,7 +568,7 @@ function M.new()
 					
 							if savedData.enableSounds == true then
 					
-								if (myData.isFireTV or myData.isController) then
+								if (myData.isTV) then
 									playReservedChannel( intoTheBasket, 11, 0 )
 								elseif (dragVOChoice == 1) then
 									if (basketOptions[randomBasket].id == 4) then
@@ -624,7 +624,7 @@ function M.new()
 		else
 			if (question == "basketGreaterLessThan") then
 				timerNumVO = timer.performWithDelay( 1600, playItemNumberVO )
-			elseif (myData.isFireTV or myData.isController) then 
+			elseif (myData.isTV) then 
 				timerNumVO = timer.performWithDelay( 400, playItemNumberVO )
 			elseif (dragVOChoice == 1) then
 				timerNumVO = timer.performWithDelay( 750, playItemNumberVO )
@@ -1328,7 +1328,7 @@ function M.new()
 			
 			-- if (currentCount > numRequiredImages) then
 			
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					transition.to( cursor, { time=100, alpha=0 } )
 					buttonsActive = false
 				end
@@ -1897,7 +1897,7 @@ function M.new()
 													keyName ~= "menu" or
 													event.keyName == nil) then
 		
-				-- if (myData.isFireTV or myData.isController) then 
+				-- if (myData.isTV) then 
 					-- transition.to( cursor, { time=100, alpha=0 } )
 					-- buttonsActive = false
 				-- end
@@ -1940,7 +1940,7 @@ function M.new()
 					question == "basketGreaterLessThan" and evenOddCorrect == true or
 					question ~= "basketEvenOdd" and question ~= "basketGreaterLessThan") then 
 				
-					-- if (myData.isFireTV or myData.isController) then 
+					-- if (myData.isTV) then 
 						-- transition.to( cursor, { time=100, alpha=0 } )
 					-- end
 				
@@ -2031,7 +2031,7 @@ function M.new()
 		-- if (dragVOChoice == 1) then
 			-- questionText.text = "Can you drag " .. numRequiredImages
 		-- else
-		if (myData.isFireTV or myData.isController) then
+		if (myData.isTV) then
 			questionText.text = "Put " .. numRequiredImages
 		else
 			questionText.text = "Drag " .. numRequiredImages
@@ -2053,7 +2053,7 @@ function M.new()
 				-- questionText.text = questionText.text .. " to the basket?"
 			-- end
 		-- else
-			if (myData.isFireTV or myData.isController) then
+			if (myData.isTV) then
 				questionText.text = questionText.text .. " into the basket."
 			elseif (basketOptions[randomBasket].id == 4) then
 				questionText.text = questionText.text .. " to the hamper."
@@ -2228,7 +2228,7 @@ function M.new()
 			
 		end
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			cursorTransition = timer.performWithDelay( (#gameImages * 100) + 300, showCursor )
 		end
 	
@@ -2880,7 +2880,7 @@ function M.new()
     ----------------------
     -- global functions --
     ----------------------
-    -- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+    -- if (myData.isTV and version.appStore ~= "Chrome") then 
     -- else
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

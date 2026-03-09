@@ -1484,7 +1484,7 @@ local myData = require("Scripts.myData")
 								-- nextScene = "iapChar"
 								-- openParentalGate()
 								
-								-- if (myData.isFireTV or myData.isController) then 
+								-- if (myData.isTV) then 
 									-- nextScene = "iapChar"
 									-- openParentalGate()
 								-- elseif (event.y > halfH + 75) then
@@ -1901,7 +1901,7 @@ local myData = require("Scripts.myData")
 						-- items.item = display.newImageRect("Images/UI/iapMenuUnlockButtonV2.png", 340, 292 )
 					-- end
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						items.item = display.newImageRect("Images/UI/iapMenuUnlockButtonV2Sale.png", 340, 292 )
 					elseif (showingSaleIAP == true) then
 						-- items.item = display.newImageRect("Images/UI/iapMenuUnlockButtonV2Sale.png", 340, 292 )
@@ -2415,10 +2415,9 @@ local myData = require("Scripts.myData")
 		if (lockedLevels[i] == levelID and levelID ~= selectableChar and levelID ~= iapChar and levelID ~= rateChar or
 			variation == 4 and unlockedEverything == false and unlockedWeeklySub == false and unlockedMonthlySub == false and unlockedYearlySub == false and levelID > #lockedLevels + #unlockedLevels and levelID ~= selectableChar and levelID ~= iapChar and levelID ~= rateChar) then
 		
-			if (levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-4] == "true" and savedData.enablePromo == true and myData.isFireTV == false and myData.isController == false or
-					levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-3] == "true" and savedData.enablePromo == false and myData.isFireTV == false and myData.isController == false or
-					levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-3] == "true" and myData.isFireTV or 
-					levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-3] == "true" and myData.isController) then
+			if (levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-4] == "true" and savedData.enablePromo == true and myData.isTV == false or
+					levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-3] == "true" and savedData.enablePromo == false and myData.isTV == false or
+					levelID <= #lockedLevels + #unlockedLevels and iapPurchased[code-3] == "true" and myData.isTV) then
 					
 				unlockedLevels[#unlockedLevels+1] = lockedLevels[i]
 				lockedLevels[i] = 0

@@ -409,10 +409,12 @@ function cardWinHop( cardOne, cardTwo )
 			
 			if (correctNum == totalPairs) then
 			
-				if (myData.isController) then
-					Runtime:removeEventListener( "key", MatchingTap )
-				elseif (myData.isFireTV) then
-					Runtime:removeEventListener( "onFTVKey", MatchingTap )
+				if (MatchingTap) then
+					if (myData.isController) then
+						Runtime:removeEventListener( "key", MatchingTap )
+					elseif (myData.isFireTV) then
+						Runtime:removeEventListener( "onFTVKey", MatchingTap )
+					end
 				end
 			
 				Runtime:removeEventListener( "enterFrame", countTime )
@@ -484,7 +486,7 @@ function cardWinHop( cardOne, cardTwo )
 					end
 				end
 			
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					timer.performWithDelay( 100, showCursor )
 				end
 				

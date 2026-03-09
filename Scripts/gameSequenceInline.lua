@@ -27,7 +27,7 @@ function checkSequenceAnswer( event )
 												event.keyName == nil) then
 												
 		
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				transition.to( cursor, { time=100, alpha=0 } )
 				buttonsActive = false
 			end
@@ -126,7 +126,7 @@ function checkSequenceAnswer( event )
 				
 				buttonsActiveTimer = timer.performWithDelay( 150, makeButtonsActive )
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					showCursorTimer = timer.performWithDelay( 100, showCursor )
 				end
 
@@ -817,7 +817,7 @@ function AddSequenceGame()
 	
 	local function backButtonTransition()
 	
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			timer.performWithDelay( 700, makeButtonsActive )
 		else
 			makeButtonsActive()
@@ -827,7 +827,7 @@ function AddSequenceGame()
 			cards[i]:addEventListener( "touch", checkSequenceAnswer )
 		end
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 		
 			if (myData.isController) then
 				Runtime:addEventListener( "key", checkSequenceAnswer )
@@ -865,7 +865,7 @@ function AddSequenceGame()
 	cardGroup.targetX = halfW+detailsTwo.offsetX
 	cardTrans = transition.to( cardGroup, { time=700, x=halfW+detailsTwo.offsetX, transition=easing.outExpo } )
 	
-	-- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+	-- if (myData.isTV and version.appStore ~= "Chrome") then 
 	-- else
 		transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

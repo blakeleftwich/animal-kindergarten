@@ -587,7 +587,7 @@ function M.new()
 													keyName ~= "menu" or
 													event.keyName == nil) then
 		
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					transition.to( cursor, { time=100, alpha=0 } )
 					buttonsActive = false
 				end
@@ -966,7 +966,7 @@ function M.new()
     ----------------------
     -- global functions --
     ----------------------
-    -- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+    -- if (myData.isTV and version.appStore ~= "Chrome") then 
     -- else
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

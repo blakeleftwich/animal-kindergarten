@@ -907,7 +907,7 @@ function CheckForMatch()
 				transition.to(cards[chosen[3]], { delay = showCardsDelay, xScale = 1, yScale = 1, time =timeToFlip, xScale = .01, onComplete = ShowBack, transition=easing.outExpo } )
 			end
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				timer.performWithDelay( showCardsDelay+100, showCursor )
 			end
 			
@@ -938,7 +938,7 @@ function CheckForMatch()
 				transition.to( cards[chosen[3]], { time=100 , xScale = 1, yScale = 1, transition=easing.outExpo} )
 			end
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				timer.performWithDelay( 100, showCursor )
 			end
 		end
@@ -1037,7 +1037,7 @@ function MatchingTap(event)
 				print(showMeSelectOptions[1])
 				print(target.showMeCate)
 			
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					transition.to( cursor, { time=100, alpha=0 } )
 					buttonsActive = false
 				end
@@ -1379,7 +1379,7 @@ function MatchingTap(event)
 									Runtime:removeEventListener( "enterFrame", cardFloat)
 									Runtime:addEventListener( "enterFrame", cardFloat)
 									
-									if (myData.isFireTV or myData.isController) then 
+									if (myData.isTV) then 
 										timer.performWithDelay( 150, showCursor )
 									end
 								end
@@ -1669,7 +1669,7 @@ function MatchingTap(event)
 						end
 						timer.performWithDelay( 100, sendCardToFloat )
 						
-						if (myData.isFireTV or myData.isController) then 
+						if (myData.isTV) then 
 							timer.performWithDelay( 150, showCursor )
 						end
 						
@@ -2254,7 +2254,7 @@ function changeShowMeQuestion(isQuestionStart)
 	if (cardOptions.category == "numbersToNumbers") then
 		if (playingFirstPartShowMe == true) then
 			-- if (isMatchingCardsFirstPlay == true) then
-				-- if (gameplayMode == 2 or myData.isFireTV or myData.isController) then
+				-- if (gameplayMode == 2 or myData.isTV) then
 					-- playReservedChannel(pickTheCardsWithTheNumber, 11, 0) --change to "findThe"... when VO is available
 					-- questionOptions.line1 = "Pick the cards with the number " .. showMeSelectOptions[1] .. "."
 				-- else
@@ -2266,7 +2266,7 @@ function changeShowMeQuestion(isQuestionStart)
 					-- playReservedChannel(pickThe, 11, 0) --change to "findThe"... when VO is available
 					questionOptions.line1 = "Find the " .. showMeSelectOptionsPlural[1] .. "."
 				else
-				-- elseif (myData.isFireTV or myData.isController) then
+				-- elseif (myData.isTV) then
 					questionOptions.line1 = "Pick the " .. showMeSelectOptionsPlural[1] .. "."
 				-- else
 					-- playReservedChannel(touchThe, 11, 0)
@@ -2275,7 +2275,7 @@ function changeShowMeQuestion(isQuestionStart)
 			-- end
 		else
 			-- if (isMatchingCardsFirstPlay == true) then
-				-- if (gameplayMode == 2 or myData.isFireTV or myData.isController) then
+				-- if (gameplayMode == 2 or myData.isTV) then
 					-- playReservedChannel(nowPickTheCardsWithTheNumber, 11, 0)--change to "findThe"... when VO is available
 					-- questionOptions.line1 = "Now pick the cards with the number " .. showMeSelectOptions[1] .. "."
 				-- else
@@ -2287,7 +2287,7 @@ function changeShowMeQuestion(isQuestionStart)
 					-- playReservedChannel(nowPickThe, 11, 0)--change to "findThe"... when VO is available
 					questionOptions.line1 = "Now find the " .. showMeSelectOptionsPlural[1] .. "."
 				else
-				-- elseif (myData.isFireTV or myData.isController) then
+				-- elseif (myData.isTV) then
 					questionOptions.line1 = "Now pick the " .. showMeSelectOptionsPlural[1] .. "."
 				-- else
 					-- playReservedChannel(nowTouchThe, 11, 0)
@@ -2298,7 +2298,7 @@ function changeShowMeQuestion(isQuestionStart)
 	elseif (cardOptions.category == "numbersToGroups") then
 	
 	else
-		-- if (myData.isFireTV or myData.isController) then 
+		-- if (myData.isTV) then 
 	
 	
 			if (isQuestionStart == true) then
@@ -2900,7 +2900,7 @@ function AddMatchCards()
 	questionTextTwo.x = 1000
 	if (questionOptions.line1 ~= "") then
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			for k = 1, string.len( questionOptions.line1 ) - 4 do
 				
 				if (questionOptions.line1:sub(k,k+4) == "Touch") then
@@ -3003,7 +3003,7 @@ function AddMatchCards()
 	cardGroup.x = 1000
 	local function backButtonTransition()
 	
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			timer.performWithDelay( 700, makeButtonsActive )
 		else
 			makeButtonsActive()
@@ -3013,7 +3013,7 @@ function AddMatchCards()
 			cards[i]:addEventListener( "touch", MatchingTap )
 		end
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 		
 			if (myData.isController) then
 				Runtime:addEventListener( "key", MatchingTap )
@@ -3039,7 +3039,7 @@ function AddMatchCards()
 	transition.to( questionTextTwo, { time=700, x=halfW, transition=easing.outExpo } )
 	
 	
-	if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+	if (myData.isTV and version.appStore ~= "Chrome") then 
 	
 		-- timer.performWithDelay( 700, makeButtonsActive )
 	else

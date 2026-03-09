@@ -329,7 +329,7 @@ function closeParentalGate()
 		gateNumberButtons[i]:removeEventListener("touch", parentalGateTouched )
 	end
 	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		Runtime:removeEventListener( "key", trackGateCursor )
 		Runtime:removeEventListener( "axis", gateTrackCursorAxis )
 		Runtime:removeEventListener( "onFTVKey", trackGateCursor )
@@ -414,7 +414,7 @@ function openParentalGate()
 	gateCursorOffsetX = -25
 	gateCursorOffsetY = 25
 	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		currentCursorSelect = 1
 		
 		gateCursor.x = gateNumberButtons[1].x + gateCursorOffsetX
@@ -483,7 +483,7 @@ function initParentalGate()
 	
 	
 	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 	else
 		gateExitBack = display.newImageRect("Images/UI/parentalGateButton.png", 52, 52 )
 		gateExitBack.xScale, gateExitBack.yScale = 0.75, 0.75

@@ -496,7 +496,7 @@ function checkQuestionAnswer( event )
 												keyName ~= "menu" or
 												event.keyName == nil) then
 	
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				if (question == "Which one is different" and gameOptions.questions.questionType2 == "hidden object" or
 					question == "Which item is" or
 					question == "Which number is" or
@@ -620,7 +620,7 @@ function checkQuestionAnswer( event )
 				
 				buttonsActiveTimer = timer.performWithDelay( 150, makeButtonsActive )
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					showCursorTimer = timer.performWithDelay( 110, showCursor )
 				end
 
@@ -998,7 +998,7 @@ function checkQuestionAnswer( event )
 				
 					
 				
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						showCursorTimer = timer.performWithDelay( 300, showCursor )
 					
 					else
@@ -2854,7 +2854,7 @@ function AddQuestionGame()
 		-- end
 		
 		if (numAnswers > 1) then
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				if (numOrGroup == "colorItem" or numOrGroup == "shapeItem") then
 					questionText.text = "Pick all the " .. questionTwo .. " items."
 				else
@@ -2950,7 +2950,7 @@ function AddQuestionGame()
 	
 	local function backButtonTransition()
 	
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			timer.performWithDelay( 700, makeButtonsActive )
 		else
 			makeButtonsActive()
@@ -2981,7 +2981,7 @@ function AddQuestionGame()
 		end
 	
 		
-		-- if (myData.isFireTV or myData.isController) then 
+		-- if (myData.isTV) then 
 			-- timer.performWithDelay( 700, makeButtonsActive )
 		-- else
 			-- transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo, onComplete=makeButtonsActive } )
@@ -3036,7 +3036,7 @@ function AddQuestionGame()
 	cardGroup.targetX = halfW+detailsTwo.offsetX
 	cardTrans = transition.to( cardGroup, { time=700, x=halfW+detailsTwo.offsetX, transition=easing.outExpo } )
 
-	-- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+	-- if (myData.isTV and version.appStore ~= "Chrome") then 
 	-- else
 		transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

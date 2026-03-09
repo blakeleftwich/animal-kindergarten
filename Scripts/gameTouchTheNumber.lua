@@ -73,7 +73,7 @@ function M.new()
 			if (touchTheNumberOptions[touchTheNumberOption].mode == "teach" or touchTheNumberOptions[touchTheNumberOption].mode == "teachChoose") then
 				
 				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then
+					if (myData.isTV) then
 						playReservedChannel( pickThe, 28, 0 )
 					else
 						playReservedChannel( touchThe, 28, 0 )
@@ -98,7 +98,7 @@ function M.new()
 				end
 				
 				
-				if (myData.isFireTV or myData.isController) then
+				if (myData.isTV) then
 					questionText.text = "Pick the " .. numberWords[numberCount+1] .. "."
 					
 					
@@ -225,7 +225,7 @@ function M.new()
 					cursorTransition2 = nil
 				end
 		
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					-- transition.to( cursor, { time=100, alpha=0 } )
 					buttonsActive = false
 				end
@@ -259,7 +259,7 @@ function M.new()
 			
 				if (target.id == numberCount or touchTheNumberOptions[touchTheNumberOption].mode == "teach" or touchTheNumberOptions[touchTheNumberOption].mode == "teachChoose") then
 			
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						transition.to( cursor, { time=100, alpha=0 } )
 					end
 			
@@ -427,7 +427,7 @@ function M.new()
 								target.initScale = target.origScale
 								transition.to( target, { time=300 , x = target.origTouchX, y = target.origTouchY, rotation = target.origR, xScale = target.origScale, yScale = target.origScale, transition=easing.inOutExpo } )
 								
-								-- if (myData.isFireTV or myData.isController) then
+								-- if (myData.isTV) then
 									questionText.text = "Now pick the " .. numberWords[numberCount+1] .. "."
 				
 									
@@ -516,7 +516,7 @@ function M.new()
 									
 								end
 								
-								if (myData.isFireTV or myData.isController) then 
+								if (myData.isTV) then 
 									cursorTransition = timer.performWithDelay( 700, showCursor )
 								end
 							
@@ -936,7 +936,7 @@ function M.new()
 			
 		end
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			cursorTransition = timer.performWithDelay( 700, showCursor )
 		end
 		
@@ -1003,7 +1003,7 @@ function M.new()
 					
 					local function startTouchTheVO()
 					
-						if (myData.isFireTV or myData.isController) then
+						if (myData.isTV) then
 							questionText.text = "Pick the " .. numberWords[numberCount+1] .. "."
 						else
 							questionText.text = "Touch the " .. numberWords[numberCount+1] .. "."
@@ -1059,7 +1059,7 @@ function M.new()
 							
 						end
 						
-						if (myData.isFireTV or myData.isController) then 
+						if (myData.isTV) then 
 							cursorTransition = timer.performWithDelay( 1201, showCursor )
 						end
 					end
@@ -1528,7 +1528,7 @@ function M.new()
 			
 			end
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 			else
 				if (touchTheNumberOptions[touchTheNumberOption].randomOrder == true) then
 					randomizeTable( gameNumbers )
@@ -1733,7 +1733,7 @@ function M.new()
     ----------------------
     -- global functions --
     ----------------------
-    -- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+    -- if (myData.isTV and version.appStore ~= "Chrome") then 
     -- else
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

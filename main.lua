@@ -119,8 +119,9 @@ if ((version.appStore == "Amazon" and string.sub(sysModel,1,3) == "AFT") or vers
 	require "Scripts.RGEasyFTV"
 elseif (system.getInfo ("model") == "Apple TV" or version.appStore == "Ouya" or version.appStore == "Chrome") then
 	myData.isController = true
-	
+
 end
+myData.isTV = myData.isTV
 
 -- xml = require( "Scripts.xml" ).newParser()
 --cardPairsXML = xml:loadFile( "cardPairs.xml" )
@@ -750,7 +751,7 @@ function pop(event)
 				keyName ~= "menu" or
 				event.keyName == nil) then
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 				else
 					display.getCurrentStage():setFocus( event.target )
 					event.target.isFocus = true
@@ -791,7 +792,7 @@ function pop(event)
 	
 	if event.phase == "ended" or event.phase == "up" then
 		-- reset global touch focus
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 		else
 			display.getCurrentStage():setFocus( nil )
 			event.target.isFocus = nil

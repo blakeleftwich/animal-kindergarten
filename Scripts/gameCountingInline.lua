@@ -29,7 +29,7 @@ function CheckCounting( event )
 												event.keyName == nil) then
 											
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				-- transition.to( cursor, { time=100, alpha=0 } )
 			end
 			buttonsActive = false
@@ -239,7 +239,7 @@ function CheckCounting( event )
 						question ~= "PickEvenOdd" and question ~= "AllGreaterLessThan" and currentCountingNumber ~= startNumber + ((row*column)*countingOptions.skip) - countingOptions.skip) then
 					timer.performWithDelay( 100, sendCardToFloat )
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						timer.performWithDelay( 150, showCursor )
 					else
 						timer.performWithDelay( 150, makeButtonsActive )
@@ -306,7 +306,7 @@ function CheckCounting( event )
 				target:removeEventListener( "onFTVKey", CheckCounting )
 				
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					transition.to( cursor, { time=100, alpha=0 } )
 				end
 				
@@ -347,7 +347,7 @@ function CheckCounting( event )
 				end
 				
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 				else
 					if (cursorTimer) then
 						timer.cancel( cursorTimer )
@@ -704,7 +704,7 @@ function AddCountingGame()
 			questionText.text = questionOptions.line1
 			questionTextTwo.text = questionOptions.line2
 		else
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				questionText.text = "Pick the numbers in order."
 			else
 				questionText.text = "Touch the numbers in order."
@@ -949,7 +949,7 @@ function AddCountingGame()
 	
 	local function backButtonTransition()
 	
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			timer.performWithDelay( 700, makeButtonsActive )
 		else
 			makeButtonsActive()
@@ -959,7 +959,7 @@ function AddCountingGame()
 			cards[i]:addEventListener( "touch", CheckCounting )
 		end
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 		
 			if (myData.isController) then
 				Runtime:addEventListener( "key", CheckCounting )
@@ -977,7 +977,7 @@ function AddCountingGame()
 	transition.to( questionText, { time=700, x=halfW, transition=easing.outExpo } )
 	transition.to( questionTextTwo, { time=700, x=halfW, transition=easing.outExpo } )
 	
-	-- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+	-- if (myData.isTV and version.appStore ~= "Chrome") then 
 	-- else
 		transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

@@ -8,9 +8,8 @@ function showCursor()
 		--if (gameplayMode == 4 and system.getInfo ( "model" ) ~= "AFTB" and version.appStore ~= "Amazon FTV" or
 		--	gameplayMode == 4 and system.getInfo ( "model" ) == "AFTB" and currentCountingNumber == startNumber or
 		--	gameplayMode == 4 and version.appStore == "Amazon FTV" and currentCountingNumber == startNumber) then
-		if ((gameplayMode == 4 and myData.isFireTV == false and myData.isController == false) or 
-			( myData.isFireTV and gameplayMode == 4 and currentCountingNumber == startNumber ) or
-			( myData.isController and gameplayMode == 4 and currentCountingNumber == startNumber ) ) then 
+		if ((gameplayMode == 4 and myData.isTV == false) or
+			( myData.isTV and gameplayMode == 4 and currentCountingNumber == startNumber ) ) then
 			
 			
 			
@@ -44,9 +43,8 @@ function showCursor()
 	--if (gameplayMode == 4 and system.getInfo ( "model" ) ~= "AFTB" and version.appStore ~= "Amazon FTV" or
 	--		gameplayMode == 4 and system.getInfo ( "model" ) == "AFTB" and currentCountingNumber == startNumber or
 	--		gameplayMode == 4 and version.appStore == "Amazon FTV" and currentCountingNumber == startNumber) then
-	if ((gameplayMode == 4 and myData.isFireTV == false and myData.isController == false) or 
-	( myData.isFireTV and gameplayMode == 4 and currentCountingNumber == startNumber ) or
-	( myData.isController and gameplayMode == 4 and currentCountingNumber == startNumber) )then  	
+	if ((gameplayMode == 4 and myData.isTV == false) or
+	( myData.isTV and gameplayMode == 4 and currentCountingNumber == startNumber ) )then
 		
 		
 		for i = 1, #cards do

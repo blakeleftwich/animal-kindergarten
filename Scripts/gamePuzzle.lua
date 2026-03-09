@@ -568,7 +568,7 @@ function M.new()
 	
 	
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			for i = 1, #puzzlePieces do
 			
 				if (puzzlePieces[i] == puzzlePieces[currentCardSelected]) then
@@ -681,7 +681,7 @@ function M.new()
 				newMaskY = itemY + (currentItem[2].maskYPos * currentItem.initScale) + currentItem.offsetPosY
 			end
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				Particles:newEmitter(explosions,"fireworks", "Images/starParticle.png", 32, 32, 10, cursor.x, cursor.y, -4, 4, -16, 6, 252,234,27)--altRgb[1], altRgb[2], altRgb[3])
 			else
 				Particles:newEmitter(explosions,"fireworks", "Images/starParticle.png", 32, 32, 10, newMaskX, newMaskY, -4, 4, -16, 6, 252,234,27)--altRgb[1], altRgb[2], altRgb[3])
@@ -799,7 +799,7 @@ function M.new()
 				
 			else
 			
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					
 					local function scatterNumbers()
 					
@@ -898,7 +898,7 @@ function M.new()
 		end
 		
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			transition.to( currentItem, { delay = 0, time=350 , x = currentItem.slotX, y = currentItem.slotY, xScale = currentItem.initScale, yScale = currentItem.initScale, rotation = 0, transition=easing.outExpo } )
 			timer.performWithDelay( 351, finishTransToSlot )
 		else
@@ -1090,7 +1090,7 @@ function M.new()
 													keyName ~= "menu" or
 													event.keyName == nil) then
 		
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					-- transition.to( cursor, { time=100, alpha=0 } )
 					buttonsActive = false
 				end
@@ -1099,7 +1099,7 @@ function M.new()
 				
 				if (puzzlePieces[currentIndex].id == puzzlePieces[currentCardSelected].id) then
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						if (cursorTimer) then
 							timer.cancel( cursorTimer )
 							cursorTimer = nil
@@ -1278,7 +1278,7 @@ function M.new()
 				local randomTime = math.random(1400,1600)-randomDelay
 				-- use
 				
-				if (k ~= currentIndex and myData.isFireTV or k ~= currentIndex and myData.isController) then
+				if (k ~= currentIndex and myData.isTV) then
 					transition.to( puzzlePieces[k], {delay = randomDelay, time=randomTime-randomDelay, alpha = 1, x = screenEdgeX + 100, y = puzzlePieces[k].initY, xScale = puzzlePiecePositions[#puzzlePieces][k][3], yScale = puzzlePiecePositions[#puzzlePieces][k][3], rotation = puzzlePiecePositions[#puzzlePieces][k][4], transition=easing.inOutQuad } )
 				else
 					transition.to( puzzlePieces[k], {delay = randomDelay, time= randomTime, x = newX, y = newY, xScale = puzzlePiecePositions[#puzzlePieces][k][3], yScale = puzzlePiecePositions[#puzzlePieces][k][3], rotation = puzzlePiecePositions[#puzzlePieces][k][4], transition=easing.inOutQuad } )
@@ -1317,7 +1317,7 @@ function M.new()
 				
 					local function startNumFloat()
 						
-						if (myData.isFireTV or myData.isController) then 
+						if (myData.isTV) then 
 							for i = 1, #puzzlePieces do
 								if (i ~= currentIndex) then
 									puzzlePieces[i].alpha = 0
@@ -1367,7 +1367,7 @@ function M.new()
 							
 						end
 						
-						if (myData.isFireTV or myData.isController) then 
+						if (myData.isTV) then 
 							cursorTransition = timer.performWithDelay( 700, showCursor )
 						end
 						
@@ -1849,7 +1849,7 @@ function M.new()
     ----------------------
     -- global functions --
     ----------------------
-    -- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+    -- if (myData.isTV and version.appStore ~= "Chrome") then 
     -- else
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

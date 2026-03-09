@@ -6,31 +6,18 @@ local _TOP, _BTM, _RHT, _LFT = base._TOP, base._BTM, base._RHT, base._LFT
 local _WIDTH, _HEIGHT = base._WIDTH, base._HEIGHT
 local myData = require("Scripts.myData")
 
--------------------------------------------------
--------------------------------------------------
--------------------------------------------------
--- New Game object function
--------------------------------------------------
 function M.new()
-    ----------------------
-    -- global variables --
-    ----------------------
-    -- local levelDetails = levelDetails["level" .. level]
     local levelOptions = gameDetails["level" .. level]
     local gameOptions  = gameLevelDetails
     
 	
-	
-    -- generate objects
     local this = display.newGroup()
     this.isLive = true
     this.isTouchEnable = true
     
-    -- copy game details...
     local tblQuestion = gameOptions.questions
 	local tblPuzzle = gameOptions.puzzle
 	local tblCards = gameOptions.cards
-	-- local equationOptions = gameOptions.equations
 	local gameGroup = display.newGroup()
 	local slotsGroup = display.newGroup()
 	local choicesGroup = display.newGroup()
@@ -59,7 +46,7 @@ function M.new()
 	local puzzleRotationRate = 35 --higher number takes longer to rotate, 60 is nice and subtle
 	
 	local fireTVMultiCardOption = false
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		if (tblPuzzle.imageSet == "Shapes" or tblPuzzle.imageSet == "ShapesDifficult") then
 		else
 			fireTVMultiCardOption = true
@@ -114,9 +101,6 @@ function M.new()
 		end
 	end
 	
-	-- if (tblPuzzle.turnOffEndVO) then
-		-- turnOffEndVO = tblPuzzle.turnOffEndVO
-	-- end
 	
 	local numToPutInSlots
 	local totalNumToPutInSlots
@@ -130,21 +114,9 @@ function M.new()
 	totalNumToPutInSlots = numToPutInSlots
 	
 	
-	-- if (numSlots == 3) then
-		-- incorrectChoices = math.random( 0, 1 )
-	-- elseif (numSlots == 2) then
-		-- incorrectChoices = 2
-	-- else
-		-- incorrectChoices = math.random( 0, 2 )
-	-- end
-	
-	-- startRange, endRange = 11, 11
-	
 	local slotOptions, choiceOptions
 	local slotYOffset, choiceYOffset
 	local slotNumbers, sharkNumbers
-	
-	
 	
 	
 	if (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsClassic" or tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "CardsPutInOrderClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult" or tblPuzzle.imageSet == "CardsEquation") then
@@ -157,7 +129,6 @@ function M.new()
 		print(tblPuzzle.maxSlotNum)
 	
 		sharkNumbers = {
-			-- tScale = teach number scale, cScale = choose number scale
 			{ id = 1, w = 88, h = 180, tScale = 1, cScale = 0.45 },
 			{ id = 2, w = 136, h = 172, tScale = 1, cScale = 0.45 },
 			{ id = 3, w = 128, h = 176, tScale = 1, cScale = 0.45 },
@@ -183,7 +154,6 @@ function M.new()
 		}
 		
 		slotNumbers = {
-			-- tScale = teach number scale, cScale = choose number scale
 			{ id = 1, w = 92, h = 184, scale = 0.5 },
 			{ id = 2, w = 140, h = 176, scale = 0.5 },
 			{ id = 3, w = 132, h = 180, scale = 0.5 },
@@ -201,7 +171,6 @@ function M.new()
 	else
 	
 		sharkNumbers = {
-			-- tScale = teach number scale, cScale = choose number scale
 			{ id = 1, w = 88, h = 180, tScale = 1.05, cScale = 0.45 },
 			{ id = 2, w = 136, h = 172, tScale = 1.05, cScale = 0.45 },
 			{ id = 3, w = 128, h = 176, tScale = 1.05, cScale = 0.45 },
@@ -217,7 +186,6 @@ function M.new()
 		}
 	
 		slotNumbers = {
-			-- tScale = teach number scale, cScale = choose number scale
 			{ id = 1, w = 92, h = 184, scale = 0.5 },
 			{ id = 2, w = 140, h = 176, scale = 0.5 },
 			{ id = 3, w = 132, h = 180, scale = 0.5 },
@@ -233,230 +201,80 @@ function M.new()
 		}
 	
 	end
-	
-	
-	if (tblPuzzle.imageSet == "CardsClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult") then
-	
-		slotYOffset = -85
-		choiceYOffset = 38
-	
-		slotOptions = {
-			-- spacing, scale per num slots
-			{ 15, 1 },
-			{ 20, 1 },
-			{ 4, 1.75 },
-			{ 5, 1.6},
-			{ 5, 1 }, -- was 15
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-		
-		if (tblPuzzle.imageSet == "CardsPutInOrderClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult") then
-			choiceOptions = {
-				-- spacing, scale per num choices
-				{ -9, 1 },
-				{ -9, 1.2 },
-				{ -9, 1.2 },
-				{ -9, 1.2 },
-				{ -9, 1.2 },
-				{ -9, 1.2 },
-				{ -9, 0.9 },
-				{ -9, 0.9 },
-				{ -9, 0.9 },
-				{ -9, 0.9 },
-			}
-		else
-			choiceOptions = {
-				-- spacing, scale per num choices
-				{ 10, 1 },
-				{ 10, 1.2 },
-				{ 10, 1.2 },
-				{ 10, 1.2 },
-				{ 10, 1.2 },
-				{ 10, 1.2 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-			}
-		end
-	
-	elseif (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult" or tblPuzzle.imageSet == "CardsEquation") then
-	
-		slotYOffset = -92
-		choiceYOffset = 25
-	
-		slotOptions = {
-			-- spacing, scale per num slots
-			{ 15, 1 },
-			{ 20, 1 },
-			{ 4, 1.75 },
-			{ 5, 1.6},
-			{ 5, 1 }, -- was 15
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-		choiceOptions = {
-			-- spacing, scale per num choices
-			{ 15, 1 },
-			{ 20, 1.33 },
-			{ 15, 1.2 },
-			{ 10, 1.33 },
-			{ 15, 1 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-	
-	elseif (tblPuzzle.imageSet == "Shapes" or tblPuzzle.imageSet == "ShapesDifficult") then
-	
-		slotYOffset = -97
-		choiceYOffset = 23
-	
-		slotOptions = {
-			-- spacing, scale per num slots
-			{ 15, 1 },
-			{ 20, 1.33 },
-			{ 15, 1.33 },
-			{ 10, 1.33 },
-			{ 15, 1 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-		choiceOptions = {
-			-- spacing, scale per num choices
-			{ 15, 1 },
-			{ 20, 1.33 },
-			{ 15, 1.33 },
-			{ 10, 1.33 },
-			{ 10, 1.33 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-	
-	elseif (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult" or 
-			tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult") then
-	
-		if (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult") then
-			slotYOffset = -90 -- Tweak slot Y pos
-			choiceYOffset = 30
-		elseif (tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult") then
-			slotYOffset = -85
-			choiceYOffset = 37
-		end
-	
-	--tweaked these for build the number game 1/10/2019 -Blake
-	
-		slotOptions = {
-			-- spacing, scale per num slots
-			{ 15, 1 },
-			{ 26, 1 },
-			{ 26, 1 },
-			{ 26, 1 },
-			{ 15, 1 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-		
-		if (myData.isFireTV and tblPuzzle.imageSet == "CardsNum" or 
-						myData.isController and tblPuzzle.imageSet == "CardsNum" or 
-						myData.isFireTV and tblPuzzle.imageSet == "CardsNumDifficult" or 
-						myData.isController and tblPuzzle.imageSet == "CardsNumDifficult") then
-						
-			
-			choiceOptions = {
-				-- spacing, scale per num choices
-				{ -3, 1 },
-				{ -3, 1 },
-				{ -3, 1 },
-				{ -3, 1 },
-				{ -3, 1 },
-				{ -3, 0.9 },
-				{ -3, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-			}
-		
-		else
-		
-		
-			choiceOptions = {
-				-- spacing, scale per num choices
-				{ 6, 1 },
-				{ 6, 1 },
-				{ 6, 1 },
-				{ 6, 1 },
-				{ 6, 1 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-				{ 10, 0.9 },
-			}
-		end
-		
+
+
+	local layoutConfig = {
+		CardsClassic = { slotY = -85, choiceY = 38,
+			slots = {{ 15, 1 },{ 20, 1 },{ 4, 1.75 },{ 5, 1.6},{ 5, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 10, 1 },{ 10, 1.2 },{ 10, 1.2 },{ 10, 1.2 },{ 10, 1.2 },{ 10, 1.2 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		CardsPutInOrderClassic = { slotY = -85, choiceY = 38,
+			slots = {{ 15, 1 },{ 20, 1 },{ 4, 1.75 },{ 5, 1.6},{ 5, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ -9, 1 },{ -9, 1.2 },{ -9, 1.2 },{ -9, 1.2 },{ -9, 1.2 },{ -9, 1.2 },{ -9, 0.9 },{ -9, 0.9 },{ -9, 0.9 },{ -9, 0.9 }}
+		},
+		CardsPutInOrderClassicDifficult = { slotY = -92, choiceY = 25,
+			slots = {{ 15, 1 },{ 20, 1 },{ 4, 1.75 },{ 5, 1.6},{ 5, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.2 },{ 10, 1.33 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		Cards = { slotY = -92, choiceY = 25,
+			slots = {{ 15, 1 },{ 20, 1 },{ 4, 1.75 },{ 5, 1.6},{ 5, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.2 },{ 10, 1.33 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		CardsPutInOrder = { slotY = -92, choiceY = 25,
+			slots = {{ 15, 1 },{ 20, 1 },{ 4, 1.75 },{ 5, 1.6},{ 5, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.2 },{ 10, 1.33 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		CardsEquation = { slotY = -92, choiceY = 25,
+			slots = {{ 15, 1 },{ 20, 1 },{ 4, 1.75 },{ 5, 1.6},{ 5, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.2 },{ 10, 1.33 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		Shapes = { slotY = -97, choiceY = 23,
+			slots = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.33 },{ 10, 1.33 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.33 },{ 10, 1.33 },{ 10, 1.33 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		ShapesDifficult = { slotY = -97, choiceY = 23,
+			slots = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.33 },{ 10, 1.33 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 15, 1 },{ 20, 1.33 },{ 15, 1.33 },{ 10, 1.33 },{ 10, 1.33 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		Num = { slotY = -90, choiceY = 30,
+			slots = {{ 15, 1 },{ 26, 1 },{ 26, 1 },{ 26, 1 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		NumDifficult = { slotY = -90, choiceY = 30,
+			slots = {{ 15, 1 },{ 26, 1 },{ 26, 1 },{ 26, 1 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		CardsNum = { slotY = -85, choiceY = 37,
+			slots = {{ 15, 1 },{ 26, 1 },{ 26, 1 },{ 26, 1 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choicesFireTV = {{ -3, 1 },{ -3, 1 },{ -3, 1 },{ -3, 1 },{ -3, 1 },{ -3, 0.9 },{ -3, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+		CardsNumDifficult = { slotY = -85, choiceY = 37,
+			slots = {{ 15, 1 },{ 26, 1 },{ 26, 1 },{ 26, 1 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choices = {{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 6, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+			choicesFireTV = {{ -3, 1 },{ -3, 1 },{ -3, 1 },{ -3, 1 },{ -3, 1 },{ -3, 0.9 },{ -3, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+		},
+	}
+	local defaultLayout = { slotY = -80, choiceY = 30,
+		slots = {{ 15, 1 },{ 26, 1 },{ 26, 1 },{ 26, 1 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }},
+		choices = {{ 15, 1 },{ 15, 1 },{ 15, 1 },{ 15, 1 },{ 15, 1 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 },{ 10, 0.9 }}
+	}
+
+	local layout = layoutConfig[tblPuzzle.imageSet] or defaultLayout
+	slotYOffset = layout.slotY
+	choiceYOffset = layout.choiceY
+	slotOptions = layout.slots
+	if (layout.choicesFireTV and (myData.isTV)) then
+		choiceOptions = layout.choicesFireTV
 	else
-	
-		slotYOffset = -90 + 10
-		choiceYOffset = 20 + 10
-	
-	--tweaked these for build the number game 1/10/2019 -Blake
-	
-		slotOptions = {
-			-- spacing, scale per num slots
-			{ 15, 1 },
-			{ 26, 1 },
-			{ 26, 1 },
-			{ 26, 1 },
-			{ 15, 1 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-		choiceOptions = {
-			-- spacing, scale per num choices
-			{ 15, 1 },
-			{ 15, 1 },
-			{ 15, 1 },
-			{ 15, 1 },
-			{ 15, 1 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-			{ 10, 0.9 },
-		}
-	
+		choiceOptions = layout.choices
 	end
-	
+
 	local rewardAnims = { 
 		{ id = "shake", particles = "", duration = 4000, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } }, 
 		{ id = "spin", particles = "", duration = 700, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } },
 		{ id = "balloon", particles = "", duration = 4000, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } },
-		-- { id = "float", particles = "", duration = 4000, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } },
 	}
-	
-	
 	
 	
 	if (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsClassic" or tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "CardsPutInOrderClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult") then
@@ -558,7 +376,6 @@ function M.new()
 		end
 		
 	
-	
 	elseif (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult" or 
 			tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult") then
 		
@@ -610,28 +427,10 @@ function M.new()
 		for i = startRange, endRange do
 			randomNumbersTable[#randomNumbersTable+1] = i
 		end
-		-- randomizeTable( randomNumbersTable )
-		-- randomizeTable( randomNumbersTable )
 	
 		for i = 1, numSlots do
 			
-			-- local numChoice
-			-- local numberRepeated = false
-			-- repeat
-				-- numberRepeated = false
 				
-				-- numChoice = math.random( startRange, endRange )
-				
-				-- for k = #numberOptions, 1, -1 do
-					-- if (numChoice == numberOptions[k]) then
-						-- numberRepeated = true
-					-- end
-				-- end
-				
-			-- until numberRepeated == false
-		
-			-- numberOptions[#numberOptions+1] = numChoice
-			
 			numberOptions[#numberOptions+1] = randomNumbersTable[i]
 			
 		end
@@ -660,7 +459,6 @@ function M.new()
 														numChoice >= numberOptions[1] - answerRange
 		
 		
-			
 			numberOptions[#numberOptions+1] = numChoice
 		
 		
@@ -696,7 +494,6 @@ function M.new()
 															numChoice >= numberOptions[blankSpotIndex] - (answerRange * placeMatch)
 			
 			
-				
 				numberOptions[#numberOptions+1] = numChoice
 			
 			else
@@ -734,25 +531,6 @@ function M.new()
 			tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult") then
 	
 	
-			-- local randomNumbersTable = {}
-			-- if (endRange - startRange + 1 <= numSlots) then
-				-- for i = startRange-1, endRange+1 do
-					-- if (i > 0 and i < 11) then
-						-- randomNumbersTable[#randomNumbersTable+1] = i
-					-- end
-				-- end
-			-- else
-				-- for i = startRange, endRange do
-					-- if (i > 0 and i < 11) then
-						-- randomNumbersTable[#randomNumbersTable+1] = i
-					-- end
-				-- end
-			-- end
-			-- randomizeTable( randomNumbersTable )
-			-- randomizeTable( randomNumbersTable )
-			
-			-- numberOptions[#numberOptions+1] = randomNumbersTable[i]
-			
 			local numChoice
 			local numberRepeated = false
 			repeat
@@ -769,7 +547,6 @@ function M.new()
 			until numberRepeated == false and numChoice > 0 and numChoice < 10
 		
 		
-			
 			numberOptions[#numberOptions+1] = numChoice
 		
 		else
@@ -824,11 +601,7 @@ function M.new()
 		end
 		
 		
-		
 	end
-	
-	
-	
 	
 	
 	function readPuzzleSlotsVO()
@@ -871,9 +644,6 @@ function M.new()
 			elseif (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult" or 
 					tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult") then
 				
-				-- if (isPutNumTogetherFirstPlay == true) then
-					-- playReservedChannel( putTheNumberBack, currentGameChannel, 0 )
-				-- else
 				
 					local randomSound = math.random( 1, 2 )
 					if (randomSound == 1) then
@@ -911,7 +681,6 @@ function M.new()
 					end
 					timerNumVO = timer.performWithDelay( 1100, buildNumVO )
 				
-				-- end
 				
 			else
 			
@@ -923,8 +692,6 @@ function M.new()
 						playReservedChannel( canPutBackNum, 28, 0 )
 					elseif (randomSound == 2) then
 						playReservedChannel( putTheNumbersBelong, 28, 0 )
-					-- elseif (randomSound == 3) then
-						-- playReservedChannel( letsDoIt, currentGameChannel, 0 )
 					end
 				end
 			end
@@ -932,9 +699,6 @@ function M.new()
 	
 	end
 	
-	---------------------------------------    
-    -- update function
-    ---------------------------------------  
 	function this.enterFrame(e)
 	
 		if (currentItem and currentItem ~= 0) then
@@ -974,7 +738,7 @@ function M.new()
 			end
 		end
 		
-		if (showSlotBG == true and myData.isFireTV or showSlotBG == true and myData.isController) then 
+		if (showSlotBG == true and myData.isTV) then
 			
 			for i = 1, #gameSlots do
 			
@@ -992,9 +756,7 @@ function M.new()
 					end
 				end
 			
-				-- if (cursor.alpha > 0) then
 					
-				-- end
 			end
 		end
 	
@@ -1035,9 +797,6 @@ function M.new()
 	
 	end
 	
-    ---------------------------------------    
-    -- touch function
-    ---------------------------------------  
 
 	local function checkSlot( currentItem, currentSlot )
 		
@@ -1058,20 +817,6 @@ function M.new()
 		audio.stop( 28 )
 		audio.stop( 29 )
 	
-		-- audio.stop( sAudio.gameInstructions1.c )
-		-- audio.stop( sAudio.gameInstructions2.c )
-		-- audio.stop( sAudio.gameInstructions3.c )
-		
-		
-		-- playReservedChannel( gameSounds.bubblesSmallSound, gameSoundFXCurr, sAudio.gameSoundFX1.l, "sound" )
-
-		-- gameSoundFXCurr = gameSoundFXCurr + 1
-		-- if (gameSoundFXCurr > sAudio.gameSoundFX3.c) then
-			-- gameSoundFXCurr = sAudio.gameSoundFX1.c
-		-- end
-		
-		-- local slotX, slotY = currentSlot:localToContent( 0, 0 )
-		-- Particles:newEmitter(explosionsGroup,"bubbles", "Images/Particles/sharkBubble.png", 48, 48, 8, slotX, slotY, -3, 3, -2, 4, 255,255,255, math.random())
 		
 		currentItem.inSlot = true
 		currentSlot.inSlot = true
@@ -1090,22 +835,11 @@ function M.new()
 				currentItem[1].alpha = 0
 			end
 			
-			-- slotsGroup:insert( currentItem )
-			-- currentItem.x = currentItem.x + (choicesGroup.x - slotsGroup.x)
-			-- currentItem.y = currentItem.y + (choicesGroup.y - slotsGroup.y)
-			
-			
-			-- transition.to( currentItem, { delay = 0, time=50 , x = currentSlot.x - (choicesGroup.x - slotsGroup.x), y = currentSlot.y - (choicesGroup.y - slotsGroup.y), xScale = currentSlot.xScale, yScale = currentSlot.yScale, rotation = currentSlot.rotation, transition=easing.inExpo } )
-			
-			-- if (myData.isFireTV or myData.isController) then 
-			
-			
 			
 			if (tblPuzzle.imageSet ~= "Cards" and tblPuzzle.imageSet ~= "CardsClassic" and tblPuzzle.imageSet ~= "CardsPutInOrder" and tblPuzzle.imageSet ~= "CardsPutInOrderClassic" and tblPuzzle.imageSet ~= "CardsPutInOrderClassicDifficult" and tblPuzzle.imageSet ~= "CardsEquation") then
 				currentItem.origScale = currentSlot.xScale
 			else
 				
-				-- currentItem.origScale = currentItem.initScale
 			end
 			
 			local function finishPoppingOnSlot()
@@ -1122,7 +856,6 @@ function M.new()
 			transition.to( currentItem, { delay = 100, time=50 , xScale = currentItem.origScale, yScale = currentItem.origScale, transition=easing.outExpo, onComplete = finishPoppingOnSlot} )
 
 			
-			-- currentSlot:removeEventListener("touch", numberTouched)
 			currentSlot:toFront()
 			
 			
@@ -1155,13 +888,6 @@ function M.new()
 			if savedData.enableSounds == true then
 			
 				local tempSayOver100 = false
-				
-				-- for i = #gameNumbers, 1, -1 do
-					-- if (type(gameNumbers[i].id) ~= "string" and gameNumbers[i].id >= 100) then
-						-- tempSayOver100 = true
-					-- end
-				-- end
-				
 				
 				
 				if (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult" or 
@@ -1208,13 +934,9 @@ function M.new()
 						questionAudioTimer = nil
 					end
 					
-					-- Tweak time between number and its place value
 					questionAudioTimer = timer.performWithDelay( 700, partFiveAudio )
 					
 					
-				
-					
-			
 				elseif (tblPuzzle.imageSet == "Shapes" or tblPuzzle.imageSet == "ShapesDifficult") then
 					playReservedChannel( gameSounds[shapeSets[currentItem.id].VO], currentGameChannel, 0 )
 				elseif (tblPuzzle.imageSet == "Num" and currentItem.id == 0 or 
@@ -1238,14 +960,7 @@ function M.new()
 					
 					elseif (tempSayOver100 == true) then
 					
-						-- local overHundredSound
-						-- repeat
-							-- overHundredSound = math.random( 1, #overHundredSounds )
-						-- until prevOverHundredSound ~= overHundredSound
-						-- prevOverHundredSound = overHundredSound
 					
-						-- playReservedChannel(overHundredSounds[ overHundredSound ], 29, 0)
-						
 					elseif (currentItem.id <= 100) then
 						playReservedChannel( gameNumSounds[currentItem.id], 29, 0 )
 					else
@@ -1301,13 +1016,6 @@ function M.new()
 					end
 				end
 			
-				-- if savedData.enableSounds == true then
-					-- playReservedChannel(shortClapSound, currOtherMainChannel, 0)
-					-- currOtherMainChannel = currOtherMainChannel + 1
-					-- if (currOtherMainChannel > 17) then
-						-- currOtherMainChannel = 15
-					-- end
-				-- end
 			
 				if (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult" or 
 					tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult") then
@@ -1317,17 +1025,13 @@ function M.new()
 					isPutNumOrderFirstPlay = false
 				end
 			
-				-- local randomRewardVO = math.random( 1, #randomRewardSounds )
 				
-				-- playReservedChannel( gameSounds[randomRewardSounds[randomRewardVO]], sAudio.gameReward.c, sAudio.gameReward.l, "sound" )
-		
 				if savedData.enableSounds == true then
 					if (tblPuzzle.imageSet == "Num" or 
 							tblPuzzle.imageSet == "NumDifficult" or 
 							tblPuzzle.imageSet == "CardsNum" or 
 							tblPuzzle.imageSet == "CardsNumDifficult") then
 						
-						-- playReservedChannel( gameNumSounds[puzzleNum], currentGameChannel, 0 )
 						
 						if (puzzleNum <= 100) then
 							playReservedChannel( gameNumSounds[puzzleNum], currentGameChannel, 0 )
@@ -1352,15 +1056,12 @@ function M.new()
 							questionAudioTimer = timer.performWithDelay( 900, partFiveAudio )
 							
 						end
-					-- else
-						-- playReservedChannel( gameNumSounds[currentItem.id], currentGameChannel, 0 )
 					end
 					currentGameChannel = currentGameChannel + 1
 					if (currentGameChannel > 25) then
 						currentGameChannel = 20
 					end
 				end
-				
 				
 				
 				local function hideGameScreen()
@@ -1381,9 +1082,6 @@ function M.new()
 						gameGroup:insert( choicesGroup )
 					end
 					
-					-- for k = 1, #gameNumbers do
-						-- gameGroup:insert(gameNumbers[k])
-					-- end
 					
 					for k = 1, #gameNumbers do
 						transition.to( gameNumbers[k], { time=700, alpha=0, transition=easing.outExpo } )
@@ -1406,7 +1104,6 @@ function M.new()
 				end
 				
 		
-				
 				if (tblPuzzle.imageSet == "Cards" and turnOffEndVO ~= true or tblPuzzle.imageSet == "CardsClassic" and turnOffEndVO ~= true) then
 				
 					local function readNumbersInOrder()
@@ -1485,7 +1182,6 @@ function M.new()
 										currentGameChannel = 20
 									end
 								end
-								-- playReservedChannel( gameSounds[randomRewardSounds[randomRewardVO]], sAudio.gameReward.c, sAudio.gameReward.l, "sound" )
 					
 								local tempNumGameSlots = #gameSlots-1
 								
@@ -1511,7 +1207,6 @@ function M.new()
 								end
 								
 								
-								
 								rewardTimer = timer.performWithDelay( 1200, hideGameScreen )
 							
 							end
@@ -1532,20 +1227,13 @@ function M.new()
 								
 									if (gameNumbers[i].id == gameSlots[m].id) then
 							
-										-- if (gameSlots[m].id >= 100) then
-											-- transition.to( gameNumbers[i], { delay = 800 + ((m-1) * 2000), time=100 , alpha = 1, xScale = gameNumbers[i].initScale+0.4, yScale = gameNumbers[i].initScale+0.4, transition=easing.inExpo, onComplete = scaleGameImageBack} )
-										-- elseif (gameSlots[m].id >= 10) then
-											-- transition.to( gameNumbers[i], { delay = 0 + ((m-1) * 1200), time=100 , alpha = 1, xScale = gameNumbers[i].initScale+0.4, yScale = gameNumbers[i].initScale+0.4, transition=easing.inExpo, onComplete = scaleGameImageBack} )
-										-- else
 											transition.to( gameNumbers[i], { delay = 0 + (m * 700), time=100 , alpha = 1, xScale = gameNumbers[i].initScale+0.4, yScale = gameNumbers[i].initScale+0.4, transition=easing.inExpo, onComplete = scaleGameImageBack} )
-										-- end
 									end
 								end
 								
 							end
 						
 							if (m == readNums) then
-								-- if (m == #gameSlots-1) then
 									if (gameSlots[m].id >= 100 or gameSlots[1].id >= 100) then
 										timer.performWithDelay(0 + (m * 2000) + 1000, playRewardAnim) --3000
 									elseif (gameSlots[m].id > 20 or gameSlots[1].id > 20) then
@@ -1553,7 +1241,6 @@ function M.new()
 									else
 										timer.performWithDelay(0 + (m * 700) + 1000, playRewardAnim)
 									end
-								-- end
 							end
 						
 						end
@@ -1581,28 +1268,17 @@ function M.new()
 						end
 					end
 					
-					-- local origNumX, origNumY = gameNumbers[1]:localToContent(0,0)
 					
 					gameNumbersGroup.anchorChildren = true
 					gameNumbersGroup.anchorX, gameNumbersGroup.anchorY = 0.5, 0.5
 					gameNumbersGroup.x, gameNumbersGroup.y = slotsGroupX, slotsGroupY
-					
-					-- local newNumX, newNumY = gameNumbers[1]:localToContent(0,0)
 					
 					
 					local randomRewardVO = math.random( 1, #randomRewardSounds )
 				
 				
 					if savedData.enableSounds == true then
-						-- if (tblPuzzle.imageSet ~= "CardsNum" and
-								-- tblPuzzle.imageSet ~= "CardsNumDifficult") then
 							
-							-- playReservedChannel( gameSounds[randomRewardSounds[randomRewardVO]], currentGameChannel, 0 )
-							-- currentGameChannel = currentGameChannel + 1
-							-- if (currentGameChannel > 25) then
-								-- currentGameChannel = 20
-							-- end
-						-- end
 					end
 					
 					gameNumbersGroup.initX = gameNumbersGroup.x
@@ -1625,7 +1301,6 @@ function M.new()
 							currentGameChannel = 20
 						end
 					end
-					-- playReservedChannel( gameSounds[randomRewardSounds[randomRewardVO]], sAudio.gameReward.c, sAudio.gameReward.l, "sound" )
 		
 				
 					if (tblPuzzle.imageSet == "CardsPutInOrder") then
@@ -1665,20 +1340,16 @@ function M.new()
 					end
 				
 				end
-				-- rewardTimer = timer.performWithDelay( 1000, fillMeter )
-				
 				
 				
 				if (tblPuzzle.imageSet == "Cards" and turnOffEndVO ~= true or tblPuzzle.imageSet == "CardsClassic" and turnOffEndVO ~= true) then
 				
 				else
 				
-					-- Tweak end reward hide game screen
 					rewardTimer = timer.performWithDelay( 1700, hideGameScreen )
 				end
 				
 			end
-			
 			
 			
 			if (currentCount > #gameSlots or 
@@ -1691,7 +1362,7 @@ function M.new()
 				
 				bg:removeEventListener("touch", this)
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					if (cursorTimer) then
 						timer.cancel( cursorTimer )
 						cursorTimer = nil
@@ -1703,15 +1374,6 @@ function M.new()
 					transition.to( cursor, { time=100, alpha=0 } )
 				end
 			
-				-- instructionsBox:removeEventListener("touch", instructionsButtonTouched)
-				
-				-- bgSky:removeEventListener("touch", gameButtonTouched)
-
-				-- for i = 1, #gameSlots do
-					-- gameSlots[i]:removeEventListener("touch", numberTouched)
-				-- end
-			
-				-- currentCount = #gameNumbers
 				
 				for k = 1, #gameNumbers do
 					if (gameNumbers[k].inSlot == true) then
@@ -1720,12 +1382,11 @@ function M.new()
 					end
 				end
 				
-				-- Tweak completed number vo timer
 				rewardTimer = timer.performWithDelay( 2000, numbersAnim )
 			else
 				
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					
 					local function scatterNumbers()
 					
@@ -1766,7 +1427,6 @@ function M.new()
 							local function showCursor()
 								for i = 1, #gameSlots do
 									if (gameSlots[i].inSlot == false) then
-										-- cursor.x, cursor.y = gameSlots[i]:localToContent( gameSlots[i].contentWidth*0.37, gameSlots[i].contentHeight*0.5 )
 										cursor.x, cursor.y = gameSlots[i]:localToContent( gameSlots[i].contentWidth*0.8, gameSlots[i].contentHeight*0.8 )
 										cursor:toFront()
 										targetCard = gameSlots[i]
@@ -1824,7 +1484,7 @@ function M.new()
 			currentItem.xScale = currentItem.xScale / currentSlot.xScale
 			currentItem.yScale = currentItem.yScale / currentSlot.xScale
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				currentItem.x = 0
 				currentItem.y = 0
 			else
@@ -1835,7 +1495,7 @@ function M.new()
 		elseif (tblPuzzle.imageSet == "CardsClassic" or tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "CardsPutInOrderClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult" or tblPuzzle.imageSet == "CardsEquation") then
 			transition.to( currentItem, { delay = 0, time=50 , x = currentSlot.x, y = currentSlot.y, xScale = currentItem.origScale, yScale = currentItem.origScale, rotation = currentSlot.rotation, transition=easing.inExpo } )
 			finishTransToSlot()
-		elseif (myData.isFireTV or myData.isController) then 
+		elseif (myData.isTV) then 
 			transition.to( currentItem, { delay = 0, time=350 , x = currentSlot.x, y = currentSlot.y, xScale = currentSlot.xScale, yScale = currentSlot.yScale, rotation = currentSlot.rotation, transition=easing.outExpo } )
 			timer.performWithDelay( 351, finishTransToSlot )
 		else
@@ -1844,7 +1504,7 @@ function M.new()
 		end
 		
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			if (fireTVMultiCardOption == true) then
 			
 				print("test 1")
@@ -1861,8 +1521,6 @@ function M.new()
 					print("show cursor")
 					local function showCursor()
 
-						-- cursor.xScale = cardOptions.scale -- Hand Cursor
-						-- cursor.yScale = cardOptions.scale
 						cursor:toFront()
 						
 						currentCardSelected = 1
@@ -1913,7 +1571,6 @@ function M.new()
         if not self.isLive or not self.isTouchEnable then return end
 
         local obj = event.target
-        -- Key pressed --
         if(event.phase == "began") then
             
 			print("test touch")
@@ -1990,10 +1647,6 @@ function M.new()
 								
 								for k = #gameSlots, 1, -1 do
 									if (currentItem.id == gameSlots[k].id) then
-										-- if (currentItem.scaleTrans) then
-											-- transition.cancel( currentItem.scaleTrans )
-											-- currentItem.scaleTrans = nil
-										-- end
 										hasSlot = true
 										
 										slotK = k
@@ -2016,7 +1669,6 @@ function M.new()
 							elseif (tblPuzzle.imageSet == "CardsPutInOrderClassic" and numSlots == totalNumToPutInSlots) then
 								currentItem.scaleTrans = transition.to( currentItem, { time=400 , xScale = currentItem.origScale*1.1, yScale = currentItem.origScale*1.1, rotation = 0, transition=easing.outExpo } )
 							elseif (tblPuzzle.imageSet == "CardsEquation" and numSlots == totalNumToPutInSlots or 
-										-- tblPuzzle.imageSet == "CardsPutInOrderClassic" and numSlots == totalNumToPutInSlots or
 										tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult" and numSlots == totalNumToPutInSlots) then
 							
 								currentItem.scaleTrans = transition.to( currentItem, { time=400 , xScale = currentItem.origScale, yScale = currentItem.origScale, rotation = 0, transition=easing.outExpo } )
@@ -2028,25 +1680,10 @@ function M.new()
 							
 							
 							if (hasSlot == false) then
-								-- if (currentItem.scaleTrans) then
-									-- transition.cancel( currentItem.scaleTrans )
-									-- currentItem.scaleTrans = nil
-								-- end
 								
-								-- if (tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "CardsEquation" and numSlots == totalNumToPutInSlots) then
-									-- currentItem.scaleTrans = transition.to( currentItem, { time=400 , xScale = currentItem.origScale, yScale = currentItem.origScale, transition=easing.outExpo } )
-								-- else
-									-- currentItem.scaleTrans = transition.to( currentItem, { time=400 , xScale = gameSlots[1].xScale, yScale = gameSlots[1].yScale, transition=easing.outExpo } )
-								-- end
 							end
 							
-							-- playReservedChannel( gameSounds.shake, gameButtonCurr, sAudio.gameButton1.l, "sound" )
 		
-							-- gameButtonCurr = gameButtonCurr + 1
-							-- if (gameButtonCurr > sAudio.gameButton3.c) then
-								-- gameButtonCurr = sAudio.gameButton1.c
-							-- end
-							
 							break
 						end
 						
@@ -2069,7 +1706,6 @@ function M.new()
 					
 				end
 			end
-        -- Key released --
         elseif(event.phase == "ended" or event.phase == "cancelled") then
             if obj._isFocus then
                 obj._isFocus = false
@@ -2089,13 +1725,7 @@ function M.new()
 					local itemX, itemY = currentItem:localToContent( 0, 0 )
 					local slotX, slotY = gameSlots[i]:localToContent( 0, 0 )
 					
-					-- Default Collision box size:
-					-- if (itemX < slotX + (gameSlots[i].contentWidth*0.5 + 0) and
-							-- itemX > slotX - (gameSlots[i].contentWidth*0.5 - 0) and 
-							-- itemY < slotY + (gameSlots[i].contentHeight*0.5 + 0) and 
-							-- itemY > slotY - (gameSlots[i].contentHeight*0.5 - 0) and
 							
-					-- Pre-K collision box is made much larger:		
 						if (itemX < slotX + (gameSlots[i].contentWidth) and
 								itemX > slotX - (gameSlots[i].contentWidth) and 
 								itemY < slotY + (gameSlots[i].contentHeight) and 
@@ -2120,20 +1750,10 @@ function M.new()
 				
 				if (currentItem.inSlot == false) then
 					
-					-- if (currentItem.x > screenEdgeX - (currentItem.contentWidth*0.5)) then
-						-- currentItem.x = screenEdgeX - (currentItem.contentWidth*0.5)
-					-- elseif (currentItem.x < screenOriginX + (currentItem.contentWidth*0.5)) then
-						-- currentItem.x = screenOriginX + (currentItem.contentWidth*0.5)
-					-- elseif (currentItem.y > screenEdgeY - (currentItem.contentHeight*0.5)) then
-						-- currentItem.y = screenEdgeY - (currentItem.contentHeight*0.5)
-					-- elseif (currentItem.y < screenOriginY + (currentItem.contentHeight*0.5))then
-						-- currentItem.y = screenOriginY + (currentItem.contentHeight*0.5)
-					-- end
 					
 					currentItem.initX = currentItem.x
 					currentItem.initY = currentItem.y
 					currentItem.inSlot = false
-					-- floaters[#floaters+1] = currentItem.id
 					
 					
 					if (currentItem.scaleTrans) then
@@ -2164,7 +1784,6 @@ function M.new()
 						currentItem.shadowImg.alpha = 0
 					end
 					
-					-- floaters[#floaters+1] = currentItem.id
 					
 					local newX = event.x - beganTouchX
 					local newY = event.y - beganTouchY
@@ -2174,7 +1793,6 @@ function M.new()
 						transition.to( currentItem, { delay = 50, time=50 , alpha = 1, xScale = currentItem.origScale, yScale = currentItem.origScale, transition=easing.outExpo} )
 	
 	
-						
 						if savedData.enableSounds == true then
 							
 							if (tblPuzzle.imageSet == "Shapes" or tblPuzzle.imageSet == "ShapesDifficult") then
@@ -2228,7 +1846,6 @@ function M.new()
 									
 								end
 								
-								-- playReservedChannel( gameNumSounds[currentItem.id], currentGameChannel, 0 )
 							end
 							currentGameChannel = currentGameChannel + 1
 							if (currentGameChannel > 25) then
@@ -2239,19 +1856,7 @@ function M.new()
 						
 					else
 					
-						-- currentItem.initR = currentItem.rotation
-						-- currentItem.initScale = currentItem.xScale
 						
-						-- playReservedChannel( gameSounds.shake, gameButtonCurr, sAudio.gameButton1.l, "sound" )
-			
-						-- gameButtonCurr = gameButtonCurr + 1
-						-- if (gameButtonCurr > sAudio.gameButton3.c) then
-							-- gameButtonCurr = sAudio.gameButton1.c
-						-- end
-					
-						-- currentItem.animationInfo = currentItem.shakeAnim
-						-- animateStart( currentItem )
-					
 					end
 					
 				end
@@ -2260,10 +1865,7 @@ function M.new()
 				
 			end
                 
-                -- if obj.name == chooseGameAnswer then
-                    -- self.isTouchEnable = false
                     
-					
             end -- if obj._isFocus then
         end -- touch began, moved, ended, cancelled
 
@@ -2271,16 +1873,11 @@ function M.new()
     end
 	
 	
-	
 	local onSlots = false
 	local function showCursor()
 
-		-- cursor.xScale = cardOptions.scale -- Hand Cursor
-		-- cursor.yScale = cardOptions.scale
 		cursor:toFront()
 		
-		-- currentSelectedTV = currentCardSelected
-		-- currentCardSelected = 1
 		
 		if (onSlots == true) then
 			currentSelected = "cards"
@@ -2297,16 +1894,6 @@ function M.new()
 		
 		if (onSlots == true) then
 			if (gameNumbers and #gameNumbers > 0) then
-				-- for i = 1, #gameNumbers do
-					-- if (gameNumbers[i].inSlot == false) then
-						-- currentCardSelected = i
-					-- end
-				-- end
-				-- for i = 1, #gameNumbers do
-					-- if (gameNumbers[i].x < gameNumbers[currentCardSelected].x and gameNumbers[i].inSlot == false) then
-						-- currentCardSelected = i
-					-- end
-				-- end
 				
 				if (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult") then
 					cursor.x, cursor.y = gameNumbers[currentCardSelected]:localToContent( gameNumbers[currentCardSelected].contentWidth*0.75, gameNumbers[currentCardSelected].contentHeight*0.75 )
@@ -2339,7 +1926,6 @@ function M.new()
 					end
 				end
 				
-				-- cursor.x, cursor.y = gameSlots[currentCardSelected]:localToContent( gameSlots[currentCardSelected].contentWidth*0.37, gameSlots[currentCardSelected].contentHeight*0.5 )
 				
 				if (tblPuzzle.imageSet == "CardsPutInOrderClassic" or puzzleOptions.imageSet == "CardsPutInOrderClassicDifficult" or tblPuzzle.imageSet == "CardsNum"  or tblPuzzle.imageSet == "CardsNumDifficult") then
 					cursor.x, cursor.y = gameSlots[currentCardSelected]:localToContent( gameSlots[currentCardSelected].contentWidth*0.37, gameSlots[currentCardSelected].contentHeight*0.37 )
@@ -2356,13 +1942,12 @@ function M.new()
 		end
 		
 		
-		
 	end
 				
 	
 	local function pressedDownOnSlot()
 	
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			if (fireTVMultiCardOption == true) then
 			
 				if (cursorTimer) then
@@ -2373,7 +1958,6 @@ function M.new()
 					transition.cancel( cursorTransition )
 					cursorTransition = nil
 				end
-				-- transition.to( cursor, { time=100, alpha=0 } )
 			
 				for k = #floaters, 1, -1 do
 					if (floaters[k] == gameNumbers[currentSelectedTV].index) then
@@ -2417,7 +2001,6 @@ function M.new()
 													event.keyName ~= "left" and 
 													event.keyName ~= "right" and
 													event.keyName ~= "up" and
-													-- event.keyName ~= "down" and 
 													event.keyName ~= "buttonY" and
 													event.keyName ~= "mediaPlayPause" and
 													event.keyName ~= "buttonZ" and
@@ -2425,19 +2008,16 @@ function M.new()
 													keyName ~= "menu" or
 													event.keyName == nil) then
 		
-				if (myData.isFireTV or myData.isController) then 
-					-- transition.to( cursor, { time=100, alpha=0 } )
+				if (myData.isTV) then 
 					buttonsActive = false
 				end
 				buttonsActive = false
 				
 				
-				
-				
 				if (event.keyName ~= "down" and currentSelected == "cards") then
 				
 				
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						if (cursorTimer) then
 							timer.cancel( cursorTimer )
 							cursorTimer = nil
@@ -2446,7 +2026,6 @@ function M.new()
 							transition.cancel( cursorTransition )
 							cursorTransition = nil
 						end
-						-- transition.to( cursor, { time=100, alpha=0 } )
 					end
 				
 					if (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsClassic") then
@@ -2524,7 +2103,7 @@ function M.new()
 				elseif (event.keyName ~= "down" and fireTVMultiCardOption == false and gameNumbers[currentIndex].id == gameSlots[currentCardSelected].id or
 						event.keyName ~= "down" and fireTVMultiCardOption == true and gameNumbers[currentSelectedTV].id == gameSlots[currentCardSelected].id) then
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						if (cursorTimer) then
 							timer.cancel( cursorTimer )
 							cursorTimer = nil
@@ -2560,11 +2139,7 @@ function M.new()
 						if (event.keyName ~= "down") then
 					
 							if savedData.enableSounds == true then
-								-- for i = #cards, 1, -1 do
-									-- if (target == cards[i]) then
 										playReservedChannel(wrongSound, currentWrongChannel, 0)
-									-- end
-								-- end
 							end
 							currentWrongChannel = currentWrongChannel + 1
 							if currentWrongChannel > 20 then
@@ -2587,7 +2162,6 @@ function M.new()
 		
 		
 	end
-	
 	
 	
 	function trackCursorAxisSlots( event )
@@ -2619,9 +2193,6 @@ function M.new()
 	end
     
 	
-	
-	
-	
 	local function showPuzzle()
 	
 		if (showSlotsPuzzle) then
@@ -2652,14 +2223,7 @@ function M.new()
 			for m = 1, numTotalSlots do
 				for i = 1, #gameNumbers do
 					if (gameSlots[m].selected == false and gameNumbers[i].selected == false and gameNumbers[i].id == gameSlots[m].id) then
-						-- local slotFound = false
-						-- local slotPosX, slotPosY
-						-- for k = 1, #gameSlots do
-							-- if (gameNumbers[i].id == gameSlots[k].id) then
-								-- slotFound = true
 								
-							-- end
-						-- end
 						gameSlots[m].selected = true
 						
 						gameNumbers[i].selected = true
@@ -2678,20 +2242,8 @@ function M.new()
 							gameNumbers[i].y = slotPosY
 							
 						end
-						-- gameNumbers[i].initX = gameNumbers[i].x
-						-- gameNumbers[i].initY = gameNumbers[i].y
 						
-						-- if (slotFound == true) then
-							-- gameNumbers[i].x = slotPosX - (choicesGroup.x - slotsGroup.x)
-							-- gameNumbers[i].y = slotPosY - (choicesGroup.y - slotsGroup.y)
 							
-							
-						-- else
-							-- gameNumbers[i].x = math.random( -50, 50 )
-							-- gameNumbers[i].y = screenEdgeY + 100
-						-- end
-						
-						
 						if (tblPuzzle.imageSet == "Cards" and m ~= blankSpotIndex or
 							tblPuzzle.imageSet == "CardsClassic" and m ~= blankSpotIndex or
 							tblPuzzle.imageSet == "CardsEquation" and numSlots ~= totalNumToPutInSlots and m ~= blankSpotIndex) then
@@ -2729,8 +2281,6 @@ function M.new()
 						
 							local function showCursor()
 
-								-- cursor.xScale = cardOptions.scale -- Hand Cursor
-								-- cursor.yScale = cardOptions.scale
 								
 								if (tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult") then
 									cursor.xScale = 1
@@ -2749,7 +2299,6 @@ function M.new()
 											end
 										end
 										
-										-- cursor.x, cursor.y = gameSlots[currentCardSelected]:localToContent( gameSlots[currentCardSelected].contentWidth*0.37, gameSlots[currentCardSelected].contentHeight*0.5 )
 										cursor.x, cursor.y = gameSlots[currentCardSelected]:localToContent( gameSlots[currentCardSelected].contentWidth*0.8, gameSlots[currentCardSelected].contentHeight*0.8 )
 									
 										targetCard = gameSlots[currentCardSelected]
@@ -2791,8 +2340,6 @@ function M.new()
 								end
 								
 								
-								
-								
 								if (myData.isController) then
 									Runtime:addEventListener( "key", puzzleSlotsTap )
 									Runtime:addEventListener( "axis", trackCursorAxisSlots )
@@ -2802,7 +2349,7 @@ function M.new()
 								
 							end
 							
-							if (myData.isFireTV or myData.isController) then 
+							if (myData.isTV) then 
 								cursorTransition = timer.performWithDelay( 700, showCursor )
 							end
 						
@@ -2823,18 +2370,6 @@ function M.new()
 							
 							local function playCanPutNumVO()
 								
-								-- if (currentGame == 1) then
-									-- playReservedChannel( gameSounds.canPutBackNumOrder, sAudio.gameInstructions1.c, sAudio.gameInstructions1.l, "sound" )
-								-- else
-									-- local randomSound = math.random( 1, 5 )
-									-- if (randomSound == 1) then
-										-- playReservedChannel( gameSounds.canPutBackNum, sAudio.gameInstructions1.c, sAudio.gameInstructions1.l, "sound" )
-									-- elseif (randomSound == 2) then
-										-- playReservedChannel( gameSounds.canPutBackNumBelong, sAudio.gameInstructions1.c, sAudio.gameInstructions1.l, "sound" )
-									-- elseif (randomSound == 3) then
-										-- playReservedChannel( gameSounds.letsDoIt, sAudio.gameInstructions1.c, sAudio.gameInstructions1.l, "sound" )
-									-- end
-								-- end
 								
 								print("test 2")
 								
@@ -2853,15 +2388,12 @@ function M.new()
 							end
 							timerVO = timer.performWithDelay( 0, playCanPutNumVO ) -- 1500
 						
-							-- makeButtonsActive()
 						
 						end
 						
 						
-				
 						local function scaleGameImageBack( obj )
 						
-							-- transition.to( obj, { time=100 , xScale = obj.startScale, yScale = obj.startScale, transition=easing.outExpo} )
 							
 							if (tblPuzzle.imageSet == "CardsNum") then
 								transition.to( obj, { time=100 , xScale = gameSlots[1].xScale, yScale = gameSlots[1].yScale, transition=easing.outExpo} )
@@ -2876,20 +2408,7 @@ function M.new()
 								if (m > numTotalSlots) then
 								else
 								
-									-- playReservedChannel( mainSounds.pop[math.random(1,#mainSounds.pop)], gameSoundFXCurr, sAudio.gameSoundFX1.l, "sound" )
 								
-									-- gameSoundFXCurr = gameSoundFXCurr + 1
-									-- if (gameSoundFXCurr > sAudio.gameSoundFX3.c) then
-										-- gameSoundFXCurr = sAudio.gameSoundFX1.c
-									-- end
-								
-									-- playReservedChannel( numSounds[obj.id], gameSoundFXCurr, sAudio.gameSoundFX1.l, "sound" )
-									
-									-- gameSoundFXCurr = gameSoundFXCurr + 1
-									-- if (gameSoundFXCurr > sAudio.gameSoundFX3.c) then
-										-- gameSoundFXCurr = sAudio.gameSoundFX1.c
-									-- end
-									
 									if savedData.enableSounds == true then
 										if (tblPuzzle.imageSet ~= "Num" and tblPuzzle.imageSet ~= "NumDifficult" or
 												m == numTotalSlots) then
@@ -2980,8 +2499,7 @@ function M.new()
 								
 									if (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsClassic" or tblPuzzle.imageSet == "CardsEquation" and numSlots ~= totalNumToPutInSlots) then
 							
-										if (myData.isFireTV and tblPuzzle.imageSet ~= "Cards" and tblPuzzle.imageSet ~= "CardsClassic" or 
-												myData.isController and tblPuzzle.imageSet ~= "Cards" and tblPuzzle.imageSet ~= "CardsClassic") then
+										if (myData.isTV and tblPuzzle.imageSet ~= "Cards" and tblPuzzle.imageSet ~= "CardsClassic") then
 										
 										else
 										
@@ -3021,30 +2539,9 @@ function M.new()
 											choicesGroup.x, choicesGroup.y = 1000, halfH + choiceYOffset
 											
 											
-											
 											numTimer = timer.performWithDelay( 500, startNumFloat )
 											
-											-- questionText:toFront()
-											-- questionTextTwo:toFront()
-											-- transition.to( questionText, { delay = 100, time=700, x=halfW, transition=easing.outExpo } )
-											-- transition.to( questionTextTwo, { delay = 100, time=700, x=halfW, transition=easing.outExpo } )
 				
-											-- readPuzzleSlotsVO()
-											
-											-- for i = choicesGroup.numChildren, 1, -1 do
-												-- local tempItem = choicesGroup[i]
-												-- local initX, initY = tempItem:localToContent(0,0)
-												-- gameGroup:insert( choicesGroup[i] )
-												-- tempItem.x, tempItem.y = initX, initY
-												
-												-- tempItem.initX = tempItem.x
-												-- tempItem.initY = tempItem.y
-											-- end
-											
-											-- choicesGroup:removeSelf()
-											-- choicesGroup = nil
-											
-											
 										end
 										
 									end
@@ -3100,7 +2597,7 @@ function M.new()
 												gameNumbers[k].origY = gameNumbers[k].initY
 												gameNumbers[k].origX = gameNumbers[k].initX
 												
-												if (k ~= currentIndex and myData.isFireTV and fireTVMultiCardOption == false or k ~= currentIndex and myData.isController and fireTVMultiCardOption == false) then
+												if (k ~= currentIndex and myData.isTV and fireTVMultiCardOption == false) then
 													transition.to( gameNumbers[k], {delay = randomDelay, time=randomTime-randomDelay, alpha = 1, x = screenEdgeX + 100, y = gameNumbers[k].initY, rotation = gameNumbers[k].initR, xScale = gameNumbers[k].initScale, yScale = gameNumbers[k].initScale, transition=easing.inOutQuad } )
 												else
 													transition.to( gameNumbers[k], {delay = randomDelay, time=randomTime-randomDelay, alpha = 1, x = gameNumbers[k].initX, y = gameNumbers[k].initY, rotation = gameNumbers[k].initR, xScale = gameNumbers[k].initScale, yScale = gameNumbers[k].initScale, transition=easing.inOutQuad } )
@@ -3117,11 +2614,6 @@ function M.new()
 													
 													local function playUhOhVO()
 													
-														-- playReservedChannel( uhOhSound, currentGameChannel, 0 )
-														-- currentGameChannel = currentGameChannel + 1
-														-- if (currentGameChannel > 25) then
-															-- currentGameChannel = 20
-														-- end
 														
 														print("play")
 														
@@ -3152,7 +2644,6 @@ function M.new()
 														
 													end
 													timerVO = timer.performWithDelay( 500, playUhOhVO )
-													
 													
 													
 													numTimer = timer.performWithDelay( transTime + 1, startNumFloat )
@@ -3191,11 +2682,7 @@ function M.new()
 							
 						end
 						
-						-- if (i > #gameSlots) then
-							-- gameNumbers[i].showTrans = transition.to( gameNumbers[i], { delay = 100 + (#gameSlots * 700) + i, time=0 , alpha = 1, xScale = gameNumbers[i].initScale, yScale = gameNumbers[i].initScale, transition=easing.inExpo, onComplete = scaleGameImageBack} )
-						-- else 
 						
-						 
 						if (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsClassic" or tblPuzzle.imageSet == "CardsNumDifficult" or tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "CardsEquation" or tblPuzzle.imageSet == "ShapesDifficult") then
 							
 							if (tblPuzzle.imageSet == "CardsPutInOrder" or tblPuzzle.imageSet == "ShapesDifficult") then
@@ -3250,13 +2737,6 @@ function M.new()
 			end
 		
 		
-		
-			-- transition.to( puzzleBGFinished, { time=700, alpha=1, transition=easing.inExpo } )
-			-- for i = #puzzlePieces, 1, -1 do
-				-- transition.to( puzzlePieces[i], { delay = 699, time=0, alpha=1, transition=easing.inExpo } )
-			-- end
-		
-		
 			local function thisIsVO()
 				
 				
@@ -3271,11 +2751,7 @@ function M.new()
 				local function isVO()
 				
 					if savedData.enableSounds == true then
-						-- if (currentNumber == "A" or currentNumber == "E" or currentNumber == "I" or currentNumber == "O") then
-							-- playReservedChannel( isAnSound, currentGameChannel, 0 )
-						-- else
 							playReservedChannel( isASound, currentGameChannel, 0 )
-						-- end
 						currentGameChannel = currentGameChannel + 1
 						if (currentGameChannel > 25) then
 							currentGameChannel = 20
@@ -3296,8 +2772,6 @@ function M.new()
 				timer.performWithDelay( 500, isVO )
 				
 			end
-			-- timer.performWithDelay( 700, thisIsVO )
-			
 			
 			
 			if (tblPuzzle.imageSet == "Cards" or tblPuzzle.imageSet == "CardsClassic") then
@@ -3329,7 +2803,6 @@ function M.new()
 					questionText.xScale = 1
 					questionText.yScale = 1
 				end
-				-- questionText.y = questionText.initY
 				if (display.pixelHeight == 960) then
 					questionText.y = questionText.initY + questionOptions.offsetY + 10 - 25
 				else
@@ -3390,16 +2863,11 @@ function M.new()
 			questionText.alpha = 1
 		
 			if (tblPuzzle.imageSet == "Cards") then
-				-- cardTrans = transition.to( choicesGroup, { time=700, x=halfW+cardOptions.offsetX, transition=easing.outExpo } )
-				-- transition.to( questionText, { time=700, x=halfW, transition=easing.outExpo } )
 			end
-			-- transition.to( questionTextTwo, { time=700, x=halfW, transition=easing.outExpo } )
 		
 			
 			local function addGameListeners()
-				-- bg:removeEventListener("touch", this)
 				Runtime:removeEventListener("enterFrame", this)
-				-- bg:addEventListener("touch", this)
 				Runtime:addEventListener("enterFrame", this)
 			end
 			timer.performWithDelay( 500, addGameListeners )
@@ -3418,14 +2886,8 @@ function M.new()
 			newSlotsPuzzle = true
 	
 			
-	
 			for i = 1, numSlots do
 			
-				-- local setSlotsScale = gameSlotsPositions[numSlots][randomPosSet][i][4] * slotNumbers[numberOption].scale
-				-- print(slotNumbers[numberOption])
-				-- print(numberOption)
-				-- print(slotNumbers[numberOption].scale)
-				-- print(slotOptions[numSlots][2])
 				
 				local numberOption = numberOptions[i]
 				if (numberOption == 0) then
@@ -3482,9 +2944,6 @@ function M.new()
 				
 				
 					gameSlots[#gameSlots].xScale, gameSlots[#gameSlots].yScale = setSlotsScale, setSlotsScale
-					-- gameSlots[#gameSlots].x = halfW + 90 + gameSlotsPositions[numSlots][randomPosSet][i][1]
-					-- gameSlots[#gameSlots].y = halfH + gameSlotsPositions[numSlots][randomPosSet][i][2]
-					-- gameSlots[#gameSlots].rotation = gameSlotsPositions[numSlots][randomPosSet][i][3]
 				
 				if (#gameSlots ~= 1) then
 					if (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult") then
@@ -3544,7 +3003,6 @@ function M.new()
 					gameSlots[#gameSlots].bg.alpha = 0
 					
 					
-					
 					slotsGroup:insert( gameSlots[#gameSlots].bg )
 					
 					
@@ -3594,10 +3052,6 @@ function M.new()
 				local randomOption = math.random( 2, #numberOptions)
 				numberOptions[1], numberOptions[randomOption] = numberOptions[randomOption], numberOptions[1]
 			end
-			-- if (#numberOptions == 2 and numberOptions[1] == gameSlots[1].id) then
-				-- numberOptions[1], numberOptions[2] = numberOptions[2], numberOptions[1]
-			-- else
-				-- repeat
 				
 				print("test 1")
 			for i = 1, #numberOptions do
@@ -3605,12 +3059,9 @@ function M.new()
 			end
 				
 				if (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult"
-						-- tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult"
 						) then
 					randomizeTable(numberOptions)
 				end
-				-- until numberOptions[1] ~= gameSlots[1].id or #numberOptions == 1 or #numberOptions == 2 and numberOptions[1] == numberOptions[2]
-			-- end
 			
 			print("test 2")
 			for i = 1, #numberOptions do
@@ -3619,9 +3070,6 @@ function M.new()
 			
 			for i = 1, #numberOptions do
 				
-				-- local randomNumPosition = math.random( 1, #gameNumbersPositions[numSlots][randomPosSet][randomNumSet] )
-				
-				-- local setNumbersScale = gameNumbersPositions[numSlots][randomPosSet][randomNumSet][randomNumPosition][4] * slotNumbers[numberOption].scale
 				
 				local numberOption = numberOptions[i]
 				if (numberOption == 0) then
@@ -3631,10 +3079,7 @@ function M.new()
 				local setNumbersScale
 				
 				
-				if (myData.isFireTV and tblPuzzle.imageSet == "CardsNum" or 
-						myData.isController and tblPuzzle.imageSet == "CardsNum" or 
-						myData.isFireTV and tblPuzzle.imageSet == "CardsNumDifficult" or 
-						myData.isController and tblPuzzle.imageSet == "CardsNumDifficult") then
+				if (myData.isTV and (tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult")) then
 					setNumbersScale = tblCards.scale * 1
 				elseif (tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult" or tblPuzzle.imageSet == "CardsEquation") then
 					setNumbersScale = tblCards.scale * .75
@@ -3644,7 +3089,6 @@ function M.new()
 					setNumbersScale = tblCards.scale * .5
 				elseif (tblPuzzle.imageSet == "Cards") then
 					setNumbersScale = sharkNumbers[numberOption].cScale
-					-- setNumbersScale = (slotNumbers[numberOption].scale * choiceOptions[#numberOptions][2]) * sharkNumbers[numberOptions[i]].tScale
 				elseif (tblPuzzle.imageSet == "Shapes" or tblPuzzle.imageSet == "ShapesDifficult") then
 					setNumbersScale = shapeSets[numberOption].puzzleSlotsScale * choiceOptions[#numberOptions][2]
 				elseif (tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult") then
@@ -3653,7 +3097,6 @@ function M.new()
 				else
 					setNumbersScale = slotNumbers[numberOption].scale * choiceOptions[#numberOptions][2]
 				end
-				
 				
 				
 				gameNumbers[#gameNumbers+1] = display.newGroup()
@@ -3694,12 +3137,10 @@ function M.new()
 				end
 				
 				
-				
 				gameNumbers[#gameNumbers]:insert( puzzlePiece )
 				if (puzzleShadow) then
 					gameNumbers[#gameNumbers].shadowImg = puzzleShadow
 				end
-				
 				
 				
 				gameNumbers[#gameNumbers].anchorChildren = true
@@ -3708,21 +3149,7 @@ function M.new()
 				gameNumbers[#gameNumbers].xScale, gameNumbers[#gameNumbers].yScale = setNumbersScale, setNumbersScale
 				
 				
-				-- gameNumbers[#gameNumbers].x = halfW + 90 + gameNumbersPositions[numSlots][randomPosSet][randomNumSet][randomNumPosition][1]
-				-- gameNumbers[#gameNumbers].y = halfH + gameNumbersPositions[numSlots][randomPosSet][randomNumSet][randomNumPosition][2]
-				
-				-- local rotationDirection = math.random( 1, 2 )
-				
-				-- if (rotationDirection == 1) then
-					-- gameNumbers[#gameNumbers].rotation = math.random( -5, -3 )
-				-- else
-					-- gameNumbers[#gameNumbers].rotation = math.random( 3, 5 )
-				-- end
-				
-				-- gameNumbers[#gameNumbers].rotation = gameNumbersPositions[numSlots][randomPosSet][randomNumSet][randomNumPosition][3]
-				
-				if (myData.isFireTV and fireTVMultiCardOption == false or 
-					myData.isController and fireTVMultiCardOption == false) then
+				if (myData.isTV and fireTVMultiCardOption == false) then
 				else
 					if (#gameNumbers ~= 1) then
 						gameNumbers[#gameNumbers].x = gameNumbers[#gameNumbers-1].x + (gameNumbers[#gameNumbers].contentWidth*0.5) + (gameNumbers[#gameNumbers-1].contentWidth*0.5) + choiceOptions[#numberOptions][1]
@@ -3733,19 +3160,8 @@ function M.new()
 				
 				if (tblPuzzle.imageSet == "CardsPutInOrderClassic" or tblPuzzle.imageSet == "CardsPutInOrderClassicDifficult") then
 					gameNumbers[#gameNumbers].initScale = tblCards.scale * .75
-				elseif (
-						myData.isFireTV and tblPuzzle.imageSet == "" or 
-						myData.isController and tblPuzzle.imageSet == "" or
-						myData.isFireTV and tblPuzzle.imageSet == "Num" or 
-						myData.isController and tblPuzzle.imageSet == "Num" or
-							myData.isFireTV and tblPuzzle.imageSet == "NumDifficult" or
-							myData.isController and tblPuzzle.imageSet == "NumDifficult" or
-							myData.isFireTV and tblPuzzle.imageSet == "CardsNum" or 
-						myData.isController and tblPuzzle.imageSet == "CardsNum" or
-							myData.isFireTV and tblPuzzle.imageSet == "CardsNumDifficult" or
-							myData.isController and tblPuzzle.imageSet == "CardsNumDifficult" or
-							myData.isFireTV and tblPuzzle.imageSet == "CardsPutInOrder" or
-							myData.isController and tblPuzzle.imageSet == "CardsPutInOrder") then
+				elseif (myData.isTV and (tblPuzzle.imageSet == "" or tblPuzzle.imageSet == "Num" or tblPuzzle.imageSet == "NumDifficult" or
+						tblPuzzle.imageSet == "CardsNum" or tblPuzzle.imageSet == "CardsNumDifficult" or tblPuzzle.imageSet == "CardsPutInOrder")) then
 					
 					gameNumbers[#gameNumbers].initScale = gameNumbers[#gameNumbers].xScale * 0.85
 				else
@@ -3809,25 +3225,14 @@ function M.new()
 				end
 				
 				
-				
 				local randomRewardAnim = math.random( 1, #rewardAnims )
 				
 				gameNumbers[#gameNumbers].finishAnim = rewardAnims[randomRewardAnim]
 				gameNumbers[#gameNumbers].shakeAnim = { id = "shake", particles = "", duration = 600, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } }
 				choicesGroup:insert( gameNumbers[#gameNumbers] )
 				
-				-- table.remove( gameNumbersPositions[numSlots][randomPosSet][randomNumSet], randomNumPosition )
-				
-				-- gameNumbers[#gameNumbers].xScale = gameSlots[#gameSlots].xScale
-				-- gameNumbers[#gameNumbers].yScale = gameSlots[#gameSlots].yScale
-				-- gameNumbers[#gameNumbers].startScale = gameNumbers[#gameNumbers].xScale
-				-- local gameSlotX, gameSlotY = gameSlots[#gameSlots]:localToContent( 0, 0 )
-				-- gameNumbers[#gameNumbers].x = gameSlotX
-				-- gameNumbers[#gameNumbers].y = gameSlotY
-				-- gameNumbers[#gameNumbers].rotation = gameSlots[#gameSlots].rotation
 				
 			end
-			
 			
 			
 			slotsGroup.anchorChildren = true
@@ -3869,7 +3274,6 @@ function M.new()
 			end
 			
 			
-			
 			for i = #gameNumbers, 1, -1 do
 				gameNumbers[i]:toFront()
 				
@@ -3893,9 +3297,6 @@ function M.new()
 	end
 	setUpPuzzle()
 	
-    ----------------------
-    -- Destroy function --
-    ----------------------
     function this:destroy()
         if self.isLive then
 		
@@ -3959,17 +3360,10 @@ function M.new()
         end
     end
     
-    ----------------------
-    -- global functions --
-    ----------------------
-    -- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
-    -- else
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )
-    -- end
     timer.performWithDelay( 550, base.backButtonTransition )
     
-    ----------------------
     return this
 end
 

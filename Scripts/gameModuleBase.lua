@@ -17,7 +17,7 @@ base._HEIGHT = base._BTM - base._TOP
 -- Shared back button transition used by all game modules.
 -- Returns the timer handle (if any) so callers can cancel it.
 function base.backButtonTransition()
-    if (myData.isFireTV or myData.isController) then
+    if (myData.isTV) then
         return timer.performWithDelay( 700, makeButtonsActive )
     else
         makeButtonsActive()

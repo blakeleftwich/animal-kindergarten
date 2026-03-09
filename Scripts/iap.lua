@@ -113,7 +113,7 @@ end
 function closeIAPMenu()
         iap_MenuOpen = false
 		
-		if (myData.isFireTV or myData.isController) then  
+		if (myData.isTV) then  
 			transition.to( iapCursor, { time=400, alpha=0, transition=easing.outExpo } )
 			transition.to( iapRestore, { time=400, alpha=0, transition=easing.outExpo } )
 			Runtime:removeEventListener( "onFTVKey", trackIAPCursor )
@@ -312,7 +312,7 @@ function openIAPMenu()
 		
 		currentState = "IAPMenu"
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			currentCursorSelect = "iapUnlockAll"
 			
 			iapCursor.x = iapUnlockAllX
@@ -434,7 +434,7 @@ function loadIAPMenu()
 	iapAlt.name = "iapUnlockCharacter"
 	iapGroup:insert( iapAlt )
 	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 	else
 		-- iapExit = display.newImageRect("Images/UI/iapMenuExitButton.png", 45, 45 )
 		-- iapExit.x = halfW + 103
@@ -479,7 +479,7 @@ function loadIAPMenu()
 	iapGroup:insert( iapCursor )
 	
 	--if (system.getInfo ( "model" ) == "AFTB") then
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		iapUnlockAllX = halfW + 90
 		iapUnlockAllY = halfH + 66
 		
@@ -993,7 +993,7 @@ function iap_failed()
 			Runtime:addEventListener( "enterFrame", positionMenu )
 			Runtime:addEventListener("touch",touchedMenu)
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				if (myData.isFireTV ) then 
 					Runtime:addEventListener( "onFTVKey", touchedMenu )
 				elseif (myData.isController) then

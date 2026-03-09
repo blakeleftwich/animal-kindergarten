@@ -1,4 +1,3 @@
--- Game
 local myData = require("Scripts.myData")
 require("Scripts.gameController")
 require("Scripts.gameAnimations")
@@ -7,6 +6,7 @@ require("Scripts.gameEquationInline")
 require("Scripts.gameCountingInline")
 require("Scripts.gameSequenceInline")
 require("Scripts.gameQuestionInline")
+require("Scripts.gameAudio")
 
 function closeGameScreen()
 
@@ -26,13 +26,10 @@ function closeGameScreen()
 	screen.anchorY = 0.5
 	screen.x = halfW
 	screen.y = halfH
-	--bgWhiteTwo.alpha = 1
-	--bgWhiteTwo:toFront()
 	screen:toFront()
 	local currentIndex = itemIndex
 	
 	
-	-- bgSunGroup.alpha = 1
 	bgSunGroup.xScale, bgSunGroup.yScale = bgSunGroup.initScale, bgSunGroup.initScale
 	bgSunGroup.x = bgSunGroup.initX
 	bgSunGroup.y = bgSunGroup.initY
@@ -42,43 +39,27 @@ function closeGameScreen()
 	gameCornerCloud1.alpha = 0
 	gameCornerCloud2.alpha = 0
 	
-	if (myData.isFireTV or myData.isController) then
+	if (myData.isTV) then
 		bgSunGroup.alpha = 1
 	end
 	
 	sun.alpha = 1
 	sunTwo.alpha = 0
 	
-	--backButton:setFillColor(255/255,255/255,255/255)
 	backButton:setFillColor(255/255,254/255,240/255)
 	
 	if (playingRandomGame == true) then
-		-- levelEditorDetails = levelEditor[charLevel]
 	else
-		-- levelEditorDetails = levelEditor[level]
-		-- if (level == 9) then
 			bg.alpha = 1
 			bgLighter.alpha = 0
-		-- end
 	end
 	
 	
 	audio.fade( { channel=3 , time=700 , volume=0  } )
 	
-	-- loadSelectScreen()
-	-- screen:toFront()
-	-- bgWhite:toFront()
 	
-	-- selectAnimation1()
-	
-	-- itemIndex = currentLevel-1
-	
-
 	local function openMenu()
 		
-		-- loadSelectScreen()
-		-- screen:toFront()
-		-- bgWhite:toFront()
 		
 		dustGroupBack:toFront()
 		titleGroupBack:toFront()
@@ -105,13 +86,11 @@ function closeGameScreen()
 		titleGroupBack.alpha = 1
 		dustGroupFront.alpha = 1
 		titleGroupFront.alpha = 1
-		-- bgBirdGroup.alpha = 1
 		
 		fromTitle = false
 		
 		selectAnimation1()
 		
-		-- itemIndex = currentLevel-1
 		
 		fromMenu = true
 		fromGame = true
@@ -158,7 +137,6 @@ function closeGameScreen()
 		end
 		
 		
-		
 		gameIcon:removeSelf()
 		gameIcon = nil
 		if (cursor) then
@@ -180,13 +158,11 @@ function closeGameScreen()
 		end
 		
 		resetGameItems(true)
-		-- Runtime:addEventListener( "enterFrame", positionMenu )
 		
 		if (cardGroup) then
 			cardGroup:removeSelf()
 			cardGorup = nil
 		end
-		
 		
 		
 		curGame = 1
@@ -235,7 +211,6 @@ function closeGameScreen()
 				local function fadeZZZ()
 					local function scaleUp()
 						local function scaleCharDown()
-							-- if (currentIndex + 1 == itemIndex) then
 								endOfGame = false
 								endZZZ = false
 								
@@ -249,10 +224,8 @@ function closeGameScreen()
 									startNextLevel = true
 								end
 								timer.performWithDelay( 1000, startLevel )
-							-- end
 						end
 						
-						-- if (currentIndex + 1 == itemIndex) then
 							if savedData.enableSounds == true then
 								playReservedChannel(completedSound, 16, 0)
 							end
@@ -262,13 +235,10 @@ function closeGameScreen()
 							else
 								scaleCharDown()
 							end
-						-- end
 					end
 					
 					
-					-- if (currentIndex + 1 == itemIndex) then
 					if (dontWakeUpChar == false) then
-						--endOfGame = false
 						endZZZ = true
 						
 						transition.to(menuGroup[itemIndex+1].z1, {time=250, alpha = 0, transition=easing.outExpo, onComplete=scaleUp} )
@@ -282,7 +252,6 @@ function closeGameScreen()
 							char2Transition = nil
 						end
 					end
-					-- end
 				end
 				
 				endGameTimer = timer.performWithDelay( 500, fadeZZZ )
@@ -290,7 +259,6 @@ function closeGameScreen()
 			end
 			
 			print("Level " .. itemIndex)
-			-- Changed for IAP Char
 			
 			if (reviewPopUp ~= nil and savedData.appOpenNum == showOnPlayFirst and currentLevelPlayedNum == showReviewFrequency or
 					reviewPopUp ~= nil and savedData.appOpenNum == showOnPlaySecond and currentLevelPlayedNum == showReviewFrequency) then
@@ -356,23 +324,14 @@ function closeGameScreen()
 			
 			endGameTimer = timer.performWithDelay( 1600, starAnimation )
 			levelNotCompleted = true
-			--Runtime:removeEventListener("touch",touchedMenu)
 			buttonsActive = false
 			
 			print("test1")
 			
-			-- if (menuGroup[itemIndex+2] and levels[menuGroup[itemIndex+2].levelID] ~= "completed" and nextCharLocked == false and menuGroup[itemIndex+2].levelID ~= selectableChar or 
-				-- menuGroup[itemIndex+2] and levels[menuGroup[itemIndex+2].levelID] == "completed" and nextCharLocked == false and menuGroup[itemIndex+2].levelID ~= selectableChar or 
-				-- menuGroup[itemIndex+1] and levels[menuGroup[itemIndex+1].levelID] ~= "completed" and level == totalLevels and menuGroup[itemIndex+1].levelID ~= selectableChar or
-				-- menuGroup[itemIndex+1].levelID == iapChar or
-				-- menuGroup[itemIndex+1].levelID == rateChar or
-				-- itemIndex+1 == totalAvailLevels) then
-				
 				
 					local function playMenuMusicTimer()
 					
 						if savedData.enableMusic == true then
-						-- audio.stop( 3 )
 						audio.play( introMenuSound, { channel = 1, loops = -1 }  )
 						audio.setVolume( 1, { channel=1 } )
 						audio.play( introMenuSound, { channel = 2, loops = -1 }  )
@@ -380,15 +339,12 @@ function closeGameScreen()
 					end
 				end
 				timer.performWithDelay( 2800, playMenuMusicTimer )
-			-- end
 		else
 			
 			local function nextCharacter()
-				--itemIndex = itemIndex+1
 				
 				levelCompleted = false
 			end
-			-- endOfGame = false
 			timer.performWithDelay( 3100, nextCharacter )
 			levelNotCompleted = false
 			buttonsActive = false
@@ -398,7 +354,6 @@ function closeGameScreen()
 			local function playMenuMusicTimer()
 			
 				if savedData.enableMusic == true then
-					-- audio.stop( 3 )
 					audio.play( introMenuSound, { channel = 1, loops = -1 }  )
 					audio.setVolume( 1, { channel=1 } )
 					audio.play( introMenuSound, { channel = 2, loops = -1 }  )
@@ -430,7 +385,7 @@ function closeGameScreen()
 	transition.to( equationGroup, { time=700, x=1000, transition=easing.outExpo } )
 	transition.to( equationComplexGroup, { time=700, x=1000, transition=easing.outExpo } )
 	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		transition.to( cursor, { time=0, alpha=0 } )
 	end
 	
@@ -444,7 +399,6 @@ function closeGameScreen()
 	transition.to( screen, { time=700, xScale=.5, yScale=.5, transition=easing.outExpo } )
 	bgWhiteTwo:toFront()
 	bgWhiteTwo.alpha = 0
-	--worldStar:toFront()
 	
 	local function removeBGTwo()
 		bgWhiteTwo.alpha = 0
@@ -452,7 +406,6 @@ function closeGameScreen()
 	transition.to( bgWhiteTwo, { time=700, alpha = 1, transition=easing.outExpo, onComplete = removeBGTwo } )
 	transition.to( bgWhiteTwo, { delay=1200, time=700, alpha = 0, transition=easing.outExpo} )
 	
-	--transition.to( mainContainer, { delay=1200, time=700, xScale=1, yScale=1 , transition=easing.outExpo } )
 	timer.performWithDelay( 500, openMenu )
 	
 end
@@ -490,12 +443,12 @@ function resetGameItems(isEndOfGame)
 			cards[i].xImage = nil
 		end
 		
-		cards[i]:removeEventListener( "touch", MatchingTap )
-		cards[i]:removeEventListener( "touch", ChoiceTap )
-		cards[i]:removeEventListener( "touch", ComplexChoiceTap )
-		cards[i]:removeEventListener( "touch", CheckCounting )
-		cards[i]:removeEventListener( "touch", checkSequenceAnswer )
-		cards[i]:removeEventListener( "touch", checkQuestionAnswer )
+		if (MatchingTap) then cards[i]:removeEventListener( "touch", MatchingTap ) end
+		if (ChoiceTap) then cards[i]:removeEventListener( "touch", ChoiceTap ) end
+		if (ComplexChoiceTap) then cards[i]:removeEventListener( "touch", ComplexChoiceTap ) end
+		if (CheckCounting) then cards[i]:removeEventListener( "touch", CheckCounting ) end
+		if (checkSequenceAnswer) then cards[i]:removeEventListener( "touch", checkSequenceAnswer ) end
+		if (checkQuestionAnswer) then cards[i]:removeEventListener( "touch", checkQuestionAnswer ) end
 		cards[i]:removeSelf()
 		cards[i] = nil
 		table.remove(cards,i)
@@ -611,19 +564,19 @@ function resetGameItems(isEndOfGame)
 	Runtime:removeEventListener( "onFTVKey", instructionsTouch )
 	Runtime:removeEventListener( "key", instructionsTouch )
 	
-	Runtime:removeEventListener( "onFTVKey", checkQuestionAnswer )
-	Runtime:removeEventListener( "onFTVKey", checkSequenceAnswer )
-	Runtime:removeEventListener( "onFTVKey", CheckCounting )
-	Runtime:removeEventListener( "onFTVKey", ChoiceTap )
-	Runtime:removeEventListener( "onFTVKey", ComplexChoiceTap )
-	Runtime:removeEventListener( "onFTVKey", MatchingTap )
-	
-	Runtime:removeEventListener( "key", checkQuestionAnswer )
-	Runtime:removeEventListener( "key", checkSequenceAnswer )
-	Runtime:removeEventListener( "key", CheckCounting )
-	Runtime:removeEventListener( "key", ChoiceTap )
-	Runtime:removeEventListener( "key", ComplexChoiceTap )
-	Runtime:removeEventListener( "key", MatchingTap )
+	if (checkQuestionAnswer) then Runtime:removeEventListener( "onFTVKey", checkQuestionAnswer ) end
+	if (checkSequenceAnswer) then Runtime:removeEventListener( "onFTVKey", checkSequenceAnswer ) end
+	if (CheckCounting) then Runtime:removeEventListener( "onFTVKey", CheckCounting ) end
+	if (ChoiceTap) then Runtime:removeEventListener( "onFTVKey", ChoiceTap ) end
+	if (ComplexChoiceTap) then Runtime:removeEventListener( "onFTVKey", ComplexChoiceTap ) end
+	if (MatchingTap) then Runtime:removeEventListener( "onFTVKey", MatchingTap ) end
+
+	if (checkQuestionAnswer) then Runtime:removeEventListener( "key", checkQuestionAnswer ) end
+	if (checkSequenceAnswer) then Runtime:removeEventListener( "key", checkSequenceAnswer ) end
+	if (CheckCounting) then Runtime:removeEventListener( "key", CheckCounting ) end
+	if (ChoiceTap) then Runtime:removeEventListener( "key", ChoiceTap ) end
+	if (ComplexChoiceTap) then Runtime:removeEventListener( "key", ComplexChoiceTap ) end
+	if (MatchingTap) then Runtime:removeEventListener( "key", MatchingTap ) end
 
 end
 
@@ -698,7 +651,6 @@ function decideLevelOrder()
 	end
 	
 	local set1, set2, set3, set4, set5
-	-- print("version: " .. variation)
 	
 	if (variation == 4 or variation == 7 and gameplayType == 1) then
 		set1 = { 2, 3, 6 }
@@ -741,7 +693,6 @@ function decideLevelOrder()
 	end
 	
 end
-
 
 
 function setOptions()
@@ -919,7 +870,6 @@ function setOptions()
 		else
 			equationSign = equationsOptions.sign
 		end
-		-- print("Equation")
 		numBlanks = equationsOptions.numBlanks
 		choiceOneBlank = equationsOptions.choiceOneBlank
 		choiceTwoBlank = equationsOptions.choiceTwoBlank
@@ -958,17 +908,14 @@ function setOptions()
 		column = countingOptions.columnNum
 		
 		if (startNumber == "random") then
-			-- startNumber = math.random(startRange, endRange - ((row*column)*countingOptions.skip)+1)
 		
 			repeat
 				startNumber = math.random(startRange, endRange)
-				-- startNumber = math.random(startRange, endRange - ((row*column)*countingOptions.skip)+1)
 			until countingOptions.placeMatch == 0 or
 					countingOptions.placeMatch ~= 0 and startNumber % countingOptions.placeMatch == 0
 					
 		
 		end
-		-- print("startNumber" .. startNumber)
 		
 		spacing = countingOptions.spacing
 		
@@ -1020,19 +967,9 @@ function setOptions()
 			tempPlaceMatch = sequenceSkipAmount
 		end
 		if (startNumber == "random") then
-			-- if (startRange > 10) then
-				-- repeat
-					-- startNumber = math.random(startRange, endRange) -- wasnt commented out
-				-- until endRange - numChoices > startNumber
-			-- else
-				-- repeat
-					-- startNumber = math.random(3, 5)
-				-- until endRange - numChoices > startNumber
-			-- end
 			
 			repeat
 				startNumber = math.random(startRange, endRange)
-			-- until endRange - numChoices > startNumber
 			until tempPlaceMatch == 0 and endRange - numChoices > startNumber or
 					tempPlaceMatch == 0 and endRange - numChoices <= startRange or
 					tempPlaceMatch ~= 0 and endRange - numChoices > startNumber and startNumber % tempPlaceMatch == 0 or 
@@ -1120,10 +1057,6 @@ function setOptions()
 				randomImage = 1
 			end
 		
-			-- repeat
-				-- randomImage = math.random(1, #howManyImageList)
-			-- until prevImage ~= randomImage
-			-- prevImage = randomImage
 			questionTwo = howManyImageList[randomImage].image
 			
 			if (groupSkip == 2) then
@@ -1193,31 +1126,8 @@ function setOptions()
 			prevAppleAnswer = questionTwo
 			
 		elseif (question == "How many are" and questionTwo == "random") then
-			-- if (curGame % 2 == 0) then
-				-- local tempNum = math.random( 1, 6 )
-				-- while tempNum == randomItem do
-					-- tempNum = math.random( 1, 6 )
-				-- end
-				-- randomItem = tempNum
-			-- else
 				
-				-- repeat
 				
-					-- if (questionOptions.showYellow == false and questionOptions.showGreen == true) then
-						-- randomItem = math.random( 1, 6 )
-					-- elseif (questionOptions.showYellow == false) then
-						-- randomItem = math.random( 1, 5 )
-					-- else
-						-- randomItem = math.random( 1, 7 )
-					-- end
-				-- until prevItem ~= randomItem
-				-- prevItem = randomItem
-			-- end
-			
-			
-			
-			
-			
 			if (#prevHowManyAreItem > #howManyAreCategories - 3) then
 				for i = #prevHowManyAreItem-3, 1, -1 do
 					table.remove( prevHowManyAreItem, i )
@@ -1244,9 +1154,6 @@ function setOptions()
 			until wasRepeated == false
 			prevHowManyAreItem[#prevHowManyAreItem+1] = randomHowManyAreItem
 			
-			-- if (#prevHowManyAreItem > 3) then
-				-- prevHowManyAreItem = {}
-			-- end
 			
 			howManyAnswer = randomHowManyAreItem
 			
@@ -1285,11 +1192,7 @@ function setOptions()
 				elseif (questionTwo == "MostLeast") then
 					questionTwo = "most" 
 				elseif (questionTwo == "GreaterLess") then
-					-- if (numChoices <= 2) then
-						-- questionTwo = "greater" 
-					-- else
 						questionTwo = "greatest" 
-					-- end
 				else
 					questionTwo = "bigger" 
 				end
@@ -1299,11 +1202,7 @@ function setOptions()
 				elseif (questionTwo == "MostLeast") then
 					questionTwo = "least"
 				elseif (questionTwo == "GreaterLess") then
-					-- if (numChoices <= 2) then
-						-- questionTwo = "less" 
-					-- else
 						questionTwo = "least" 
-					-- end
 				else
 					questionTwo = "smaller" 
 				end
@@ -1360,13 +1259,11 @@ function setOptions()
 			answer = questionTwo
 			
 			
-			
 			if (numAnswers == 2) then
 				numBlanks = 2
 			else
 				numBlanks = 3
 			end
-		
 		
 		
 		elseif (question == "Which is") then
@@ -1516,8 +1413,6 @@ function setOptions()
 				cardSettingsSpacing = nil
 			end
 			
-			-- startRange = 1
-			-- endRange = 10
 		
 		elseif (question == "Which sentence" and questionTwo == "random" or
 					question == "Word problem" and questionTwo == "random") then
@@ -1578,7 +1473,6 @@ function setOptions()
 		end
 		
 		
-		
 		if (question == "Which number is") then
 			if (cardOptions.spacing) then
 				cardSettingsSpacing = cardOptions.spacing
@@ -1595,21 +1489,8 @@ function setOptions()
 		imageCount = questionsOptions.imageCount
 		
 		
-		-- if (question == "PickEvenOdd") then
-			-- local randomEvenOdd = math.random(1, 2)
-			-- if (randomEvenOdd == 1) then
-				-- isEvenOdd = "even"
-			-- else
-				-- isEvenOdd = "odd"
-			-- end
-			
-		-- end
-		
 		if (question == "PickEvenOdd" or question == "AllGreaterLessThan") then
 			local randomEvenOdd = math.random(1, 2)
-			-- if (question == "AllGreaterLessThan") then
-				-- randomEvenOdd = math.random(1, 3)
-			-- end
 			
 			if (randomEvenOdd == 1 and questionsOptions.questionType2 ~= "even" and
 				questionsOptions.questionType2 ~= "odd" or
@@ -1619,11 +1500,8 @@ function setOptions()
 			elseif (randomEvenOdd == 2 and questionsOptions.questionType2 ~= "odd" and
 					questionsOptions.questionType2 ~= "even" or
 					questionsOptions.questionType2 == "odd") then
-			-- elseif (randomEvenOdd == 2) then
 				isEvenOdd = "odd"
 				isGreaterLessThan = "less than"
-			-- else
-				-- isGreaterLessThan = "equal to"
 			end
 			
 			local matchingType = cardOptions.category
@@ -1660,7 +1538,6 @@ function setOptions()
 		print("Answer: " .. questionTwo)
 		
 		playedGames[#playedGames+1] = question
-		
 		
 		
 	end
@@ -1704,1322 +1581,6 @@ function instructionsTouch( event )
 	
 end
 
-function playInstructionsAudio(questionTouched)
-
-	levelOptions = gameDetails["level" .. level]
-	gameOptions = gameLevelDetails
-	
-	questionOptions = gameOptions.question
-	equationOptions = gameOptions.equation
-	equationOptions = gameOptions.equation
-	cardOptions = gameOptions.cards
-	if (gameOptions.gameType == "question") then
-		questionsOptions = gameOptions.questions
-	end
-	
-	
-	local skipHeresAnotherOne = false
-	
-	if (
-		-- gameOptions.gameType == "matching" and cardOptions.category == "shapeToShapeItem" or
-		-- gameOptions.gameType == "matching" and cardOptions.category == "colorToColorItem" or
-		gameOptions.gameType == "matching" and 
-		cardOptions.category ~= "shapeToShape" and cardOptions.category ~= "colorToColor" and
-		cardOptions.category ~= "shapeItemToShapeItem" and cardOptions.category ~= "colorItemToColorItem" and
-		cardOptions.category ~= "shapeToShapeItem" and cardOptions.category ~= "colorToColorItem"or
-		gameOptions.gameType == "touchCounting" or
-		gameOptions.gameType == "basket" or
-			gameOptions.gameType == "basketEvenOdd" or
-			gameOptions.gameType == "basketGreaterLessThan" or
-		gameOptions.gameType == "touchTheNumber" or
-		gameOptions.gameType == "puzzleSlots" or
-		gameOptions.gameType == "question" and question == "Which one is a" or
-		gameOptions.gameType == "question" and question == "How many" or
-		gameOptions.gameType == "question" and question == "Which number is" or
-		gameOptions.gameType == "question" and question == "How many are" or
-		gameOptions.gameType == "question" and question == "Which one is different") then
-		
-		skipHeresAnotherOne = true
-		
-	end
-	
-	skipHeresAnotherOne = true
-	
-	
-	if (skipHeresAnotherOne == false and questionTouched == false and playedGames[#playedGames-1] and playedGames[#playedGames-2] and playedGames[#playedGames-3] == nil and
-			playedGames[#playedGames] == playedGames[#playedGames-1] and
-			playedGames[#playedGames] == playedGames[#playedGames-2] or
-			skipHeresAnotherOne == false and questionTouched == false and playedGames[#playedGames-1] and playedGames[#playedGames-2] and playedGames[#playedGames-3] and
-			playedGames[#playedGames] == playedGames[#playedGames-1] and
-			playedGames[#playedGames] == playedGames[#playedGames-2] and
-			playedGames[#playedGames] ~= playedGames[#playedGames-3]) then
-	
-	
-		if savedData.enableSounds == true then
-		
-			if (gameOptions.gameType == "matching") then
-			
-				if (cardOptions.category == "shapeToShape" or
-						cardOptions.category == "shapeItemToShapeItem" or
-						cardOptions.category == "shapeToShapeItem") then
-				
-					playReservedChannel(matchTheShapeCards, 11, 0)
-				elseif (cardOptions.category == "colorToColor" or
-							cardOptions.category == "colorItemToColorItem" or
-							cardOptions.category == "colorToColorItem") then
-				
-					playReservedChannel(matchTheColorCards, 11, 0)
-				else
-					playReservedChannel(numbersAndNumbersInstructions, 11, 0)
-				end
-			
-			else
-		
-				playReservedChannel(heresAnotherOne, 11, 0)
-				
-			end
-			
-			
-		end
-	
-	else
-	
-		if (gameOptions.gameType == "matching") then
-		
-			print("test 4")
-			print(cardOptions.category)
-		
-			if (cardOptions.category == "numbersToGroups") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(numbersAndGroupsInstructions2, 11, 0)
-					else
-						playReservedChannel(numbersAndGroupsInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "groupsToGroups") then
-				if savedData.enableSounds == true then
-					-- if (myData.isFireTV or myData.isController) then 
-						-- playReservedChannel(groupsAndGroupsInstructions2, 11, 0)
-					-- else
-						playReservedChannel(groupsAndGroupsInstructions, 11, 0)
-					-- end
-				end
-			elseif (cardOptions.category == "shapeToShape" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-				
-					-- if (showMeMode and showMeMode == 2) then
-					
-						if (playingFirstPartShowMe == true) then
-							if (gameplayMode == 2) then
-								playReservedChannel(findThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(pickThe, 11, 0)
-							-- else
-								-- playReservedChannel(touchThe, 11, 0)
-							end
-						else
-							if (gameplayMode == 2) then
-								playReservedChannel(nowFindThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(nowPickThe, 11, 0)
-							-- else
-								-- playReservedChannel(nowTouchThe, 11, 0)
-							end
-						end
-						
-						local function partTwoAudio()
-							if savedData.enableSounds == true then
-								playReservedChannel(gameSounds[ showMeSelectOptionsPlural[1] ], 11, 0)
-							end
-							
-							
-							
-							-- local function partThreeAudio()
-								-- if savedData.enableSounds == true then
-									-- playReservedChannel( cards2, 11, 0)
-								-- end
-							
-							-- end
-							-- if (questionAudioTimer) then
-								-- timer.cancel( questionAudioTimer )
-								-- questionAudioTimer = nil
-							-- end
-							-- questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-							
-						
-						end
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						
-						if (playingFirstPartShowMe == true) then
-							questionAudioTimer = timer.performWithDelay( 700, partTwoAudio )
-						elseif (gameplayMode ~= 2) then -- memory mode
-							print("Test memory")
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						else
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						end
-						
-					-- else
-						-- playReservedChannel(shapesMatchingInstructions, 11, 0)
-					-- end
-					
-				end
-			elseif (cardOptions.category == "shapeToShape" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					playReservedChannel(shapesAndItemsMatchingInstructions, 11, 0)
-				end
-			elseif (cardOptions.category == "shapeToShape" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					playReservedChannel(shapesMatchingInstructions, 11, 0)
-				end
-			elseif (cardOptions.category == "shapeToShapeItem" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-			
-					-- if (showMeMode and showMeMode == 2) then
-					
-						if (playingFirstPartShowMe == true) then
-							if (gameplayMode == 2) then
-								playReservedChannel(findThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(pickThe, 11, 0)
-							-- else
-								-- playReservedChannel(touchThe, 11, 0)
-							end
-						else
-							if (gameplayMode == 2) then
-								playReservedChannel(nowFindThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(nowPickThe, 11, 0)
-							-- else
-								-- playReservedChannel(nowTouchThe, 11, 0)
-							end
-						end
-						
-						local function partTwoAudio()
-							if savedData.enableSounds == true then
-								playReservedChannel(gameSounds[ showMeSelectOptionsPlural[1] ], 11, 0)
-							end
-							
-							
-							
-							-- local function partThreeAudio()
-								-- if savedData.enableSounds == true then
-									-- playReservedChannel( items, 11, 0)
-								-- end
-							
-							-- end
-							-- if (questionAudioTimer) then
-								-- timer.cancel( questionAudioTimer )
-								-- questionAudioTimer = nil
-							-- end
-							-- questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-							
-						
-						end
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						
-						if (playingFirstPartShowMe == true) then
-							questionAudioTimer = timer.performWithDelay( 700, partTwoAudio )
-						elseif (gameplayMode ~= 2) then -- memory mode
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						else
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						end
-						
-					-- else
-						-- if (myData.isFireTV or myData.isController) then 
-							-- playReservedChannel(shapesAndItemsMatchingInstructions2, 11, 0)
-						-- else
-							-- playReservedChannel(shapesAndItemsMatchingInstructions, 11, 0)
-						-- end
-					-- end
-					
-				end
-			elseif (cardOptions.category == "shapeToShapeItem" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(shapesAndItemsMatchingInstructions2, 11, 0)
-					else
-						playReservedChannel(shapesAndItemsMatchingInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "shapeToShapeItem" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(shapesAndItemsMatchingInstructions2, 11, 0)
-					else
-						playReservedChannel(shapesMatchingInstructions, 11, 0)
-					end
-				end
-			
-			elseif (cardOptions.category == "shapeItemToShapeItem" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-			
-					-- if (showMeMode and showMeMode == 2) then
-					
-						if (playingFirstPartShowMe == true) then
-							if (gameplayMode == 2) then
-								playReservedChannel(findThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(pickThe, 11, 0)
-							-- else
-								-- playReservedChannel(touchThe, 11, 0)
-							end
-						else
-							if (gameplayMode == 2) then
-								playReservedChannel(nowFindThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(nowPickThe, 11, 0)
-							-- else
-								-- playReservedChannel(nowTouchThe, 11, 0)
-							end
-						end
-						
-						local function partTwoAudio()
-							if savedData.enableSounds == true then
-							
-								playReservedChannel(gameSounds[ showMeSelectOptionsPlural[1] ], 11, 0)
-							end
-							
-							
-							
-							-- local function partThreeAudio()
-								-- if savedData.enableSounds == true then
-									-- playReservedChannel( items, 11, 0)
-								-- end
-							
-							-- end
-							-- if (questionAudioTimer) then
-								-- timer.cancel( questionAudioTimer )
-								-- questionAudioTimer = nil
-							-- end
-							-- questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-							
-						
-						end
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						
-						if (playingFirstPartShowMe == true) then
-							questionAudioTimer = timer.performWithDelay( 700, partTwoAudio )
-						elseif (gameplayMode ~= 2) then -- memory mode
-							questionAudioTimer = timer.performWithDelay( 1250, partTwoAudio )
-						else
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						end
-						
-					-- else
-						-- if (myData.isFireTV or myData.isController) then 
-							-- playReservedChannel(shapesAndItemsMatchingInstructions2, 11, 0)
-						-- else
-							-- playReservedChannel(shapesAndItemsMatchingInstructions, 11, 0)
-						-- end
-					-- end
-					
-				end
-			elseif (cardOptions.category == "shapeItemToShapeItem" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(shapesAndItemsMatchingInstructions2, 11, 0)
-					else
-						playReservedChannel(shapesAndItemsMatchingInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "shapeItemToShapeItem" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(shapesAndItemsMatchingInstructions2, 11, 0)
-					else
-						playReservedChannel(shapesMatchingInstructions, 11, 0)
-					end
-				end
-			
-			elseif (cardOptions.category == "colorToColor" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-			
-					-- if (showMeMode and showMeMode == 2) then
-					
-						if (playingFirstPartShowMe == true) then
-							if (gameplayMode == 2) then
-								playReservedChannel(findThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(pickThe, 11, 0)
-							-- else
-								-- playReservedChannel(touchThe, 11, 0)
-							end
-						else
-							if (gameplayMode == 2) then
-								playReservedChannel(nowFindThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(nowPickThe, 11, 0)
-							-- else
-								-- playReservedChannel(nowTouchThe, 11, 0)
-							end
-						end
-						
-						local function partTwoAudio()
-							if savedData.enableSounds == true then
-								playReservedChannel(gameSounds[ showMeSelectOptions[1] ], 11, 0)
-							end
-							
-							
-							
-							local function partThreeAudio()
-								if savedData.enableSounds == true then
-									playReservedChannel( cards2, 11, 0)
-								end
-							
-							end
-							if (questionAudioTimer) then
-								timer.cancel( questionAudioTimer )
-								questionAudioTimer = nil
-							end
-							questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-							
-						
-						end
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						
-						
-						if (playingFirstPartShowMe == true) then
-							questionAudioTimer = timer.performWithDelay( 700, partTwoAudio )
-						elseif (gameplayMode ~= 2) then -- memory mode
-							
-							questionAudioTimer = timer.performWithDelay( 1450, partTwoAudio ) -- 1150
-						else
-							questionAudioTimer = timer.performWithDelay( 1400, partTwoAudio ) -- 1400
-						end
-						
-					-- else
-						-- playReservedChannel(colorsMatchingInstructions, 11, 0)
-					-- end
-				end
-			elseif (cardOptions.category == "colorToColor" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					playReservedChannel(colorsAndItemsMatchingInstructions, 11, 0)
-				end
-			elseif (cardOptions.category == "colorToColor" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					playReservedChannel(colorsMatchingInstructions, 11, 0)
-				end
-				
-			elseif (cardOptions.category == "colorToColorItem" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-			
-					-- if (showMeMode and showMeMode == 2) then
-					
-						if (playingFirstPartShowMe == true) then
-							if (gameplayMode == 2) then
-								playReservedChannel(findThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(pickThe, 11, 0)
-							-- else
-								-- playReservedChannel(touchThe, 11, 0)
-							end
-						else
-							if (gameplayMode == 2) then
-								playReservedChannel(nowFindThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(nowPickThe, 11, 0)
-							-- else
-								-- playReservedChannel(nowTouchThe, 11, 0)
-							end
-						end
-						
-						local function partTwoAudio()
-							if savedData.enableSounds == true then
-								playReservedChannel(gameSounds[ showMeSelectOptions[1] ], 11, 0)
-							end
-							
-							
-							
-							local function partThreeAudio()
-								if savedData.enableSounds == true then
-									playReservedChannel( items, 11, 0)
-								end
-							
-							end
-							if (questionAudioTimer) then
-								timer.cancel( questionAudioTimer )
-								questionAudioTimer = nil
-							end
-							
-							if (gameplayMode ~= 2) then
-								questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-							end
-						
-						end
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						
-						if (playingFirstPartShowMe == true) then
-							questionAudioTimer = timer.performWithDelay( 700, partTwoAudio )
-						elseif (gameplayMode ~= 2) then -- memory mode
-							questionAudioTimer = timer.performWithDelay( 1000, partTwoAudio )
-						else
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						end
-						
-					-- else
-						-- if (myData.isFireTV or myData.isController) then 
-							-- playReservedChannel(colorsAndItemsMatchingInstructions2, 11, 0)
-						-- else
-							-- playReservedChannel(colorsAndItemsMatchingInstructions, 11, 0)
-						-- end
-					-- end
-				
-					
-				end
-			elseif (cardOptions.category == "colorToColorItem" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(colorsAndItemsMatchingInstructions, 11, 0)
-					else
-						playReservedChannel(colorsAndItemsMatchingInstructions, 11, 0)
-					end
-				end
-			elseif 	(cardOptions.category == "colorToColorItem" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(colorsMatchingInstructions, 11, 0)
-					else
-						playReservedChannel(colorsMatchingInstructions, 11, 0)
-					end
-				end
-			
-			elseif (cardOptions.category == "colorItemToColorItem" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-			
-					-- if (showMeMode and showMeMode == 2) then
-					
-						if (playingFirstPartShowMe == true) then
-							if (gameplayMode == 2) then
-								playReservedChannel(findThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(pickThe, 11, 0)
-							-- else
-								-- playReservedChannel(touchThe, 11, 0)
-							end
-						else
-							if (gameplayMode == 2) then
-								playReservedChannel(nowFindThe, 11, 0)
-							else
-							-- elseif (myData.isFireTV or myData.isController) then 
-								playReservedChannel(nowPickThe, 11, 0)
-							-- else
-								-- playReservedChannel(nowTouchThe, 11, 0)
-							end
-						end
-						
-						local function partTwoAudio()
-							if savedData.enableSounds == true then
-								playReservedChannel(gameSounds[ showMeSelectOptions[1] ], 11, 0)
-							end
-							
-							
-							
-							local function partThreeAudio()
-								if savedData.enableSounds == true then
-									playReservedChannel( items, 11, 0)
-								end
-							
-							end
-							if (questionAudioTimer) then
-								timer.cancel( questionAudioTimer )
-								questionAudioTimer = nil
-							end
-							
-							if (gameplayMode ~= 2) then
-								questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-							end
-						
-						end
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						
-						if (playingFirstPartShowMe == true) then
-							questionAudioTimer = timer.performWithDelay( 750, partTwoAudio )
-						elseif (gameplayMode ~= 2) then -- memory mode
-							questionAudioTimer = timer.performWithDelay( 1250, partTwoAudio )
-						else
-							questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-						end
-						
-					-- else
-						-- if (myData.isFireTV or myData.isController) then 
-							-- playReservedChannel(colorItemsMatchingInstructions2, 11, 0)
-						-- else
-							-- playReservedChannel(colorItemsMatchingInstructions, 11, 0)
-						-- end
-					-- end
-				
-					
-				end
-			elseif (cardOptions.category == "colorItemToColorItem" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(colorItemsMatchingInstructions2, 11, 0)
-					else
-						playReservedChannel(colorItemsMatchingInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "colorItemToColorItem" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(colorsMatchingInstructions, 11, 0)
-					else
-						playReservedChannel(colorsMatchingInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "numbersToNumbers" and isClassicMode == false) then
-				if savedData.enableSounds == true then
-			
-					print("is first game")
-				print(isMatchingCardsFirstPlay)
-			
-				-- if (showMeMode and showMeMode == 2) then
-				
-					-- gameplayMode == 2 is memory mode
-				
-					if (playingFirstPartShowMe == true) then
-						if (gameplayMode == 2) then
-							playReservedChannel(findThe, 11, 0)
-						else
-						-- elseif (myData.isFireTV or myData.isController) then 
-							playReservedChannel(pickThe, 11, 0)
-						-- else
-							-- playReservedChannel(touchThe, 11, 0)
-						end
-					else
-						if (gameplayMode == 2) then
-							playReservedChannel(nowFindThe, 11, 0)
-						else
-						-- elseif (myData.isFireTV or myData.isController) then 
-							playReservedChannel(nowPickThe, 11, 0)
-						-- else
-							-- playReservedChannel(nowTouchThe, 11, 0)
-						end
-					end
-					
-					local function partTwoAudio()
-						if savedData.enableSounds == true then
-							-- if (isMatchingCardsFirstPlay == true) then
-								-- playReservedChannel(gameSounds[ showMeSelectOptions[1] ], 11, 0)
-							-- else
-							print("test sound")
-							print(showMeSelectOptionsPlural[1])
-								playReservedChannel(gameSounds[ showMeSelectOptionsPlural[1] ], 11, 0)
-							-- end
-						end
-						
-					
-					end
-					if (questionAudioTimer) then
-						timer.cancel( questionAudioTimer )
-						questionAudioTimer = nil
-					end
-					
-					if (playingFirstPartShowMe == true) then
-						if (isMatchingCardsFirstPlay == true) then
-							questionAudioTimer = timer.performWithDelay( 818, partTwoAudio ) 
-						elseif (gameplayMode == 2 or myData.isFireTV or myData.isController) then -- memory mode
-							questionAudioTimer = timer.performWithDelay( 818, partTwoAudio ) --was 1000
-						else
-							questionAudioTimer = timer.performWithDelay( 818, partTwoAudio ) --was 700
-						end
-					else
-						if (isMatchingCardsFirstPlay == true) then
-							questionAudioTimer = timer.performWithDelay( 1290, partTwoAudio )
-						elseif (gameplayMode == 2 or myData.isFireTV or myData.isController) then -- memory mode
-							questionAudioTimer = timer.performWithDelay( 1290, partTwoAudio ) --was 1000
-						else
-							questionAudioTimer = timer.performWithDelay( 1290, partTwoAudio )
-						end
-					end
-						
-					-- else
-						-- if (myData.isFireTV or myData.isController) then 
-							-- playReservedChannel(colorItemsMatchingInstructions2, 11, 0)
-						-- else
-							-- playReservedChannel(colorItemsMatchingInstructions, 11, 0)
-						-- end
-					-- end
-				
-					
-				end
-			elseif (cardOptions.category == "numbersToNumbers" and matchingOptions.mode == "showme") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(numbersAndNumbersInstructions, 11, 0)
-					else
-						playReservedChannel(numbersAndNumbersInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "numbersToNumbers" and matchingOptions.mode == "memory") then
-				if savedData.enableSounds == true then
-					if (myData.isFireTV or myData.isController) then 
-						playReservedChannel(numbersAndNumbersInstructions, 11, 0)
-					else
-						playReservedChannel(numbersAndNumbersInstructions, 11, 0)
-					end
-				end
-			elseif (cardOptions.category == "item") then
-				if savedData.enableSounds == true then
-					playReservedChannel(itemMatchingInstructions, 11, 0)
-				end
-			elseif (cardOptions.category == "numbersToEquations") then
-				if savedData.enableSounds == true then
-				
-					if (gameplayMode == 1) then
-						if (myData.isFireTV or myData.isController) then 
-							playReservedChannel(equationsAnswersShowMeInstructions2, 11, 0)
-						else
-							playReservedChannel(equationsAnswersShowMeInstructions, 11, 0)
-						end
-					else
-						playReservedChannel(equationsAnswersMatchInstructions, 11, 0)
-					end
-					
-				end
-			end
-			
-		elseif (gameOptions.gameType == "equation" or gameOptions.gameType == "complex equation") then
-		
-			if (questionTouched == true) then
-				if savedData.enableSounds == true then
-					playReservedChannel(solveTheEquationSound[1], 11, 0)
-				end
-			else
-		
-				if savedData.enableSounds == true then
-					playReservedChannel(solveTheEquationSound[currentEquationVO], 11, 0)
-				end
-				
-				currentEquationVO = currentEquationVO + 1
-				if (currentEquationVO > #solveTheEquationSound) then
-					currentEquationVO = 1
-				end
-			end
-			
-		elseif (gameOptions.gameType == "counting") then
-		
-			if savedData.enableSounds == true then
-				if (myData.isFireTV or myData.isController) then 
-					playReservedChannel(countingSound2, 11, 0)
-				else
-					playReservedChannel(countingSound, 11, 0)
-				end
-			end
-			
-		elseif (gameOptions.gameType == "sequence") then
-		
-			-- print("test VO")
-			-- print(prevSequenceVO)
-			-- print(questionOptions.line1)
-			-- print(currentSequenceVO)
-		
-			if (prevSequenceVO == "What comes next?" and questionOptions.line1 == "What's missing?" or 
-				prevSequenceVO == "What's missing?" and questionOptions.line1 == "What comes next?") then
-			
-				
-				currentSequenceVO = 1
-			end
-		
-			if (questionOptions.line1 == "What comes next?") then
-				if (questionTouched == true) then
-					if savedData.enableSounds == true then
-						playReservedChannel(whatComesNextSound[1], 11, 0)
-					end
-				else
-			
-					if savedData.enableSounds == true then
-						playReservedChannel(whatComesNextSound[currentSequenceVO], 11, 0)
-					end
-					
-					currentSequenceVO = currentSequenceVO + 1
-					if (currentSequenceVO > #whatComesNextSound) then
-						currentSequenceVO = 1
-					end
-					-- print("Sequence: " .. currentSequenceVO)
-				end
-				
-			
-				
-			else
-				
-				if (questionTouched == true) then
-					if savedData.enableSounds == true then
-						playReservedChannel(whatsMissingSound[1], 11, 0)
-					end
-				else
-			
-					if savedData.enableSounds == true then
-						playReservedChannel(whatsMissingSound[currentSequenceVO], 11, 0)
-					end
-					
-					currentSequenceVO = currentSequenceVO + 1
-					if (currentSequenceVO > #whatsMissingSound) then
-						currentSequenceVO = 1
-					end
-					-- print("Sequence: " .. currentSequenceVO)
-				end
-				
-				
-			end
-			
-			prevSequenceVO = questionOptions.line1
-		
-		elseif (gameOptions.gameType == "question") then
-		
-		
-		
-			if (question == "How many more apples do you need to make" or 
-				question == "How many apples do you need to take away to leave") then
-			
-				if (question == "How many more apples do you need to make") then
-					if (appleGameImage == "apples") then
-						if savedData.enableSounds == true then
-							playReservedChannel(howManyMoreApplesSound, 11, 0)
-						end
-					else
-						if savedData.enableSounds == true then
-							playReservedChannel(howManyMoreBananasSound, 11, 0)
-						end
-					end
-				else
-					if (appleGameImage == "apples") then
-						if savedData.enableSounds == true then
-							playReservedChannel(howManyApplesSound, 11, 0)
-						end
-					else
-						if savedData.enableSounds == true then
-							playReservedChannel(howManyBananasSound, 11, 0)
-						end
-					end
-				end
-				
-				-- print("Sound: " .. questionTwo)
-				
-				local function partTwoAudio()
-					if savedData.enableSounds == true then
-						playReservedChannel(gameNumSounds[ questionTwo ], 11, 0)
-					end
-					
-					local function partThreeAudio()
-						if (questionTwo == 1) then
-							if (appleGameImage == "apples") then
-								if savedData.enableSounds == true then
-									playReservedChannel(gameSounds[ "apple" ], 11, 0)
-								end
-							else
-								if savedData.enableSounds == true then
-									playReservedChannel(gameSounds[ "banana" ], 11, 0)
-								end
-							end
-						else
-							if savedData.enableSounds == true then
-								playReservedChannel(gameSounds[ appleGameImage ], 11, 0)
-							end
-						end
-					end
-					if (questionAudioTimer) then
-						timer.cancel( questionAudioTimer )
-						questionAudioTimer = nil
-					end
-					questionAudioTimer = timer.performWithDelay( 600, partThreeAudio )
-				
-				end
-				if (questionAudioTimer) then
-					timer.cancel( questionAudioTimer )
-					questionAudioTimer = nil
-				end
-				
-				if (question == "How many more apples do you need to make") then
-					questionAudioTimer = timer.performWithDelay( 2300, partTwoAudio )
-				else
-					questionAudioTimer = timer.performWithDelay( 2900, partTwoAudio )
-				end
-			
-			elseif (question == "How many") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(howManySound, 11, 0)
-				end
-				
-				local function partTwoAudio()
-					if savedData.enableSounds == true then
-						playReservedChannel(gameSounds[ questionTwo ], 11, 0)
-					end
-				
-				end
-				if (questionAudioTimer) then
-					timer.cancel( questionAudioTimer )
-					questionAudioTimer = nil
-				end
-				questionAudioTimer = timer.performWithDelay( 800, partTwoAudio )
-				
-			elseif (question == "How many are") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(howManyAreSound, 11, 0)
-				end
-				
-				local function partTwoAudio()
-					if savedData.enableSounds == true then
-						playReservedChannel(gameSounds[ questionTwo ], 11, 0)
-					end
-				
-				end
-				if (questionAudioTimer) then
-					timer.cancel( questionAudioTimer )
-					questionAudioTimer = nil
-				end
-				questionAudioTimer = timer.performWithDelay( 1000, partTwoAudio )
-				
-			elseif (questionTwo == "first") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(whichNumberFirstSound, 11, 0)
-				end
-				
-			elseif (questionTwo == "last") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(whichNumberLastSound, 11, 0)
-				end
-			
-			elseif (questionTwo == "most") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(whichCardMostSound, 11, 0)
-				end
-			
-			elseif (questionTwo == "least") then
-			
-				if (cardOptions.category == "numbers") then
-					playReservedChannel(whichNumIsLeast, 11, 0)
-				else
-					playReservedChannel(whichCardLeastSound, 11, 0)
-				end
-			elseif (questionTwo == "less") then
-		
-				if savedData.enableSounds == true then
-					playReservedChannel(whichNumIsLess, 11, 0)
-				end
-				
-			elseif (questionTwo == "greater") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(whichNumIsGreater, 11, 0)
-				end
-				
-			elseif (questionTwo == "greatest") then
-			
-				if savedData.enableSounds == true then
-					playReservedChannel(whichNumIsGreatest, 11, 0)
-				end
-			
-			elseif (question == "Which 2 numbers add up to") then
-			
-				if savedData.enableSounds == true then
-					if (numAnswers == 2) then
-					playReservedChannel(whichTwoAddSound, 11, 0)
-					else
-						playReservedChannel(whichThreeAddSound, 11, 0)
-					end
-				end
-				
-				local function partTwoAudio()
-					if savedData.enableSounds == true then
-						playReservedChannel(gameNumSounds[ questionTwo ], 11, 0)
-					end
-				
-				end
-				if (questionAudioTimer) then
-					timer.cancel( questionAudioTimer )
-					questionAudioTimer = nil
-				end
-				questionAudioTimer = timer.performWithDelay( 2000, partTwoAudio )
-				
-			elseif (question == "Which one is a" or question == "Which one is an") then
-				
-				-- if savedData.enableSounds == true then
-					-- if (numOrGroup == "shape" or numOrGroup == "shapeItem") then
-						-- if (questionTwo == "oval" or questionTwo == "octagon") then
-							
-							-- playReservedChannel(whichOneIsAnSound, 11, 0)
-						-- else
-							-- playReservedChannel(whichOneIsASound, 11, 0)
-						-- end
-					-- elseif (numOrGroup == "color" or numOrGroup == "colorItem") then
-						-- playReservedChannel(whichOneIsSound, 11, 0)
-					-- end
-					
-				-- end
-				
-				-- local function partTwoAudio()
-					-- if savedData.enableSounds == true then
-						-- playReservedChannel(gameSounds[ questionTwo ], 11, 0)
-					-- end
-				
-				-- end
-				-- if (questionAudioTimer) then
-					-- timer.cancel( questionAudioTimer )
-					-- questionAudioTimer = nil
-				-- end
-				-- questionAudioTimer = timer.performWithDelay( 1100, partTwoAudio )
-				
-				
-				if savedData.enableSounds == true then
-			
-					if (numAnswers > 1) then
-						
-						if (myData.isFireTV or myData.isController) then 
-							playReservedChannel(pickAllThe, 11, 0)
-						else
-							playReservedChannel(touchAllThe, 11, 0)
-						end
-						
-					else
-					
-						if (numOrGroup == "shape" or numOrGroup == "shapeItem") then
-							if (questionTwo == "oval" or questionTwo == "octagon") then
-								
-								playReservedChannel(whichOneIsAnSound, 11, 0)
-							else
-								playReservedChannel(whichOneIsASound, 11, 0)
-							end
-						elseif (numOrGroup == "color" or numOrGroup == "colorItem") then
-							playReservedChannel(whichOneIsSound, 11, 0)
-							
-						end
-						
-					end
-					
-					
-				end
-				
-				local function partTwoAudio()
-					if savedData.enableSounds == true then
-						playReservedChannel(gameSounds[ questionTwo ], 11, 0)
-					end
-					
-					local function partThreeAudio()
-						
-						if (numOrGroup == "colorItem" or numOrGroup == "shapeItem") then
-							playReservedChannel(items, 11, 0)
-						else
-							playReservedChannel(cards2, 11, 0)
-						end
-						
-					end
-					
-					if (questionAudioTimer) then
-						timer.cancel( questionAudioTimer )
-						questionAudioTimer = nil
-					end
-					if (numAnswers > 1) then
-						if (questionTwo == "rectangle") then
-							questionAudioTimer = timer.performWithDelay( 1000, partThreeAudio )
-						else
-							questionAudioTimer = timer.performWithDelay( 750, partThreeAudio )
-						end
-					end
-					
-				end
-				if (questionAudioTimer) then
-					timer.cancel( questionAudioTimer )
-					questionAudioTimer = nil
-				end
-				if (numAnswers > 1) then
-					questionAudioTimer = timer.performWithDelay( 1200, partTwoAudio )
-				else
-					questionAudioTimer = timer.performWithDelay( 1000, partTwoAudio )
-				end
-			
-				
-			elseif (question == "Which number is" or question == "Which item is") then
-				
-				if savedData.enableSounds == true then
-					if (questionTwo == "bigger") then
-						if (numChoices > 2) then
-							playReservedChannel(whichOneIsBiggest, 11, 0)
-						else
-							playReservedChannel(whichOneIsBigger, 11, 0)
-						end
-					else
-						if (numChoices > 2) then
-							playReservedChannel(whichOneIsSmallest, 11, 0)
-						else
-							playReservedChannel(whichOneIsSmaller, 11, 0)
-						end
-					end
-				end
-			
-			
-			elseif (question == "Which is") then
-		
-				if savedData.enableSounds == true then
-					playReservedChannel(whichOneIsSound, 11, 0)
-				end
-				
-				local function partTwoAudio()
-					if savedData.enableSounds == true then
-						playReservedChannel(gameNumSounds[ groupSkip ], 11, 0)
-					end
-					
-					local function partThreeAudio()
-						if (questionTwo == "more than") then
-							if savedData.enableSounds == true then
-								playReservedChannel(moreThanSound, 11, 0)
-							end
-						else
-							if savedData.enableSounds == true then
-								playReservedChannel(lessThanSound, 11, 0)
-							end
-						end
-						
-						local function partFourAudio()
-							if savedData.enableSounds == true then
-								if (whichIsSecondNum <= 100) then
-									playReservedChannel(gameNumSounds[ whichIsSecondNum ], 11, 0)
-								else
-								
-									local function partFiveAudio()
-										local numTemp
-										if (whichIsSecondNum < 110) then
-											numTemp = tonumber( tostring(whichIsSecondNum):sub(3, 3) )
-										else
-											numTemp = tonumber( tostring(whichIsSecondNum):sub(2, 3) )
-										end
-										playReservedChannel(gameNumSounds[ numTemp ], 11, 0)
-									end
-								
-									playReservedChannel(hundredSounds[ tonumber(tostring(whichIsSecondNum):sub(1, 1)) ], 11, 0)
-								
-								
-									if (questionAudioTimer) then
-										timer.cancel( questionAudioTimer )
-										questionAudioTimer = nil
-									end
-									questionAudioTimer = timer.performWithDelay( 900, partFiveAudio )
-									-- playReservedChannel(thisNumberSound, 11, 0)
-								end
-							end
-						end
-						
-						if (questionAudioTimer) then
-							timer.cancel( questionAudioTimer )
-							questionAudioTimer = nil
-						end
-						questionAudioTimer = timer.performWithDelay( 900, partFourAudio )
-					end
-					
-					if (questionAudioTimer) then
-						timer.cancel( questionAudioTimer )
-						questionAudioTimer = nil
-					end
-					
-					
-					if (groupSkip > 99) then
-						questionAudioTimer = timer.performWithDelay( 1000, partThreeAudio )
-					else
-						questionAudioTimer = timer.performWithDelay( 800, partThreeAudio )
-					end
-				end
-				if (questionAudioTimer) then
-					timer.cancel( questionAudioTimer )
-					questionAudioTimer = nil
-				end
-				questionAudioTimer = timer.performWithDelay( 1000, partTwoAudio )
-				
-			elseif (question == "PickEvenOdd") then
-			
-				if savedData.enableSounds == true then
-					if (isEvenOdd == "even") then
-						playReservedChannel(pickTheEven, 11, 0)
-					else
-						playReservedChannel(pickTheOdd, 11, 0)
-					end
-					
-				end
-			
-			elseif (question == "AllGreaterLessThan") then
-		
-				if savedData.enableSounds == true then
-					
-					
-					
-					local function partTwoAudio()
-						if savedData.enableSounds == true then
-						
-							if (greaterLessThanAnswer <= 100) then
-								playReservedChannel( gameNumSounds[greaterLessThanAnswer], 11, 0 )
-							else
-								local function partFiveAudio()
-									local numTemp
-									if (greaterLessThanAnswer < 110) then
-										numTemp = tonumber( tostring(greaterLessThanAnswer):sub(3, 3) )
-									else
-										numTemp = tonumber( tostring(greaterLessThanAnswer):sub(2, 3) )
-									end
-									playReservedChannel(gameNumSounds[ numTemp ], 11, 0)
-								end
-							
-								playReservedChannel(hundredSounds[ tonumber(tostring(greaterLessThanAnswer):sub(1, 1)) ], 11, 0)
-							
-							
-								if (questionAudioTimer) then
-									timer.cancel( questionAudioTimer )
-									questionAudioTimer = nil
-								end
-								questionAudioTimer = timer.performWithDelay( 900, partFiveAudio )
-									
-							end
-						
-							-- playReservedChannel(gameNumSounds[ questionTwo ], 11, 0)
-						end
-					
-					end
-					
-					if (questionAudioTimer) then
-						timer.cancel( questionAudioTimer )
-						questionAudioTimer = nil
-					end
-					questionAudioTimer = timer.performWithDelay( 2300, partTwoAudio )
-					
-					
-					-- local function partTwoAudio()
-						-- if savedData.enableSounds == true then
-							-- playReservedChannel(gameNumSounds[ greaterLessThanAnswer ], 11, 0)
-						-- end
-					-- end
-					
-					
-					if (isGreaterLessThan == "greater than" ) then
-						playReservedChannel(pickTheNumbersGreaterThan, 11, 0)
-					else
-						playReservedChannel(pickTheNumbersLessThan, 11, 0)
-					end
-					
-				end
-				
-			
-			elseif (question == "TrueOrFalse") then
-		
-				if savedData.enableSounds == true then
-					playReservedChannel(trueOrFalseSound, 11, 0)
-				end
-			
-			
-			elseif (question == "Word problem") then
-		
-		
-				if savedData.enableSounds == true then
-					if (numOrGroup == "operations") then
-						playReservedChannel(whatOperationSound, 11, 0)
-					else
-						playReservedChannel(solveWordProblemSound, 11, 0)
-					end
-				end
-			
-			elseif (question == "Which one is different") then
-			
-				if savedData.enableSounds == true then
-					if (questionTwo == "category") then
-						playReservedChannel(whichOneDoesntBelong, 11, 0)
-					else
-						
-						-- playReservedChannel(whichOneIsDifferentSound[math.random(1,#whichOneIsDifferentSound)], 11, 0)
-						
-						playReservedChannel(whichOneIsDifferentSound[whichOneIsDifferentVO], 11, 0)
-						
-						whichOneIsDifferentVO = whichOneIsDifferentVO + 1
-						if (whichOneIsDifferentVO > #whichOneIsDifferentSound) then
-							whichOneIsDifferentVO = 1
-						end
-					end
-				end
-			
-			end
-			
-			
-			
-		elseif (gameOptions.gameType == "puzzleSlots") then
-			
-			if (questionTouched == true) then
-				readPuzzleSlotsVO()
-			end
-			
-		elseif (gameOptions.gameType == "puzzle") then
-		
-			if (questionTouched == true) then
-				readPuzzleVO()
-			end
-			
-			
-		elseif (gameOptions.gameType == "basket" or
-			gameOptions.gameType == "basketEvenOdd" or
-			gameOptions.gameType == "basketGreaterLessThan") then
-	
-			if (questionTouched == true) then
-				itemStartTouched = false
-				
-				readBasketVO(true)
-			end
-		
-		elseif (gameOptions.gameType == "bubbleCounting") then
-		
-			if (questionTouched == true) then
-				readBubbleCountingVO(true)
-			end
-		
-		elseif (gameOptions.gameType == "touchTheNumber") then
-	
-			if (questionTouched == true) then
-				readTouchTheNumVO(true)
-			end
-		
-		
-		elseif (gameOptions.gameType == "touchCounting") then
-		
-			if (questionTouched == true) then
-				readCountingVO(true)
-			end
-			
-		end
-		
-	end
-	
-	
-end
 
 function nextGame()
 
@@ -3069,7 +1630,6 @@ function nextGame()
 	end
 	
 	
-	
 	gameOptions = gameLevelDetails
 	
 	questionOptions = gameOptions.question
@@ -3094,25 +1654,7 @@ function nextGame()
 		correctAnswer = nil
 		gameCompleted = false
 	
-		--if savedData.enableMusic == true then
-			--audio.setVolume( 1, { channel=6 } )
-			--if (reward == 0) then
-				--audio.fade( { channel=2 , time=0 , volume=0  } )
-			-- end
-			-- if (reward == 0 or reward == 1) then
-				-- audio.fade( { channel=3 , time=0 , volume=0  } )
-			-- end
-			-- if (reward == 0 or reward == 1 or reward == 2) then
-				-- audio.fade( { channel=4 , time=0 , volume=0  } )
-			-- end
-		-- end
 		
-		-- local details = levelDetails["level" .. level]
-		-- local detailsCards = details.cards[curGame]
-		
-		-- local detailsQuestion = details.questions[curGame]
-		-- local detailsEquations = details.equations[curGame]
-		-- print(detailsEquations)
 		scaleCards = cardOptions.scale
 		
 		if (cardGroup) then
@@ -3123,8 +1665,6 @@ function nextGame()
 		cardGroup = display.newGroup()
 		cardGroup.x = 0
 		cardGroup.y = 0
-		
-		
 		
 		
 		print("Waypoint: " .. currentWaypoint)
@@ -3138,25 +1678,25 @@ function nextGame()
 		print(gameplayMode)
 		if (gameplayMode == 3) then
 			AddEquation()
-		elseif (gameplayMode == 4 or 
-				gameplayMode == 5 and question == "PickEvenOdd" or 
+		elseif (gameplayMode == 4 or
+				gameplayMode == 5 and question == "PickEvenOdd" or
 				gameplayMode == 5 and question == "AllGreaterLessThan") then
 			AddCountingGame()
 		elseif (gameplayMode == 5) then
 			AddQuestionGame()
 		elseif (gameplayMode == 6) then
 			AddSequenceGame()
-		elseif (gameplayMode == 7) then -- wilson
+		elseif (gameplayMode == 7) then
 			gamePuzzle = require("Scripts.gamePuzzle").new()
-		elseif (gameplayMode == 8 or gameplayMode == 13 or gameplayMode == 14) then -- wilson
+		elseif (gameplayMode == 8 or gameplayMode == 13 or gameplayMode == 14) then
 			gamePuzzle = require("Scripts.gameBasket").new()
-		elseif (gameplayMode == 9) then -- wilson
+		elseif (gameplayMode == 9) then
 			gamePuzzle = require("Scripts.gamePuzzleSlots").new()
-		elseif (gameplayMode == 10) then -- wilson
+		elseif (gameplayMode == 10) then
 			gamePuzzle = require("Scripts.gameCounting").new()
-		elseif (gameplayMode == 11) then -- wilson
+		elseif (gameplayMode == 11) then
 			gamePuzzle = require("Scripts.gameTouchTheNumber").new()
-		elseif (gameplayMode == 12) then -- wilson
+		elseif (gameplayMode == 12) then
 			gamePuzzle = require("Scripts.gameCountingBubble").new()
 		elseif (gameplayMode == 15) then
 			gamePuzzle = require("Scripts.gameCardSlots").new()
@@ -3167,7 +1707,6 @@ function nextGame()
 		local function addInstructionsListener()
 			questionHitBox:addEventListener( "touch", instructionsTouch )
 			instructionsReplayButton:addEventListener("touch", instructionsTouch)
-			--if (version.appStore == "Amazon" and system.getInfo ( "model" ) == "AFTB" or version.appStore == "Amazon FTV") then
 			
 			if (myData.isController) then
 				Runtime:addEventListener( "key", instructionsTouch )
@@ -3178,20 +1717,12 @@ function nextGame()
 		timer.performWithDelay( 700, addInstructionsListener )
 		playInstructionsAudio(false)
 		
-		--cardGroup:setReferencePoint ( display.CenterReferencePoint ) -- commented out for graphics 2.0 and replaced with:
-		--cardGroup.anchorX=0.5 
-		--cardGroup.anchorY=0.5 
 		
-		-- cardGroup.x = halfW + cardOptions.offsetX
 		cardGroup.y = halfH + cardOptions.offsetY
-		
-		-- print("Card group: " .. cardGroup.y)
-		
 		
 		
 		questionText.xScale = questionOptions.scale
 		questionText.yScale = questionOptions.scale
-		--questionText:setReferencePoint( display.CenterReferencePoint ) -- commented out for graphics 2.0 and replaced with:
 		questionText.anchorX=0.5 
 		questionText.anchorY=0.5 
 		
@@ -3211,7 +1742,6 @@ function nextGame()
 		
 		questionTextTwo.xScale = questionOptions.scale
 		questionTextTwo.yScale = questionOptions.scale
-		--questionTextTwo:setReferencePoint( display.CenterReferencePoint ) -- commented out for graphics 2.0 and replaced with:
 		questionTextTwo.anchorX=0.5 
 		questionTextTwo.anchorY=0.5 
 		
@@ -3237,15 +1767,6 @@ function nextGame()
 			currentCardSelected = 1
 			
 			
-			-- cursor.width = cards[currentCardSelected].contentWidth*1.16 -- Yellow Cursor
-			-- cursor.height = cards[currentCardSelected].contentHeight*1.1
-			-- cursor.x, cursor.y = cards[currentCardSelected]:localToContent( 0, 0 )
-			
-			-- cursor.width = cards[currentCardSelected].contentWidth*1.15 -- Black Cursor
-			-- cursor.height = cards[currentCardSelected].contentHeight*1.09
-			-- cursor.x, cursor.y = cards[currentCardSelected]:localToContent( 1, 1 )
-			
-			
 			if (cards and #cards > 0) then
 				
 				if (gameplayMode == 4) then
@@ -3269,11 +1790,9 @@ function nextGame()
 			end
 		
 		end
-		--if (version.appStore == "Amazon" and system.getInfo ( "model" ) == "AFTB" or version.appStore == "Amazon FTV" or
-		--	gameplayMode == 4) then
 		if (gameplayMode ~= 9 and gameplayMode ~= 15 and
 			gameplayMode ~= 8 and gameplayMode ~= 13 and gameplayMode ~= 14) then
-			if (myData.isFireTV or gameplayMode == 4 or myData.isController) then 
+			if (myData.isTV or gameplayMode == 4) then
 				cursorTransition = timer.performWithDelay( 700, showCursor )
 			end
 		end
@@ -3355,7 +1874,6 @@ function puzzleOptionsSettings()
 	
 	currentObjectSet = 1
 	objectSets = {
-		-- { image = "IceCream", maskSet = { 11 }, w = 160, h = 236, slotW = 164, slotH = 240 },
 		
 		
 		{ id = 1, image = "Egg", VO = "egg", maskSet = { 11, 19 }, w = 160, h = 212, slotW = 168, slotH = 216, puzzleOffsetX = 0, puzzleOffsetY = 7, slotOffsetX = 0, slotOffsetY = 0 },
@@ -3373,19 +1891,10 @@ function puzzleOptionsSettings()
 		{ id = 13, image = "IceCream", VO = "iceCream", maskSet = { 20 }, w = 136*.88, h = 256*.88, slotW = 140*.88, slotH = 260*.88, puzzleOffsetX = 0, puzzleOffsetY = 10, slotOffsetX = 0, slotOffsetY = 0 },
 		{ id = 14, image = "RedBird", VO = "redBird", maskSet = { 21 }, w = 204*0.98, h = 208*0.98, slotW = 208*0.98, slotH = 212*0.98, puzzleOffsetX = 0, puzzleOffsetY = 10, slotOffsetX = 0, slotOffsetY = 0 },
 				
-		-- puzzles with holes in the black background or with antennae sticking out of slot
-		-- { image = "Carrot", VO = "carrot", maskSet = { 15 }, w = 312, h = 120, slotW = 310, slotH = 120, puzzleOffsetX = 0, puzzleOffsetY = -22, slotOffsetX = 0, slotOffsetY = 0 },
-		-- { image = "Tractor", VO = "greenTractor", maskSet = { 19 }, w = 196, h = 216, slotW = 200, slotH = 220, puzzleOffsetX = 0, puzzleOffsetY = 0, slotOffsetX = 0, slotOffsetY = 0 },
-		-- { image = "Caterpillar", VO = "caterpillar", maskSet = { 18 }, w = 320, h = 168, slotW = 324, slotH = 144, puzzleOffsetX = 0, puzzleOffsetY = 0, slotOffsetX = 0, slotOffsetY = 13 },
-		-- { image = "Bee", VO = "beeVO", maskSet = { 17, 19 }, w = 248, h = 196, slotW = 236, slotH = 200, puzzleOffsetX = 0, puzzleOffsetY = -10, slotOffsetX = 9, slotOffsetY = 0 },
-		
-		
-		
 		
 	}
 	randomizeTable(objectSets)
 	randomizeTable(objectSets)
-	
 	
 	
 	colorSets = {
@@ -3460,7 +1969,6 @@ function setTouchTheNumberOptions()
 
 	numberCount = 1
 	currentNumberCount = 1
-	-- game2PrevMode = game2CurMode
 	game2LoopingOne = 0
 	game2LoopingTwo = 0
 	teachModeRepeating = false
@@ -3481,9 +1989,7 @@ function setTouchTheNumberOptions()
 
 	touchTheNumberOptions = {
 			
-		-- { mode = "choose", numbers = { 8 }, numChoices = 3, choicesRange = { 1, 9 }, randomOrder = false  }, -- for testing
 		{ mode = "teachChoose", num = 1 },
-		-- { mode = "choose", numbers = { 1 }, numChoices = 2, choicesRange = { 1, 3 }, randomOrder = false  },
 		{ mode = "teach", num = 2 },
 		{ mode = "choose", numbers = { 2 }, numChoices = 2, choicesRange = { 1, 3 }, randomOrder = false  },
 		{ mode = "teach", num = 3 },
@@ -3504,48 +2010,32 @@ function setTouchTheNumberOptions()
 		{ mode = "choose", numbers = { 10, "random" }, numChoices = 3, choicesRange = { 3, 10 }, randomOrder = false  },
 		
 		
-		-- Level 8
-		
 		{ mode = "choose", numbers = { "random" }, numChoices = 4, choicesRange = { 6, 10 }, randomOrder = true },
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 11, 15 }, randomOrder = true },
 		{ mode = "choose", numbers = { "random" }, numChoices = 4, choicesRange = { 14, 20 }, randomOrder = true },
 		
-		-- Level 12
 		
 		{ mode = "choose", numbers = { "random" }, numChoices = 4, choicesRange = { 10, 20 }, randomOrder = true },
 		
 		
-		
-		-- Loops forever (Use "game2LoopFourStart" variable)
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 5, 9 }, randomOrder = true },
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 2, 9 }, randomOrder = true },
 	
-		--22
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 3, 10 }, randomOrder = true  },
-		--23
 		{ mode = "choose", numbers = { 8,"random" }, numChoices = 3, choicesRange = { 4, 10 }, randomOrder = true  },
-		--24
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 3, 10 }, randomOrder = true  },
 		
-		--25
 		{ mode = "choose", numbers = { "random",7 }, numChoices = 3, choicesRange = { 2, 10 }, randomOrder = true  },
-		--26
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 3, 5 }, randomOrder = false  },
-		--27
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 1, 5 }, randomOrder = false  },
 		
-		--28
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 6, 7 }, randomOrder = false  },
-		--29
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 8, 10 }, randomOrder = false  },
-		--30
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 6, 10 }, randomOrder = false  },
 		
-		-- 31
 		{ mode = "choose", numbers = { 1 }, numChoices = 2, choicesRange = { 1, 3 }, randomOrder = false  },
 	
 	
-		-- Level 7 review
 		{ mode = "choose", numbers = { "random" }, numChoices = 4, choicesRange = { 10, 14 }, randomOrder = true },
 		{ mode = "choose", numbers = { "random" }, numChoices = 3, choicesRange = { 15, 20 }, randomOrder = true },
 		{ mode = "choose", numbers = { "random" }, numChoices = 4, choicesRange = { 15, 20 }, randomOrder = true },
@@ -3554,7 +2044,6 @@ function setTouchTheNumberOptions()
 	}
 	
 	colorfulNumbers = {
-		-- tScale = teach number scale, cScale = choose number scale
 		{ id = 1, w = 88, h = 180, tScale = 1.05, cScale = 1.1 },
 		{ id = 2, w = 136, h = 172, tScale = 1.05, cScale = 1.1 },
 		{ id = 3, w = 128, h = 176, tScale = 1.05, cScale = 1.1 },
@@ -3586,28 +2075,12 @@ function setBubbleCountingOptions()
 	
 	game3BubbleOptions = { 
 	
-		-- { id = "Bubble", w = 284, h = 280, numColors = 1, offsetX = 0, offsetY = 0 },
-		-- { id = "Balloon", w = 264, h = 340, numColors = 2, offsetX = -1.5, offsetY = 34 },
-		-- { id = "Cloud", w = 308, h = 300, numColors = 1, offsetX = -2.5, offsetY = -9 },
 		
 		{ id = "Bubble", w = 318, h = 314, numColors = 1, offsetX = 0, offsetY = 0 },
 		{ id = "Balloon", w = 280, h = 361, numColors = 2, offsetX = -1.5, offsetY = 34 },
 		{ id = "Cloud", w = 305, h = 297, numColors = 1, offsetX = -2.5, offsetY = -9 },
 		
-		-- { id = "Balloon", w = 280, h = 361, numColors = 2, offsetX = -1.5, offsetY = 34 },
-		-- { id = "Balloon", w = 280, h = 361, numColors = 2, offsetX = -1.5, offsetY = 34 },
-		-- { id = "Balloon", w = 280, h = 361, numColors = 2, offsetX = -1.5, offsetY = 34 },
 		
-		-- { id = "Cloud", w = 305, h = 297, numColors = 1, offsetX = -2.5, offsetY = -9 },
-		-- { id = "Cloud", w = 305, h = 297, numColors = 1, offsetX = -2.5, offsetY = -9 },
-		-- { id = "Cloud", w = 305, h = 297, numColors = 1, offsetX = -2.5, offsetY = -9 },
-		
-		-- { id = "Bubble", w = 318, h = 314, numColors = 1, offsetX = 0, offsetY = 0 },
-		-- { id = "Bubble", w = 318, h = 314, numColors = 1, offsetX = 0, offsetY = 0 },
-		-- { id = "Bubble", w = 318, h = 314, numColors = 1, offsetX = 0, offsetY = 0 },
-		
-		
-	
 	}
 	randomizeTable( game3BubbleOptions )
 	
@@ -3634,22 +2107,7 @@ function setUpGameTimer()
 	local function playBassMusicTimer()
 		if (savedData.enableMusic == true) then
                         
-			-- audio.play( matchingDrumsSound, { channel = 6, loops = -1 }  )
 			
-			--audio.play( menuGroup[itemIndex+1].music, { channel = 2, loops = -1 }  )
-			
-			
-			-- audio.play( matchingTriangleSound, { channel = 3, loops = -1 }  )
-			-- audio.play( matchingInstrumentSound, { channel = 4, loops = -1 }  )
-			
-			
-			--audio.fade( { channel=2 , time=0 , volume=0  } )
-			--audio.fade( { channel=3 , time=0 , volume=0  } )
-			--audio.fade( { channel=4 , time=0 , volume=0  } )
-                        -- audio.setVolume( 1, { channel=2 } )
-                        -- audio.setVolume( 0, { channel=3 } )
-                        -- audio.setVolume( 0, { channel=4 } )
-                        -- audio.setVolume( 0, { channel=6 } )
 		end
 	end
 	timer.performWithDelay( 500-soundDelay, playBassMusicTimer )
@@ -3657,7 +2115,6 @@ function setUpGameTimer()
 
 	correctCount = 0
 	
-	--local backTemp = { 1, 2, 3, 4, 5, 6 }
 	local backTemp = { 11, 17, 18, 19 }
 	for i = #backTemp, 1, -1 do
 	
@@ -3669,7 +2126,6 @@ function setUpGameTimer()
 	
 	end
 	currentBack = 1
-	
 	
 	
 	isPutNumOrderFirstPlay = true
@@ -3684,12 +2140,10 @@ function setUpGameTimer()
 	randomRewardSounds = { "partyHorn", "cartoon", "laughSillyB", "gatorWow" }
 	
 	
-	
 	difficulty = 1
 	layout = 0
 	reward = 0
 	
-	-- For layouts in matching
 	decideLevelOrder()
 	
 	
@@ -3717,29 +2171,15 @@ function setUpGameTimer()
 	
 	
 	basketOptions = {
-		-- { id = 1, xOffset = 0, yOffset = 0, numColor = { 255, 255, 255 }, showBasketBG = true }, 
-		-- { id = 2, xOffset = -10, yOffset = 0, numColor = { 0, 0, 0 }, showBasketBG = false }, 
 		{ id = 3, xOffset = 0, yOffset = 0, numColor = { 255, 255, 255 }, showBasketBG = true }, --round basket
-		-- { id = 4, xOffset = 5, yOffset = 0, numColor = { 76, 59, 35 }, showBasketBG = true }, -- hamper
-		-- { id = 5, xOffset = 5, yOffset = 0, numColor = { 255, 220, 100 }, showBasketBG = true }, -- toy box
-		-- { id = 6, xOffset = 5, yOffset = 0, numColor = { 124, 76, 20 }, showBasketBG = true }, -- square basket
 	}
 	randomizeTable( basketOptions )
 	
 	basketItemOptions = {
 		
-		-- { id = "appleCount", name = "apple", plural = "apples", delayVO = 0, w = 144, h = 148, basket = 3, numColors = 1, numOffsetX = 0.5, numOffsetY = 0.6, qScale = .85, sound = "appleReward", soundTwo = "chomp", animation = { id = "balloon", particles = "juice", duration = 100, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "watermelon", name = "watermelon", plural = "watermelon slices", pluralVO = "watermelonSlices", delayVO = 500, w = 166, h = 143, basket = 3,numColors = 1, numOffsetX = 0.5, numOffsetY = 0.49, numScale = .9, qScale = .7, sound = "foodCrunch", soundTwo = "chomp", animation = { id = "disappear", particles = "juice", duration = 110, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "basketStrawberry", name = "strawberry", plural = "strawberries", delayVO = 0, w = 130, h = 182, basket = 3,numColors = 1, numOffsetX = 0.5, numOffsetY = 0.55, numScale = 1, qScale = .85, sound = "gulp", soundTwo = "chomp", animation = { id = "disappear", particles = "juice", duration = 110, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "pepper", name = "pepper", plural = "peppers", delayVO = 0, w = 140, h = 166, basket = 3,numColors = 3, numOffsetX = 0.49, numOffsetY = 0.59, numScale = 1, qScale = .85, sound = "foodCrunch", soundTwo = "laughSillyB", animation = { id = "disappear", particles = "pepperSmoke", duration = 110, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "raspberry", name = "raspberry", plural = "raspberries", delayVO = 0, w = 147, h = 167, basket = 3,numColors = 1, numOffsetX = 0.5, numOffsetY = 0.56, numScale = .9, qScale = .85, sound = "spin", soundTwo = "none", animation = { id = "spin", particles = "", duration = 870, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "orangeCount", name = "orange", plural = "oranges", delayVO = 0, w = 150, h = 150, basket = 6,numColors = 1, numOffsetX = 0.5, numOffsetY = 0.5, numScale = 1, qScale = .85, sound = "gulp", soundTwo = "laughSilly3", animation = { id = "walkright", particles = "dust", duration = 1200, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "heartCount", name = "heart", plural = "hearts", delayVO = 0, w = 150, h = 131, basket = 6, numColors = 1, numOffsetX = 0.5, numOffsetY = 0.5, qScale = .85, sound = "heartReward", soundTwo = "none", animation = { id = "balloon", particles = "none", duration = 700, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
-		-- { id = "starCount", name = "star", plural = "stars", delayVO = 0, w = 150, h = 143, basket = 6, numColors = 1, numOffsetX = 0.5, numOffsetY = 0.55, qScale = .85, sound = "starReward", soundTwo = "none", animation = { id = "spin", particles = "none", duration = 1400, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
 
 		{ id = "appleCount", name = "apple", plural = "apples", delayVO = 0, w = 144, h = 148, basket = 3, numColors = 1, numOffsetX = 0.015, numOffsetY = 0.13, qScale = .85, sound = "appleReward", soundTwo = "chomp", animation = { id = "balloon", particles = "juice", duration = 100, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
 		
-		-- { id = "watermelon", name = "watermelon", plural = "watermelon slices", pluralVO = "watermelonSlices", delayVO = 500, w = 166, h = 143, basket = 3,numColors = 1, numOffsetX = .015, numOffsetY = 0.09, numScale = .9, qScale = .7, sound = "foodCrunch", soundTwo = "chomp", animation = { id = "disappear", particles = "juice", duration = 110, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
 		
 		{ id = "basketStrawberry", name = "strawberry", plural = "strawberries", delayVO = 300, w = 130, h = 182, basket = 3,numColors = 1, numOffsetX = .015, numOffsetY = 0.14, numScale = 1, qScale = .85, sound = "gulp", soundTwo = "chomp", animation = { id = "disappear", particles = "juice", duration = 110, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
 		
@@ -3754,9 +2194,7 @@ function setUpGameTimer()
 		{ id = "starCount", name = "star", plural = "stars", delayVO = 0, w = 150, h = 143, basket = 6, numColors = 1, numOffsetX = .015, numOffsetY = 0.1, qScale = .85, sound = "starReward", soundTwo = "none", animation = { id = "spin", particles = "none", duration = 1400, anchor = { 0.5, 0.5 }, particleOffset = { 0, 0 } } },
 
 	
-	
 	}
-	
 	
 	
 	nextGame()
@@ -3766,16 +2204,7 @@ end
 function startGame()	
 
 	
-	
-	
-	-- print("game started")
-	-- transition.to( line1, { time=500, alpha=0, transition=easing.outExpo } )
-	-- transition.to( line3, { time=500, alpha=0, transition=easing.outExpo } )
-	-- transition.to( line5, { time=500, alpha=0, transition=easing.outExpo } )
-	-- transition.to( bgWhite, { time=700, alpha = 0, transition=easing.outExpo } )
-
 	local screenCapture = display.captureScreen()
-	-- bgWhite.alpha = 1
 	bgWhite:toFront()
 	screenCapture:toFront()
 	screenCapture.anchorX = 0.5
@@ -3794,9 +2223,6 @@ function startGame()
 	transition.to( screenCapture, { time=700, alpha = 0, transition=easing.outExpo } )
 	
 	
-	
-	
-	
 	if (myData.isController) then
 		Runtime:addEventListener( "key", trackCursor )
 		Runtime:addEventListener( "axis", trackCursorAxis )
@@ -3805,65 +2231,26 @@ function startGame()
 	end
 	
 	
-	-- local details = levelDetails["level" .. level]
 	local levelOptions = gameDetails["level" .. level]
 	local bgImage = backgroundOptions[levelEditorDetails.levelSetting].image
-	
 	
 	
 	if (savedData.enableMusic == true) then
 	
 	
-		----------OLD CODE-----------
-        -- audio.stop( 3 )
-		
-		-- audio.play( bgOneMusic, { channel = 3, loops = -1 }  )
-				-- audio.setVolume( 0, { channel=3 } )
-		-- audio.setVolume( 1, { channel=3 } )
-		
-		-- audio.setVolume( 1, { channel=2 } )
-		
-		
-		
-		
-		-- audio.stop( 2 )
 		audio.stop( 3 )
-		-- audio.stop( 4 )
-		-- audio.stop( 5 )
 		
 		audio.play( musicOptions[levelEditorDetails.music], { channel = 3, loops = -1 }  )
 		
 		
-		-- if (bgImage == "worldBG1") then
-			-- audio.play( bgOneMusic, { channel = 2, loops = -1 }  )
-		-- elseif (bgImage == "worldBG5") then
-			-- audio.play( bgFiveMusic, { channel = 3, loops = -1 }  )
-		-- elseif (bgImage == "worldBG6") then
-			-- audio.play( bgSixMusic, { channel = 4, loops = -1 }  )
-		-- elseif (bgImage == "worldBG7") then
-			-- audio.play( bgSevenMusic, { channel = 5, loops = -1 }  )
-		-- end
-					-- audio.setVolume( 0, { channel=2 } )
 					audio.setVolume( 0, { channel=3 } )
-					-- audio.setVolume( 0, { channel=4 } )
-					-- audio.setVolume( 0, { channel=5 } )
-		-- if (bgImage == "worldBG1") then
-			-- audio.setVolume( 1, { channel=2 } )
-		-- elseif (bgImage == "worldBG5") then
 			audio.setVolume( 1, { channel=3 } )
-		-- elseif (bgImage == "worldBG6") then
-			-- audio.setVolume( 1, { channel=4 } )
-		-- elseif (bgImage == "worldBG7") then
-			-- audio.setVolume( 1, { channel=5 } )
-		-- end
 		
 		
 	end
 	
-	-- audio.setVolume( 1, { channel=6 } )
 	
 	timer.performWithDelay( 500, setUpGameTimer )
-	
 	
 	
 	whichDifferentHSetsTable = {}
@@ -3880,23 +2267,17 @@ function loadBGItems()
 	gamePathGroup.y = 0
 	
 	
-	-- if (version.appStore == "Amazon" and system.getInfo ( "model" ) == "AFTB" or version.appStore == "Amazon FTV") then
 	currentCardSelected = 1
-	-- cursor = display.newImageRect("Images/UI/cursor.png", 94, 114)--381, 119 )
-	-- cursor = display.newImageRect("Images/UI/cursor2.png", 85, 105)
 	cursor = display.newImageRect("Images/UI/cursorHand.png", 59, 59)
 	cursor.x = 0
 	cursor.y = 0
 	cursor.alpha = 0
 	
 	
-	-- local details
 	local levelOptions
 	if (playingRandomGame == true) then
-		-- details = levelDetails["level" .. charLevel]
 		levelOptions = gameDetails["level" .. charLevel]
 	else
-		-- details = levelDetails["level" .. level]
 		levelOptions = gameDetails["level" .. level]
 	end
 	
@@ -3905,10 +2286,7 @@ function loadBGItems()
 	local waypointDetails = waypoints[levelEditorDetails.levelMoveStyle]
 	
 	
-	
-	
 	numGames = 0
-	
 	
 	
 	randomizeTable( wordProblemsAddition["num10"] )
@@ -3935,7 +2313,6 @@ function loadBGItems()
 	wordProblemsSubtraction100 = 1
 	wordProblemsSubtraction1000 = 1
 
-	
 	
 	local completeGames = 0
 	if (playingRandomGame == true) then
@@ -3967,7 +2344,6 @@ function loadBGItems()
 	numGamesLeft = numGames
 		
 	
-	
 	if (system.getInfo( "platformName" ) == "Android"  ) then
 
 		selectFont = "BigSky_1"
@@ -3981,15 +2357,12 @@ function loadBGItems()
 	
 		
 	gameBackground = display.newImageRect("Images/UI/" .. bgDetails.image .. ".png", bgDetails.width, bgDetails.height )
-	--gameBackground:setReferencePoint(display.BottomCenterReferencePoint) -- commented out for graphics 2.0 and replaced with:
         gameBackground.anchorX=0.5
         gameBackground.anchorY = 1
 	gameBackground.x = halfW
 	gameBackground.y = 270+(gameBackground.height/2)
-	--gamePathGroup:insert( gameBackground )
 	
 	for i = 1, numGames do
-		--gamePathText[#gamePathText+1] = display.newText( i, -400, 295, selectFont, 21 )
 		gamePathText[#gamePathText+1] = display.newImageRect("Images/UI/" .. i .. ".png", 20, 15 )
 		
 		gamePathText[#gamePathText]:setFillColor(255/255, 254/255, 240/255)
@@ -4007,7 +2380,6 @@ function loadBGItems()
 			hopX = waypointDetails[numGames-1].finish.x
 		end
 		
-		--gamePathText[#gamePathText]:setTextColor(255, 255, 255)
 		gamePathGroup:insert( gamePathText[#gamePathText] )
 		
 	
@@ -4015,7 +2387,6 @@ function loadBGItems()
 	
 	
 	worldStar = display.newImageRect("Images/UI/worldStar.png", 15, 14 )
-	--worldStar:setReferencePoint(display.centerReferencePoint) -- commented out for graphics 2.0 and replaced with:
         worldStar.anchorX = 0.5
         worldStar.anchorY = 0.5
 		
@@ -4024,32 +2395,22 @@ function loadBGItems()
 	worldStar.initY = worldStar.y
 	worldStar.alpha = 1
 	worldStar.frame = 0
-	--gamePathGroup:insert( worldStar )
 	
 	Runtime:addEventListener( "enterFrame", worldStarFloat)
 	
 	
-	
 	local iconW, iconH
-	-- if (display.pixelHeight == 960) then
-		-- iconW = details.iconIphone4.width
-		-- iconH = details.iconIphone4.height
-	-- else
 		iconW = iconDetails.width
 		iconH = iconDetails.height
-	-- end
-	
 	
 	
 	gameIcon = display.newImageRect("Images/UI/" .. iconDetails.image .. ".png", iconW, iconH )
-	--gameIcon:setReferencePoint(display.centerReferencePoint) -- commented out for graphics 2.0 and replaced with:
         gameIcon.anchorX = iconDetails.anchor[1]
 		gameIcon.anchorY = iconDetails.anchor[2]
 		
 	gameIcon.x = waypointDetails[1].start.x
 	gameIcon.y = waypointDetails[1].start.y
 	gamePathGroup:insert( gameIcon )
-	
 	
 	
 	bgPlane = display.newImageRect("Images/UI/plane.png", 74, 51 )
@@ -4077,7 +2438,6 @@ function loadBGItems()
 	bgPlane.frame = 0
 	
 	
-	-- carGroup = display.newGroup()
 	carsFront = {}
 	carsBack = {}
 	
@@ -4095,9 +2455,6 @@ function loadBGItems()
 	addCarsTimer = timer.performWithDelay( math.random( addCarMin, addCarMax ), addCars, -1 )
 	
 	
-	
-	
-	--gamePathGroup:insert( gameIcon )
 	gamePathGroup.x = gamePathGroup.x + pathDetails.x
 	gamePathGroup.y = gamePathGroup.y + pathDetails.y
 	
@@ -4106,8 +2463,6 @@ function loadBGItems()
 	
 	gameBackground.alpha = 1
 	
-	-- carGroup:toBack()
-	-- dustGroupBack:toBack()
 	gamePathGroup:toFront()
 	
 	
@@ -4122,11 +2477,9 @@ function loadBGItems()
 	
 	
 	Runtime:addEventListener( "enterFrame", bgGameAnimations)
-	-- print("system.getInfo "..system.getInfo( "targetAppStore" ))
 	
 	
-	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 	else
 		if (system.getInfo( "platformName" ) == "Android" ) then
 			print(system.getInfo( "platformName" ))
@@ -4144,30 +2497,7 @@ function loadBGItems()
 			screenGroup:insert( gamePathGroup )
 			
 			
-			-- print("test contentWidth")
-			-- print(display.pixelWidth)
-			-- print(screenGroup.width)
-			
-			-- testText = display.newText( "test", halfW, screenOriginY + 50, dynamicFont, 25 )
-			-- testText:setFillColor( 0 )
-			-- testText.text = "Test1 Display: " .. display.pixelWidth .. "  BG: " .. screenGroup.width
-			
-			-- if (screenGroup.width - 150 < display.pixelWidth) then
-				-- testText.text = "Test2 Display: " .. display.pixelWidth .. "  BG: " .. screenGroup.width
-			
-				
-				-- local newScale = (display.pixelWidth*1.3) / screenGroup.width
-				-- local oldW, oldH = screenGroup.width, screenGroup.height
-			
-				-- screenGroup.width = screenGroup.width * newScale
-				-- screenGroup.height = screenGroup.height * newScale
-			-- end
-			
-			-- if (system.getInfo( "platformName" ) == "Android" ) then
 				screenGroup.xScale, screenGroup.yScale = androidScale, androidScale
-			-- else
-				-- screenGroup.xScale, screenGroup.yScale = chromeScale, chromeScale
-			-- end
 			
 			screenGroup.anchorChildren = true
 			screenGroup.anchorX = 0.5
@@ -4190,28 +2520,16 @@ function gameStartAnim2()
 	mainContainer.alpha = 0
 	
 	
-	-- local details
-	-- if (playingRandomGame == true) then
-		-- details = levelDetails["level" .. charLevel]
-	-- else
-		-- details = levelDetails["level" .. level]
-	-- end
-	
-	-- local detailsInstructions = details.instructions
-	
-	
 	if (playingRandomGame == true and randomLevelDetails["random" .. randomLevelChallenge] and randomLevelDetails["random" .. randomLevelChallenge].showTime ~= "") then
 		timer.performWithDelay( randomLevelDetails["random" .. randomLevelChallenge].showTime, startGame, 1 ) --was 1700
 	else
 		timer.performWithDelay( levelEditorDetails.levelIntroShowTime, startGame, 1 ) --was 1700
 	end
 	
-	-- timer.performWithDelay( detailsInstructions.showTime, startGame, 1 ) --was 1700
 	
 	local function transAnim()
 		removeCharAnim("fade")
 	end
-	-- timer.performWithDelay( detailsInstructions.showTime, transAnim ) --was 1700
 	
 	if (playingRandomGame == true and randomLevelDetails["random" .. randomLevelChallenge] and randomLevelDetails["random" .. randomLevelChallenge].showTime ~= "") then
 		timer.performWithDelay( randomLevelDetails["random" .. randomLevelChallenge].showTime, transAnim, 1 ) --was 1700
@@ -4235,7 +2553,6 @@ function gameStartAnim1()
 	bgBirdGroup.alpha = 0
 	
 	
-	
 	if (playingRandomGame == true) then
 		levelEditorDetails = levelEditor[charLevel]
 	else
@@ -4250,16 +2567,8 @@ function gameStartAnim1()
 	end
 	
 	
-	
 	bgSunGroup.xScale, bgSunGroup.yScale = 0.9, 0.9
 	
-	-- if (oniPhoneX == true) then
-		-- bgSunGroup.x = screenEdgeX - 15 - 7
-		-- bgSunGroup.y = screenOriginY + 8 + 7
-	-- else
-		-- bgSunGroup.x = screenEdgeX - 15
-		-- bgSunGroup.y = screenOriginY + 8
-	-- end
 	
 	if (oniPhoneX == true) then
 		bgSunGroup.x = screenEdgeX - safeScreenDistX - 24
@@ -4269,46 +2578,23 @@ function gameStartAnim1()
 		bgSunGroup.y = safeScreenOriginY + 8
 	end
 	
-	--- Sun position on all non iPhoneX platforms
-	-- bgSunGroup.x = display.safeActualContentWidth + safeScreenOriginX - 15
-	-- bgSunGroup.y = safeScreenOriginY + 8
 	
-	--- Sun position on iPhoneX only
-	-- bgSunGroup.x = display.safeActualContentWidth + safeScreenOriginX - 24
-	-- bgSunGroup.y = safeScreenOriginY + 29
-	
-	
-	
-	-- bgSunGroup.alpha = 0
 	bgCloudsOneGroup.alpha = 0
 	bgCloudsTwoGroup.alpha = 0
 	
 	gameCornerCloud1.alpha = 1
-	-- gameCornerCloud2.alpha = 1
 	
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		bgSunGroup.alpha = 0	
 	end
 	
 	sun.alpha = 0
 	sunTwo.alpha = 1
 	
-	-- backButton:setFillColor(9/255,196/255,236/255)
-	
 	
 	if (playingRandomGame == true) then
-		-- levelEditorDetails = levelEditor[charLevel]
 	else
-		-- levelEditorDetails = levelEditor[level]
-		-- tweak lighter bg
 		if (
-			-- level == 9 or 
-			-- level == 10 or 
-			-- level == 12 or 
-			-- level == 13 or
-			-- level == 15 or
-			-- level == 17 or
-			-- level == 28
 			level == 2 or --
 			level == 5 or --
 			level == 6 or --
@@ -4337,39 +2623,11 @@ function gameStartAnim1()
 	bgWhite:toFront()
 	
 	
-
-	-- local function playInstructionSound(event)
-		-- if gameplayMatch == 1 then -- numbers to numbers
-			-- playReservedChannel(colorsPicturesInstructionSound, 13, 0)
-		-- elseif (gameplayMatch == 2) then -- groups to numbers
-			-- playReservedChannel(picturesAndWordsInstructionSound, 13, 0)
-		-- elseif (gameplayMatch == 3) then -- groups to groups
-			-- playReservedChannel(colorsInstructionSound, 13, 0)
-		-- elseif (gameplayMatch == 4) then -- pictures to pictures
-			-- playReservedChannel(shapesInstructionSound, 13, 0)
-		-- elseif (gameplayMatch == 5) then -- color to color
-			-- playReservedChannel(picturesAndShapesInstructionSound, 13, 0)
-		-- elseif (gameplayMatch == 6) then -- color to color
-			-- playReservedChannel(shapesPicturesInstructionSound, 13, 0)
-		-- end
-	-- end
-	
-	
 	instructions.anchorX=0.5
     instructions.anchorY=0.5 
 	instructions.x = 0
 	instructions.y = 0
 	
-	
-	-- local details
-	-- if (playingRandomGame == true) then
-		-- details = levelDetails["level" .. charLevel]
-	-- else
-		-- details = levelDetails["level" .. level]
-	-- end
-	
-	
-	-- local detailsInstructions = details.instructions
 	
 	if (playingRandomGame == true and randomLevelDetails["random" .. randomLevelChallenge] and randomLevelDetails["random" .. randomLevelChallenge].line1 ~= "") then
 		line1.text = randomLevelDetails["random" .. randomLevelChallenge].line1
@@ -4394,14 +2652,6 @@ function gameStartAnim1()
 	end
 	
 	
-	-- line1.text = detailsInstructions.line1
-	-- line3.text = detailsInstructions.line2
-	-- line5.text = detailsInstructions.line3
-	-- line1.size = detailsInstructions.scale
-	-- line3.size = detailsInstructions.scale
-	-- line5.size = detailsInstructions.scale
-	
-	
 	line3.text = ""
 	line3.size = levelEditorDetails.levelIntroTextSize
 	
@@ -4421,18 +2671,7 @@ function gameStartAnim1()
 	end
 	timer.performWithDelay( 200, playIntroVO )
 		
-	--line1:setReferencePoint( display.CenterLeftReferencePoint ) -- commented out for graphics 2.0 and replaced with:
-        -- line1.anchorX=0
-        -- line1.anchorY=0.5
 	line1.x, line1.y = 0,  halfH + 24
-	--line3:setReferencePoint( display.CenterLeftReferencePoint ) -- commented out for graphics 2.0 and replaced with:
-	    -- line3.anchorX=0
-        -- line3.anchorY=0.5
-	-- line3.x, line3.y = 0, line1.y + detailsInstructions.spacing
-	--line5:setReferencePoint( display.CenterLeftReferencePoint ) -- commented out for graphics 2.0 and replaced with:
-        -- line5.anchorX=0
-        -- line5.anchorY=0.5
-	-- line5.x, line5.y = 0, line1.y + (detailsInstructions.spacing*2)
 	
 	
 	if (playingRandomGame == true and randomLevelDetails["random" .. randomLevelChallenge] and randomLevelDetails["random" .. randomLevelChallenge].spacing ~= "") then
@@ -4442,11 +2681,9 @@ function gameStartAnim1()
 	end
 	
 	
-	
 	if system.getInfo( "platformName" ) == "Android" then
 		line1.y = halfH - 180 --60
 		
-		-- check 11, 26, 29
 		if (level == 11 or level == 22 or level == 23 or level == 44) then
 			line5.y = halfH - 152 --115 --130
 		else
@@ -4455,37 +2692,17 @@ function gameStartAnim1()
 	end
 	
 	
-	--instructions:setReferencePoint( display.CenterRightReferencePoint ) -- commented out for graphics 2.0 and replaced with:
-	-- instructions.anchorChildren = true
-	-- instructions.anchorX=0
-    -- instructions.anchorY=0.5 
-	
-	
-	-- instructions.x = screenEdgeX - ((screenEdgeX-(screenOriginX*3))/8  ) - 55 + detailsInstructions.offsetX
-	-- instructions.x = halfW
-	
-	-- instructions.x = (display.viewableContentWidth/0.81)/2 + detailsInstructions.offsetX -- updated for graphics 2.0 conversion
-	
-	
 	speechBubble.x = halfW + 130
 	speechBubble.y = halfH - 90
 	
 	
-	--instructions.xScale, instructions.yScale = levelEditorDetails.levelIntroTextSize, levelEditorDetails.levelIntroTextSize
 	instructions.anchorX, instructions.anchorY = 0.5, 0.5
 	
 	instructions.y = speechBubble.y - 10 + levelEditorDetails.levelIntroTextYOffset
 	instructions.x = speechBubble.x + levelEditorDetails.levelIntroTextXOffset
 	
-	-- if (playingRandomGame == true and randomLevelDetails["random" .. randomLevelChallenge] and randomLevelDetails["random" .. randomLevelChallenge].offsetX ~= "") then
-		-- instructions.x = (display.viewableContentWidth/0.81)/2 + randomLevelDetails["random" .. randomLevelChallenge].offsetX
-	-- else
-		-- instructions.x = (display.viewableContentWidth/0.81)/2 + levelEditorDetails.levelIntroTextXOffset -- updated for graphics 2.0 conversion
-	-- end
 	
-	-- instructions.y = halfH + levelEditorDetails.levelIntroTextYOffset-- updated for graphics 2.0 conversion
 	if system.getInfo( "platformName" ) == "Android" then
-		--instructions.y = halfH + levelEditorDetails.levelIntroTextYOffset - 50
 		instructions.y = instructions.y - 37
 	end
 	
@@ -4494,32 +2711,22 @@ function gameStartAnim1()
 	line5:setFillColor(64/255,64/255,64/255) -- colored here when converting to graphics 2.0 (did not find text coloring, if code redundant, remove)
 	
 	
-	-- startCharAnim( (screenEdgeX+(screenOriginX*3))/5 + 55 )
-	-- startCharAnim( display.viewableContentWidth/3.1 )
-	
 	speechBubble:toFront()
 	line1:toFront()
 	line3:toFront()
 	line5:toFront()
 	instructions:toFront()
 	
-	-- timer.performWithDelay( 1300, gameStartAnim2, 1 )
-	--timer.soundPerformWithDelay( 1600-soundDelay, playSoundTimer, { sound=touchAsManySound, reservedChannel=22, loopNumber=0 } )
-	
-	
-	
 	
 	if (sceneSkip == 0) then
 	
 		startCharAnim( display.viewableContentWidth/3.1 )
 	
-		-- transition.to( speechBubble, { time=600, alpha=.9, transition=easing.outExpo } )
 	
 		transition.to( speechBubble, { time=600, alpha=.9, transition=easing.outExpo } )
 	
 		transition.to( line1, { time=1200, alpha=1, transition=easing.outExpo } )
 	
-		-- timer.performWithDelay( 1300, showTextTwo )
 		timer.performWithDelay( 1300, gameStartAnim2, 1 )
 	else
 		backButton.alpha = 1
@@ -4529,7 +2736,6 @@ function gameStartAnim1()
 		startGame()
 		sceneSkip = 0
 	end
-	
 	
 	
 end

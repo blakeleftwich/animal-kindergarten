@@ -55,7 +55,7 @@ function M.new()
 	local equationAlternatives = {}
 	
 	local fireTVMultiCardOption = false
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		fireTVMultiCardOption = true
 	end
 	
@@ -683,7 +683,7 @@ function M.new()
 			end
 		end
 		
-		if (showSlotBG == true and myData.isFireTV or showSlotBG == true and myData.isController) then 
+		if (showSlotBG == true and myData.isTV) then
 			
 			for i = 1, #gameSlots do
 			
@@ -772,7 +772,7 @@ function M.new()
 			
 			-- transition.to( currentItem, { delay = 0, time=50 , x = currentSlot.x - (choicesGroup.x - slotsGroup.x), y = currentSlot.y - (choicesGroup.y - slotsGroup.y), xScale = currentSlot.xScale, yScale = currentSlot.yScale, rotation = currentSlot.rotation, transition=easing.inExpo } )
 			
-			-- if (myData.isFireTV or myData.isController) then 
+			-- if (myData.isTV) then 
 			
 			
 			currentItem.origScale = currentSlot.xScale * 0.9
@@ -861,7 +861,7 @@ function M.new()
 			
 				bg:removeEventListener("touch", this)
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					if (cursorTimer) then
 						timer.cancel( cursorTimer )
 						cursorTimer = nil
@@ -894,7 +894,7 @@ function M.new()
 			else
 				
 				
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					if (fireTVMultiCardOption == false) then
 						-- numTimer = timer.performWithDelay( 900, scatterNumbers )
 						
@@ -914,7 +914,7 @@ function M.new()
 			
 		end
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			local newX, newY = currentSlot:localToContent(0, 0)
 			local newX2, newY2 = currentItem:localToContent(0, 0)
 			local differenceX, differenceY = newX - newX2, newY - newY2
@@ -931,7 +931,7 @@ function M.new()
 		end
 		
 		
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			if (fireTVMultiCardOption == true) then
 				if (currentCount > numSlots) then
 				else
@@ -1282,7 +1282,7 @@ function M.new()
 													keyName ~= "menu" or
 													event.keyName == nil) then
 		
-				if (myData.isFireTV or myData.isController) then 
+				if (myData.isTV) then 
 					-- transition.to( cursor, { time=100, alpha=0 } )
 					buttonsActive = false
 				end
@@ -1380,7 +1380,7 @@ function M.new()
 				
 				if (currentSelected == "cards") then
 				
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						if (cursorTimer) then
 							timer.cancel( cursorTimer )
 							cursorTimer = nil
@@ -1428,7 +1428,7 @@ function M.new()
 				
 				elseif (isCorrectSlot == true) then
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						if (cursorTimer) then
 							timer.cancel( cursorTimer )
 							cursorTimer = nil
@@ -1454,7 +1454,7 @@ function M.new()
 				
 				else
 				
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						if (fireTVMultiCardOption == true) then
 						
 							if (cursorTimer) then
@@ -1624,7 +1624,7 @@ function M.new()
 				
 			end
 			
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				cursorTransition = timer.performWithDelay( 700, showCursor )
 			end
 		
@@ -1834,8 +1834,7 @@ function M.new()
 				
 				-- gameNumbers[#gameNumbers].rotation = gameNumbersPositions[numSlots][randomPosSet][randomNumSet][randomNumPosition][3]
 				
-				if (myData.isFireTV and fireTVMultiCardOption == false or 
-					myData.isController and fireTVMultiCardOption == false) then
+				if (myData.isTV and fireTVMultiCardOption == false) then
 				else
 					if (#gameNumbers ~= 1) then
 						gameNumbers[#gameNumbers].x = gameNumbers[#gameNumbers-1].x + (gameNumbers[#gameNumbers].contentWidth*0.5) + (gameNumbers[#gameNumbers-1].contentWidth*0.5) + choiceOptions[#numberOptions][1]
@@ -2016,7 +2015,7 @@ function M.new()
     ----------------------
     -- global functions --
     ----------------------
-    -- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+    -- if (myData.isTV and version.appStore ~= "Chrome") then 
     -- else
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )

@@ -3,7 +3,7 @@ local myData = require("Scripts.myData")
 
 function equationWin()
 
-	if (myData.isFireTV or myData.isController) then 
+	if (myData.isTV) then 
 		transition.to( cursor, { time=100, alpha=0 } )
 	end
 
@@ -125,7 +125,7 @@ function ComplexChoiceTap(event)
 												keyName ~= "menu" or
 												event.keyName == nil) then
 	
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				transition.to( cursor, { time=100, alpha=0 } )
 				buttonsActive = false
 			end
@@ -214,7 +214,7 @@ function ComplexChoiceTap(event)
 					end
 					timer.performWithDelay( 105, moveCards )
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						timer.performWithDelay( 100, showCursor )
 					end
 				else
@@ -265,7 +265,7 @@ function ComplexChoiceTap(event)
 					end
 					timer.performWithDelay( 105, moveCards )
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						timer.performWithDelay( 100, showCursor )
 					end
 				end
@@ -945,7 +945,7 @@ function ChoiceTap(event)
 												event.keyName == nil) then
 												
 	
-			if (myData.isFireTV or myData.isController) then 
+			if (myData.isTV) then 
 				transition.to( cursor, { time=100, alpha=0 } )
 				buttonsActive = false
 			end
@@ -1058,7 +1058,7 @@ function ChoiceTap(event)
 					timer.performWithDelay( 105, moveCards )
 				
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						timer.performWithDelay( 100, showCursor )
 					end
 				else
@@ -1104,7 +1104,7 @@ function ChoiceTap(event)
 					timer.performWithDelay( 105, moveCards )
 				
 					
-					if (myData.isFireTV or myData.isController) then 
+					if (myData.isTV) then 
 						timer.performWithDelay( 100, showCursor )
 					end
 				end
@@ -1343,7 +1343,7 @@ function ChoiceTap(event)
 						end
 						transition.to( obj, { time=100 , xScale = 1.15, yScale = 1.15, transition=easing.outExpo } )
 						
-						if (myData.isFireTV or myData.isController) then 
+						if (myData.isTV) then 
 							timer.performWithDelay( 150, showCursor )
 						else
 							timer.performWithDelay( 150, makeButtonsActive )
@@ -3116,7 +3116,7 @@ function AddEquation()
 	
 	local function backButtonTransition()
 	
-		if (myData.isFireTV or myData.isController) then 
+		if (myData.isTV) then 
 			timer.performWithDelay( 700, makeButtonsActive )
 		else
 			makeButtonsActive()
@@ -3147,7 +3147,7 @@ function AddEquation()
 		end
 	
 		--if (version.appStore == "Amazon" and system.getInfo ( "model" ) == "AFTB" or version.appStore == "Amazon FTV") then
-		-- if (myData.isFireTV or myData.isController) then 
+		-- if (myData.isTV) then 
 			-- timer.performWithDelay( 700, makeButtonsActive )
 		-- else
 			-- transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo, onComplete=makeButtonsActive } )
@@ -3162,7 +3162,7 @@ function AddEquation()
 	transition.to( questionText, { time=700, x=halfW, transition=easing.outExpo } )
 	transition.to( questionTextTwo, { time=700, x=halfW, transition=easing.outExpo } )
 	
-	-- if (myData.isFireTV or myData.isController and version.appStore ~= "Chrome") then 
+	-- if (myData.isTV and version.appStore ~= "Chrome") then 
 	-- else
 		transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )
