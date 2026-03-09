@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs wc -l)",
+      "Bash(wc -l \"/c/Users/blake/Dropbox/Eggroll/Games/Animal Kindergarten Math Games/Kindergarten Repository/Scripts\"/*.lua)",
+      "Bash(wc -l *.lua)"
+    ]
+  }
+}

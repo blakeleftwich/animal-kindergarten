@@ -1,35 +1,10 @@
 local M = {}
 
-local _W   = display.contentWidth
-local _H   = display.contentHeight
-local _CX  = display.contentCenterX
-local _CY  = display.contentCenterY
-local _TOP = display.screenOriginY
-local _BTM = display.contentHeight - display.screenOriginY
-local _RHT = display.contentWidth - display.screenOriginX
-local _LFT = display.screenOriginX
-local _WIDTH = _RHT - _LFT
-local _HEIGHT = _BTM - _TOP
-
+local base = require("Scripts.gameModuleBase")
+local _W, _H, _CX, _CY = base._W, base._H, base._CX, base._CY
+local _TOP, _BTM, _RHT, _LFT = base._TOP, base._BTM, base._RHT, base._LFT
+local _WIDTH, _HEIGHT = base._WIDTH, base._HEIGHT
 local myData = require("Scripts.myData")
-
-
--------------------------------------------------
--- This is a global init function
--------------------------------------------------
-local function backButtonTransition()
-	print("back button")
-    if (myData.isFireTV or myData.isController) then 
-        backButtonTimer = timer.performWithDelay( 700, makeButtonsActive )
-    else
-        makeButtonsActive()
-    end
---    if (myData.isController) then
---        Runtime:addEventListener( "key", ChoiceTap )
---    elseif (myData.isFireTV) then
---        Runtime:addEventListener( "onFTVKey", ChoiceTap )
---    end
-end
 
 -------------------------------------------------
 -------------------------------------------------
@@ -50,49 +25,6 @@ function M.new()
     local this = display.newGroup()
     this.isLive = true
     this.isTouchEnable = true
-    
-    ---------------------------
-    -- Image pop up function --
-    ---------------------------
-    local function imgPop(obj, upTime, downTime, scale, alpha)
-        if obj.isPopping then return end
-        obj.isPopping = true
-        
-        obj.xScale = scale or 1
-        obj.yScale = scale or 1
-        obj.alpha = alpha or 1
-
-        local function func()
-            transition.to(obj, { time = downTime or 400 , xScale = 1, yScale = 1, transition=easing.outExpo,
-            onComplete = function()
-               obj.isPopping = false 
-            end})
-        end
-        transition.to(obj, {time = upTime or 150, alpha = 1, xScale = 1.5, yScale = 1.5, transition=easing.inExpo,
-            onComplete = func})
-    end
-    
-    -----------------------------
-    -- Image floating function --
-    -----------------------------
-    local function imgFloat(obj)
-        local posY = obj.y
-        local transTime = 1500
-        local transShift = 2
-        local func1, func2
-        function func1()
-            if not this.isLive then return end
-            local r = math.random(80, 120)*0.01
-            transition.to(obj, { time=transTime*r , y=posY+transShift*r, transition=easing.inOutSine, onComplete=func2 } )
-        end
-        function func2()
-            if not this.isLive then return end
-            local r = math.random(80, 120)*0.01
-            transition.to(obj, { time=transTime*r , y=posY-transShift*r, transition=easing.inOutSine, onComplete=func1 } )
-        end
-        func2()
-    end
-    
     
     -- copy game details...
     local tblQuestion = gameOptions.questions
@@ -1806,7 +1738,7 @@ function M.new()
         transition.to( backButton, { time=700, alpha=1, transition=easing.outExpo } )
 		transition.to( instructionsReplayButton, { time=700, alpha=1, transition=easing.outExpo } )
     -- end
-    backButtonTimer = timer.performWithDelay( 550, backButtonTransition )
+    backButtonTimer = timer.performWithDelay( 550, base.backButtonTransition )
     
     ----------------------
     return this

@@ -100,27 +100,6 @@ else
 end
 
 
--- Flurry 2019
---attach flurry
--- if(logToFlurry == true) then
-      -- analytics = require( "plugin.flurry.analytics" )
-      -- local function flurryListener( event )
-	      -- if ( event.phase == "init" ) then  -- Successful initialization
-		      -- print( event.provider )
-	      -- end
-      -- end
-      -- analytics.init( flurryListener, { apiKey=version.flurryID } )
--- end
-
--- function logAnalyticEvent(eventID,params) --handle logging anaytic events
-    -- if logToFlurry == true then 
-		-- if params == nil then
-			-- analytics.logEvent(eventID)
-		-- else
-			-- analytics.logEvent(eventID,params)
-		-- end   
-	-- end
--- end
 
 
 if ( system.getInfo("environment") == "simulator" ) then
