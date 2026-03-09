@@ -1,0 +1,8 @@
+{
+	"enableSounds":true,
+	"enablePromo":true,
+	"enableIAP":true,
+	"enableMusic":true,
+	"appOpenNum":0,
+	"showPopupAt":0
+}

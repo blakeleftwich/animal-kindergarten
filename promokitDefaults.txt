@@ -1,0 +1,93 @@
+{	
+	"Google Play":{
+		"mainmenuPromo":
+			[{"promoURL":"https://play.google.com/store/apps/developer?id=Eggroll+Games",
+				"fileName":"promoEggroll.png",				
+				"path":"Images/Promo/",
+				"height":152,"width":84,
+                                "x":42,"y":33,
+				"weighting":1,
+				"trackingID":"promo-more"
+				}
+			],
+		"links":{
+			"privacyPolicy":"http://eggrollgames.com/support/privacy/",	
+			"facebookURL":"https://www.facebook.com/EggrollGames",
+			"googleplusURL":"https://plus.google.com/111809632559939874651/posts",
+			"youtubeURL":"http://www.youtube.com/user/EggrollGames",
+			"twitterURL":"http://www.twitter.com/eggrollgames/",
+			"eggrollURL":"http://eggrollgames.com/",
+			"rateThisAppURL":"https://play.google.com/store/apps/details?id=com.eggrollgames.animalmathkindergartenfree",
+			"moreURL":"https://play.google.com/store/apps/developer?id=Eggroll+Games"
+		},		
+		"files":[
+                           
+                        ],
+                "testGroups":{
+                    "rateUsPopup":-1,
+                }
+
+	},
+	"iTunes":{
+		"mainmenuPromo":
+			[{"promoURL":"https://apps.apple.com/us/developer/eggroll-games-llc/id480933875?mt=8&uo=4&at=11l4UF",
+				"fileName":"promoEggroll.png",				
+				"path":"Images/Promo/",
+				"height":152,"width":84,
+                                "x":42,"y":33,
+				"weighting":1,
+				"trackingID":"promo-more"
+				}
+			],
+		"links":{
+			"privacyPolicy":"http://eggrollgames.com/support/privacy/",	
+			"facebookURL":"https://www.facebook.com/EggrollGames",
+			"googleplusURL":"https://plus.google.com/111809632559939874651/posts",
+			"youtubeURL":"http://www.youtube.com/user/EggrollGames",
+			"twitterURL":"http://www.twitter.com/eggrollgames/",
+			"eggrollURL":"http://eggrollgames.com/",
+			"rateThisAppURL":"https://apps.apple.com/us/app/animal-math-kindergarten/id1064151827?mt=8&uo=4&at=11l4UF",
+			"moreURL":"https://apps.apple.com/us/developer/eggroll-games-llc/id480933875?mt=8&uo=4&at=11l4UF"
+		},		
+		"files":[
+                           
+                        ],
+                "testGroups":{
+                    "rateUsPopup":-1,
+                }
+	}, 
+	"Samsung":{
+	},
+	"Amazon":{
+		"mainmenuPromo":
+			[{"promoURL":"http://www.amazon.com/s/ref=bl_sr_mobile-apps?_encoding=UTF8&field-brandtextbin=Eggroll%20Games&node=2350149011&tag=eggrgame-20",
+				"fileName":"promoEggroll.png",				
+				"path":"Images/Promo/",
+				"height":152,"width":84,
+                                "x":42,"y":33,
+				"weighting":1,
+				"trackingID":"promo-more"
+				}
+			],
+		"links":{
+			"privacyPolicy":"http://eggrollgames.com/support/privacy/",	
+			"facebookURL":"https://www.facebook.com/EggrollGames",
+			"googleplusURL":"https://plus.google.com/111809632559939874651/posts",
+			"youtubeURL":"http://www.youtube.com/user/EggrollGames",
+			"twitterURL":"http://www.twitter.com/eggrollgames/",
+			"eggrollURL":"http://eggrollgames.com/",
+			"rateThisAppURL":"http://www.amazon.com/Animal-Math-Games-Kids-Skills/dp/B00IBI4N6K/ref=sr_1_1?s=mobile-apps&ie=UTF8&qid=1403211386&sr=1-1&tag=eggrgame-20",
+			"moreURL":"http://www.amazon.com/s/ref=bl_sr_mobile-apps?_encoding=UTF8&field-brandtextbin=Eggroll%20Games&node=2350149011&tag=eggrgame-20"
+		},		
+		"files":[
+                           
+                        ],
+                "testGroups":{
+                    "rateUsPopup":-1,
+                }
+
+	}, 
+	"OUYA":{
+	
+	}
+}
